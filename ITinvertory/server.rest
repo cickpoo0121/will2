@@ -1,0 +1,82 @@
+
+//=========User========
+
+### date alert
+get http://localhost:8080/datealert
+Content-Type: application/json
+
+### get years
+get http://localhost:8080/years
+Content-Type: application/json
+
+### show product of guset page
+get http://localhost:8080/product/guest
+Content-Type: application/json
+
+### productstatus
+get http://localhost:8080/product/countstatus
+Content-Type: application/json
+
+### show product of user home page
+get http://localhost:8080/product/user
+Content-Type: application/json
+
+### show import information
+get http://localhost:8080/product/import/2020
+Content-Type: application/json
+
+
+### show all status of product and who scan 
+get http://localhost:8080/product/status/2020
+Content-Type: application/json
+
+### show commitee in current year
+get http://localhost:8080/committee/2020
+Content-Type: application/json
+
+
+
+
+//=========Admin========
+
+### add datealert
+post http://localhost:8080/datealert/insert
+Content-Type: application/json
+
+{ 
+   "datestart":"2020-03-06", 
+   "dateend":"2020-04-13"
+}
+
+### update datealert
+put http://localhost:8080/datealert/update/2020
+Content-Type: application/json
+
+{
+  "datestart":"2020-08-13", 
+  "dateend":"2020-09-13"  
+}
+
+### 
+put http://localhost:8080/takephoto/2019
+Content-Type: application/json
+
+{
+"records":[{"invenNum":"1"},
+            {"invenNum":"2"}]
+}
+
+
+
+
+### working history page
+get http://localhost:8080/workingHistory
+Content-Type: application/json
+
+### assign committee
+post http://localhost:8080/assign/committee
+Content-Type: application/json
+
+{
+   
+}
