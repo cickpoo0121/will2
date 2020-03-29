@@ -18,7 +18,7 @@ router.get("/guest", function (req, res) {
         }
         else {
             res.json(result);
-            console.log(err)
+            // console.log(err)
         }
     });
 });
