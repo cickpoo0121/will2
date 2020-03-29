@@ -7,29 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Data Tables</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/libs/css/style.css">
-    <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/buttons.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/select.bootstrap4.css">
-    <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+    <!-- <link rel="stylesheet" href="landingpage.css"> -->
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+
 </head>
 
-<script>
-    $(document).ready(function () {
-    $("#insert").click(function () {
-        $("#myModal").modal();
-
-
-    });
-    });
-</script>
 <style>
     .dot1 {
         height: 10px;
@@ -62,20 +58,25 @@
     #barcode {
         width: 130px;
     }
+
     #insert {
         width: 100px;
         height: 35px;
     }
-    #years{
-        height:35px ;
+
+    #years {
+        height: 35px;
         width: 90px;
     }
-    #year{
-        height:25px ;
+
+    #year {
+        /* height: 25px; */
         width: 85px;
     }
-    .modal-header,h3{
-        background-color: red;
+
+    .modal-header,
+    h3 {
+        background-color: #dc3545;
         color: white;
     }
 </style>
@@ -89,20 +90,23 @@
     <div>
         <div class="row">
             <div class="col-11">
-                <img src="banner.png" alt="LOGO" style="width: 450px;">
+                <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
             </div>
             <div class="col-1">
-               
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="account.png"  id="log" class="user-avatar-md rounded-circle"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+
+                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" style="width:100px ;"
+                        id="log" class="user-avatar-md rounded-circle"></a>
+                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                    aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
                         <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
-                        
+
                     </div>
-                
+
                     <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
-            </li>
+                </li>
             </div>
         </div>
 
@@ -139,267 +143,295 @@
             </div>
         </nav>
     </div>
-  <!-- Menu -->
+    <!-- Menu -->
 
 
     <!-- ============================================================== -->
-    <div class="row">
-        <!-- ============================================================== -->
-        <!-- basic table  -->
-        <!-- ============================================================== -->
-         <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
+    <!-- ============================================================== -->
+    <!-- basic table  -->
+    <!-- ============================================================== -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
 
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header" style="padding:20px 40px;">
-              <h3><span class="glyphicon glyphicon-lock"></span> นำเข้าข้อมูล</h3>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:20px 40px;">
+                    <h3><span class="glyphicon glyphicon-lock"></span> นำเข้าข้อมูล</h3>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="usrname"><span class="glyphicon glyphicon-user"></span>ไฟล์ :</label>
+                            <br>
+                            <input class="form-control" type="file" name="excel" style="border: none;">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="year"><span class=" glyphicon glyphicon-eye-open mt-2"></span>ปี</label>
+                            <!-- <div> -->
+                            <input type="text" id="yearmodal">
+                            <!-- </div> -->
+                        </div>
+                        <div>
+                            <button class="btn btn-primary "><span class="glyphicon glyphicon-off"></span>
+                                บันทึก</button>
+                            <button class="btn btn-danger "><span
+                                    class="glyphicon glyphicon-off "></span>ยกเลิก</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
-            <div class="modal-body" style="padding:40px 50px;">
-              <form role="form">
-                <div class="form-group">
-                  <label for="usrname"><span class="glyphicon glyphicon-user"></span>ไฟล์ :</label>
-                  <br>
-                  <button>เลือกไฟล์</button>
-                </div>
-               
-                
-                <div class="form-group">
-                  <label for="year"><span class=" glyphicon glyphicon-eye-open mt-2"></span>ปี</label>
-                  <div>
-                  <select id="year" >
-                    <option value="2016 "> 2563</option>
-                    <option value="2017 "> 2562</option>
-                    <option value="2018 "> 2561</option>
-                    <option value="2019 "> 2560</option>
-                  </select>
-                </div>
-                </div>
-                <div>
-                <button  class="btn btn-primary "><span class="glyphicon glyphicon-off"></span>
-                  บันทึก</button>
-                <button  class="btn btn-danger "><span
-                    class="glyphicon glyphicon-off "></span>ยกเลิก</button>
-                </div>
-              </form>
-            </div>
-            
-          </div>
 
         </div>
-      </div>
-
-        
-        <div class="col-sm-12">
-            <select id="years" class=" float-right mb-2 mt-3 mr-3">
-                <option value="2016 "> 2563</option>
-                <option value="2017 "> 2562</option>
-                <option value="2018 "> 2561</option>
-                <option value="2019 "> 2560</option>
-              </select>
-            
-             <button id="insert" class="btn btn-danger float-right mb-2 mt-3 mr-3"> นำเข้าข้อมูล</button>
-             
-</div>
-
-  
-
-</div> 
-
-        <div class="col-sm-12 mt-2 ">
-            <div class="card">
-                <h5 class="card-header">ข้อมูลครุภัณฑ์ ประจำปี 2563</h5>
-                
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered first">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Asset</th>
-                                    <th>Subnumber</th>
-                                    <th>Iventory Number</th>
-                                    <th>Asset Description</th>
-                                    <th>ยี่ห้อ/รุ่น</th>
-                                    <th>Serial Number</th>
-                                    <th>Location</th>
-                                    <th>วันที่รับรัพย์สิน</th>
-                                    <th>Original Value</th>
-                                    <th>Cost Center</th>
-                                    <th>หน่วยงาน</th>
-                                    <th>Vendor Name1</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>4000000224</td>
-                                    <td>0</td>
-                                    <td>749001500148005</td>
-                                    <td>เครื่องทำลายเอกสาร</td>
-                                    <td>HSM / 104.2</td>
-                                    <td> - </td>
-                                    <td>E3A/315/1</td>
-                                    <td>18/11/2004</td>
-                                    <td>16800</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>4000024314</td>
-                                    <td>0</td>
-                                    <td>711001401246097</td>
-                                    <td>ตู้เอกสาร</td>
-                                    <td>Welma</td>
-                                    <td>-</td>
-                                    <td>IB/211</td>
-                                    <td>13/3/2003</td>
-                                    <td>3870.00</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>4000024315</td>
-                                    <td>0</td>
-                                    <td>711001401246098</td>
-                                    <td>ตู้เอกสาร</td>
-                                    <td>Welma</td>
-                                    <td>-</td>
-                                    <td>E1สัก1/330</td>
-                                    <td>13/3/2003</td>
-                                    <td>3870.00</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>4000024318</td>
-                                    <td>0</td>
-                                    <td>711001401246101</td>
-                                    <td>ตู้เก็บเอกสาร(90)</td>
-                                    <td>WELMA</td>
-                                    <td>-</td>
-                                    <td>E1/324</td>
-                                    <td>26/8/2003</td>
-                                    <td>3870.00</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>4280002627</td>
-                                    <td>0</td>
-                                    <td>744000902057002</td>
-                                    <td>อุปกรณ์ Xbox + kinect </td>
-                                    <td> </td>
-                                    <td> </td>
-                                    <td>S7B/306</td>
-                                    <td>15/7/2014</td>
-                                    <td>14500</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>4280002657</td>
-                                    <td>0</td>
-                                    <td>74400901654001</td>
-                                    <td>Digitizing tablet</td>
-                                    <td>Wecom</td>
-                                    <td> </td>
-                                    <td>S7B/306</td>
-                                    <td>27/4/2011</td>
-                                    <td>15500.00</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td>ซีสเต็ม ไมโคร</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>4280002726</td>
-                                    <td>0</td>
-                                    <td>744004800253001</td>
-                                    <td>เครื่องตัดต่อเสียง Digial</td>
-                                    <td>DIGISIGN</td>
-                                    <td>AKH09493557D</td>
-                                    <td>S7B/306</td>
-                                    <td>26/8/2010</td>
-                                    <td>19902.00</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>4280002727</td>
-                                    <td>0</td>
-                                    <td>744004800253002</td>
-                                    <td>เครื่องตัดต่อเสียง Digial</td>
-                                    <td>DIGISIGN</td>
-                                    <td>AKH09493557D</td>
-                                    <td>S7B/320</td>
-                                    <td>26/8/2010</td>
-                                    <td>19902.00</td>
-                                    <td>11130000</td>
-                                    <td>สำนักวิชาเทคโนโลยีสารสนเทศ</td>
-                                    <td></td>
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- end basic table  -->
-        <!-- ============================================================== -->
     </div>
 
-        <!-- Footer -->
-        <footer class="page-footer font-small blue " style="background-color: #fe0000;">
 
-            <!-- Copyright -->
-            <div class="footer-copyright text-center py-3 text-light">© 2020 POWERSOL</div>
-            <!-- Copyright -->
 
-        </footer>
-        <!-- Footer -->
-        <!-- ============================================================== -->
-        <!-- end main wrapper -->
-        <!-- ============================================================== -->
-        <!-- Optional JavaScript -->
-        <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-        <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-        <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-        <script src="../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
-        <script src="../assets/libs/js/main-js.js"></script>
-        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script src="../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-        <script src="../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
-        <script src="../assets/vendor/datatables/js/data-table.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-        <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-        <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-        <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
+
+
+
+    <div class="container-fluid my-5">
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md-10 text-left">
+                <div class="">
+                    <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</h2>
+                </div>
+            </div>
+            <div class="col-md-1" style="text-align: right;">
+                <div class="ml-2">
+                    <button id="insert" class="btn btn-danger float-right mb-2 mb-3 mr-3"> นำเข้าข้อมูล</button>
+                </div>
+            </div>
+            <div class="col-md-1 " style="text-align: right;">
+                <select id="years" class=" form-control float-right mb-2 mb-3 mr-3">
+                    <!-- <option value="2020 "> 2563</option>
+                    <option value="2019 "> 2562</option>
+                    <option value="2018 "> 2561</option>
+                    <option value="2017 "> 2560</option> -->
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center">
+        <!--Table-->
+        <table class="table mt-2" id="mytable" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>รหัสครุภัณฑ์</th>
+                    <th>คำอธิบาย</th>
+                    <th>ยี่ห้อ</th>
+                    <th>รหัสผลิตภัณฑ์</th>
+                    <th>สถานที่</th>
+                    <th>วันที่รับรัพย์สิน</th>
+                    <th>ราคา</th>
+                    <th>Cost Center</th>
+                    <th>หน่วยงาน</th>
+                    <th>Vendor Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end basic table  -->
+    <!-- ============================================================== -->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small blue " style="background-color: #fe0000;">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3 text-light">© 2020 POWERSOL</div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+    <!-- ============================================================== -->
+    <!-- end main wrapper -->
+    <!-- ============================================================== -->
+    <!-- Optional JavaScript -->
 
 </body>
+<script>
+    var tableUser;
+    var getyear
+    
+    date=new Date();
+    const year = date.getFullYear();
+    $(document).ready(function () {
+        
+        dropdownyear();
+
+        $('#yearmodal').val(year);
+        $('#yearmodal').prop('disabled',true);
+        // console.log(gg)
+        // $('#yearmodal').prop(year)
+
+        $('#years').ready(function () {
+            getyear = $('#years').val();
+            // console.log(getyear)
+            productadmin();
+
+        });
+
+        $('#years').change(function () {
+            getyear = $('#years').val();
+            // console.log(getyear)
+            productadmin();
+        });
+        
+
+        $("#insert").click(function () {
+            $("#myModal").modal();
+
+
+        });
+
+        var dataSet = [
+            {
+                "No": "1",
+                "desc": "เครื่องถ่ายเอกสาร",
+                "brand": "HSM/104.2",
+                "location": "E3A-401",
+                "status": "ปกติ"
+
+            },
+            {
+                "No": "2",
+                "desc": "โต๊ะ",
+                "brand": "-",
+                "location": "S7-401",
+                "status": "สูญหาย"
+
+            },
+            {
+                "No": "3",
+                "desc": "กล้อง",
+                "brand": "fujiXA-2",
+                "location": "S7-401",
+                "status": "ปกติ"
+
+            },
+            {
+                "No": "4",
+                "desc": "เครื่องถ่ายเอกสาร",
+                "brand": "HSM/104.2",
+                "location": "E3A-401",
+                "status": "ปกติ"
+
+            },
+            {
+                "No": "5",
+                "desc": "โต๊ะ",
+                "brand": "-",
+                "location": "S7-401",
+                "status": "สูญหาย"
+
+            },
+            {
+                "No": "6",
+                "desc": "กล้อง",
+                "brand": "fujiXA-2",
+                "location": "S7-401",
+                "status": "ปกติ"
+
+            },
+
+        ];
+
+        tableUser = $("#mytable").DataTable({
+            // data: dataSet,
+            // "searching": false,
+            // "paging": false,
+            "ordering": false,
+            "info": false,
+            "lengthChange": false,
+            deferRender: true,
+            columns: [
+                // {
+                //     data: 'No',
+                //     render: function (data, type, full, meta) {
+                //         // return '<img src="' + data + '" no-repeat center center /cover >';
+                //         return '<img src="' + data + '" no-repeat center center /cover >';
+                //         // return image ? `<div style=" background-image: url('${data}') no-repeat center center /cover "></div>` : 'No image';
+                //     }
+                // },
+                { data: "No" },
+                { data: "inventorynumber" },
+                { data: "description" },
+                { data: "model" },
+                { data: "serialnumber" },
+                { data: "locateroom" },
+                { data: "receive_date" },
+                { data: "originalvalue" },
+                { data: "costcenter" },
+                { data: "department" },
+                { data: "vendername" },
+                // { defaultContent: "<button id='btnPrint' class='btn btn-success'>Print</button> ", orderable: false },
+                // { defaultContent: "<button id='view' class='btn btn-primary'>View</button>", orderable: false }
+            ],
+            responsive: true
+        });
+
+        $(".btn-primary").click(function () {
+
+            window.location.replace("/")
+        });
+    });
+
+    function productadmin() {
+        
+        getyear = $('#years').val();
+
+        $.ajax({
+            method: "GET",
+            url: "/product/import/" + getyear
+        }).done(function (dataSet, state, xhr) {
+
+            for (let i = 0; i < dataSet.length; i++) {
+                dataSet[i].No = i + 1;
+                // dataSet[i].receive_date=dataSet[i].receive_date.getFullYear();
+                dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
+            }
+            console.log(dataSet)
+            //clear DataTable
+            tableUser.clear();
+            //display modified JSON in DataTable
+            tableUser.rows.add(dataSet).draw();
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
+
+    function dropdownyear() {
+
+        $.ajax({
+            method: "GET",
+            url: "/years"
+        }).done(function (dataSet, state, xhr) {
+
+            $("#years").empty();
+            $("#year").empty();
+                for( let i = dataSet.length-1; i>=0; i--){
+                    let id = dataSet[i].working_year;
+                    
+                    $("#years").append("<option value='"+id+"'>"+id+"</option>");
+                    
+
+                }
+            console.log(dataSet)
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
+
+</script>
 
 </html>

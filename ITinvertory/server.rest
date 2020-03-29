@@ -10,7 +10,7 @@ get http://localhost:8080/years
 Content-Type: application/json
 
 ### show product of guset page
-get http://localhost:8080/product/guest
+get http://localhost:8080/product/guest/2020
 Content-Type: application/json
 
 ### productstatus
@@ -33,6 +33,32 @@ Content-Type: application/json
 ### show commitee in current year
 get http://localhost:8080/committee/2020
 Content-Type: application/json
+
+### import excel
+post http://localhost:8080/product/import
+Content-Type: application/json
+
+{
+  # "year":"",
+   "inventorynumber":"13079320", 
+   "asset":"8888", 
+   "subnumber":"8888",
+    "description":"888", 
+    "model":"888", 
+    "serialnumber":"888",
+    "location":"888",
+    "room":"888",
+    "receive_date":"2020-03-06", 
+    "originalvalue":"8888",
+    "costcenter":"1130",
+    "department":"IT", 
+    "vendername":"Mr.gg",
+    "product_status":"", 
+    "image":"", 
+    "image_status":"",
+    "scan_date":"",
+    "committee":""
+}
 
 
 

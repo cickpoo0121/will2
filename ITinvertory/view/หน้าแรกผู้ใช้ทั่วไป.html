@@ -70,20 +70,20 @@
         
     </div> -->
 
-   <div class="container-fluid text-center">
-       <!--Table-->
-       <table class="table" id="mytable" style="width:100%">
-        <thead>
-            <tr>
-                <th>ลำดับ</th>
-                <th>คำอธิบาย</th>
-                <th>ยี่ห้อ</th>
-                <th>สถานที่</th>
-                <th>สถานะ</th>
-            </tr>
-        </thead>
-    </table>
-   </div>
+    <div class="container-fluid text-center">
+        <!--Table-->
+        <table class="table" id="mytable" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ลำดับ</th>
+                    <th>คำอธิบาย</th>
+                    <th>ยี่ห้อ</th>
+                    <th>สถานที่</th>
+                    <th>สถานะ</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
 
 
@@ -113,6 +113,7 @@
 </body>
 <script>
     var tableUser;
+    // var locateroom;
     $(document).ready(function () {
 
         var dataSet = [
@@ -167,7 +168,7 @@
 
         ];
 
-            tableUser = $("#mytable").DataTable({
+        tableUser = $("#mytable").DataTable({
             // data: dataSet,
             // "searching": false,
             // "paging": false,
@@ -187,7 +188,7 @@
                 { data: "No" },
                 { data: "description" },
                 { data: "model" },
-                { data: "location" },
+                { data: "locateroom" },
                 { data: "product_status" }
                 // { defaultContent: "<button id='btnPrint' class='btn btn-success'>Print</button> ", orderable: false },
                 // { defaultContent: "<button id='view' class='btn btn-primary'>View</button>", orderable: false }
@@ -203,37 +204,40 @@
     });
 
     function getUser() {
-            //get users from DB
-            $.ajax({
-                method: "GET",
-                url: "/product/guest"
-            }).done(function (dataSet, state, xhr) {
+        //get users from DB
+        date = new Date();
+        const year = date.getFullYear();
+        $.ajax({
+            method: "GET",
+            url: "/product/guest/"+year
+        }).done(function (dataSet, state, xhr) {
 
-                for (let i = 0; i < dataSet.length; i++) {
-                    dataSet[i].No = i + 1;
-                    if(dataSet[i].product_status==0){
-                        dataSet[i].product_status="สูญหาย"
-                    }
-                    else if(dataSet[i].product_status==1){
-                        dataSet[i].product_status="ปกติ"
-                    }
-                    else if(dataSet[i].product_status==2){
-                        dataSet[i].product_status="ส่งซ่อม"
-                    }
-                    else if(dataSet[i].product_status==3){
-                        dataSet[i].product_status="ไม่ระบุ"
-                    }
+            for (let i = 0; i < dataSet.length; i++) {
+                dataSet[i].No = i + 1;
+                dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
+                if (dataSet[i].product_status == 0) {
+                    dataSet[i].product_status = "สูญหาย"
                 }
-                    console.log(dataSet)
-                //clear DataTable
-                tableUser.clear();
-                //display modified JSON in DataTable
-                tableUser.rows.add(dataSet).draw();
-            }).fail(function (xhr, state, error) {
-                //get data failed
-                alert(xhr.responseText);
-            });
-        }
+                else if (dataSet[i].product_status == 1) {
+                    dataSet[i].product_status = "ปกติ"
+                }
+                else if (dataSet[i].product_status == 2) {
+                    dataSet[i].product_status = "ส่งซ่อม"
+                }
+                else if (dataSet[i].product_status == 3) {
+                    dataSet[i].product_status = "ไม่ระบุ"
+                }
+            }
+            console.log(dataSet)
+            //clear DataTable
+            tableUser.clear();
+            //display modified JSON in DataTable
+            tableUser.rows.add(dataSet).draw();
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
 
 </script>
 
