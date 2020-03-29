@@ -161,27 +161,23 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body" style="padding:40px 50px;">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="usrname"><span class="glyphicon glyphicon-user"></span>ไฟล์ :</label>
-                            <br>
-                            <input class="form-control" type="file" name="excel" style="border: none;">
-                        </div>
+                    <form id="upexcel" method="POST" enctype="multipart/form-data">
+                        <!-- action="/uploadfile" -->
+                        <label for="usrname"><span class="glyphicon glyphicon-user"></span>ไฟล์ :</label>
+                        <br>
+                        <input class="form-control" type="file" name="fileUpload" style="border: none;">
+                        <br>
 
+                        <label for="year"><span class=" glyphicon glyphicon-eye-open mt-2"></span>ปี</label>
+                        <br>
+                        <input type="text" id="yearmodal">
+                        <button class="btn btn-primary " id="btnupload" type="submit">บันทึก</button>
+                        <button class="btn btn-danger "><span class="glyphicon glyphicon-off "></span>ยกเลิก</button>
 
-                        <div class="form-group">
-                            <label for="year"><span class=" glyphicon glyphicon-eye-open mt-2"></span>ปี</label>
-                            <!-- <div> -->
-                            <input type="text" id="yearmodal">
-                            <!-- </div> -->
-                        </div>
-                        <div>
-                            <button class="btn btn-primary "><span class="glyphicon glyphicon-off"></span>
-                                บันทึก</button>
-                            <button class="btn btn-danger "><span
-                                    class="glyphicon glyphicon-off "></span>ยกเลิก</button>
-                        </div>
                     </form>
+                    <!-- <form action="/convertexcel" method="POST">
+                    <button class="btn btn-primary">sdfsf</button>
+                    </form> -->
                 </div>
 
             </div>
@@ -258,17 +254,19 @@
 
 </body>
 <script>
-    var tableUser;
+    var tableUser
     var getyear
-    
-    date=new Date();
+    var fileName
+
+    date = new Date();
     const year = date.getFullYear();
+
     $(document).ready(function () {
-        
+
         dropdownyear();
 
         $('#yearmodal').val(year);
-        $('#yearmodal').prop('disabled',true);
+        $('#yearmodal').prop('disabled', true);
         // console.log(gg)
         // $('#yearmodal').prop(year)
 
@@ -284,13 +282,67 @@
             // console.log(getyear)
             productadmin();
         });
-        
+
 
         $("#insert").click(function () {
             $("#myModal").modal();
 
 
         });
+
+        // $('#btnupload').click(function () {
+
+        //     $('input[type="file"]').change(function(e){
+        //     fileName = e.target.files[0].name;
+        //     console.log(this.files[0].mozFullPath);
+        //     alert('The file "' + fileName +  '" has been selected.');
+        // });
+
+        $('form#upexcel').submit(function () {
+            var file = "";
+            const formData = new FormData(this);
+
+            $.ajax({
+                method: "POST",
+                url: "/uploadfile",
+                data: formData,
+                contentType: false,
+                processData: false
+
+            }).done(function (data, state, xhr) {
+
+                // file = data.filename
+                // console.log(file)
+                // alert(file)
+
+                // $.ajax({
+                //     method:"POST",
+                //     url:"/convertexcel",
+                //     data:file
+
+                // }).done(function(data,state,xhr){
+                //     console.log(data)
+                // }).fail(function(xhr,state,err){
+
+                // })
+
+
+            }).fail(function (xhr, state, err) {
+                console.log(err)
+            })
+
+        });
+        // $.ajax({
+        //     method: "POST",
+        //     url: "/ec",
+        //     data:{excel:fileName}
+        // }).done(function (dataSet, state, xhr) {
+
+        // }).fail(function (xhr, state, error) {
+        //     //get data failed
+        //     alert(xhr.responseText);
+        // });
+
 
         var dataSet = [
             {
@@ -378,14 +430,11 @@
             responsive: true
         });
 
-        $(".btn-primary").click(function () {
 
-            window.location.replace("/")
-        });
     });
 
     function productadmin() {
-        
+
         getyear = $('#years').val();
 
         $.ajax({
@@ -418,13 +467,13 @@
 
             $("#years").empty();
             $("#year").empty();
-                for( let i = dataSet.length-1; i>=0; i--){
-                    let id = dataSet[i].working_year;
-                    
-                    $("#years").append("<option value='"+id+"'>"+id+"</option>");
-                    
+            for (let i = dataSet.length - 1; i >= 0; i--) {
+                let id = dataSet[i].working_year;
 
-                }
+                $("#years").append("<option value='" + id + "'>" + id + "</option>");
+
+
+            }
             console.log(dataSet)
         }).fail(function (xhr, state, error) {
             //get data failed

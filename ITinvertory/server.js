@@ -6,10 +6,11 @@ const mysql = require("mysql");
 const config = require("./dbConfig.js");
 var fs = require('fs');
 var cm = require('csv-mysql');
-const XLSXtoMYSQL = require('xlsx-mysql');
-const readXlsxFile  = require("read-excel-file/node");
+var xlsxtojson = require("xlsx-to-json");
+var xlstojson = require("xls-to-json");
 const multer = require("multer");
 const passport = require("passport");
+// let upload = require("express-fileupload");
 // const upload = require("express-fileupload");
 // const cookieSession = require("cookie-session");
 
@@ -36,8 +37,8 @@ const storageOption = multer.diskStorage({
 });
 
 
-const upload = multer({ storage: storageOption }).single("fileUpload");
 // const upload = multer({ storage: storageOption }).single("fileUpload");
+const upload = multer({ storage: storageOption }).single("fileUpload");
 // const upload1 = multer({ storage: storageOption }).array("addfileUpload");
 
 
@@ -57,165 +58,57 @@ app.use("/auth", authRoutes);
 
 //===========================User================================//
 
-app.post("/test", function (req, res) {
+// var filename
+app.post('/uploadfile', function (req, res) {
+
     upload(req, res, function (err, result) {
         if (err) {
             res.status(500).send("Upload failed");
+            console.log(err)
             return;
         }
         else {
-            res.json(req.file.filename)
+            // res.send("successed")
+            res.json(req.file)
+            // filename = req.file.filename;
             console.log(req.file.filename)
+
+            // xlsxtojson({
+            //     // input: "./uploads/"+req.file.filename+"",
+            //     input: "./uploads/1585503413369_soccer_players.xlsx",  // input xls
+            //     output: "output.json", // output json
+            //     lowerCaseHeaders: true
+            // }, function (err, result) {
+            //     if (err) {
+            //         res.json(err);
+            //     } else {
+            //         res.json(result);
+            //         console.log(result)
+            //     }
+            // });
+
         }
     })
 
+});
 
-    // importExcelData2MySQL(__basedir + '/uploads/' + req.file.filename);
-    // res.json({
-    //       'msg': 'File uploaded/import successfully!', 'file': req.file
-    //     });
-  });
-
-  function importExcelData2MySQL(filePath){
-    // File path.
-    readXlsxFile(filePath).then((rows) => {
-      // `rows` is an array of rows
-      // each row being an array of cells.   
-      console.log(rows);
-     
-      /**
-      [ [ 'Id', 'Name', 'Address', 'Age' ],
-      [ 1, 'Jack Smith', 'Massachusetts', 23 ],
-      [ 2, 'Adam Johnson', 'New York', 27 ],
-      [ 3, 'Katherin Carter', 'Washington DC', 26 ],
-      [ 4, 'Jack London', 'Nevada', 33 ],
-      [ 5, 'Jason Bourne', 'California', 36 ] ] 
-      */
-     
-      // Remove Header ROW
-      rows.shift();
-     
-      // Create a connection to the database
-    //   const connection = mysql.createConnection({
-    //     host: 'localhost',
-    //     user: 'root',
-    //     password: '12345',
-    //     database: 'testdb'
-    //   });
-     
-      // Open the MySQL connection
-      con.connect((error) => {
-        if (error) {
-          console.error(error);
+app.post('/convertexcel', function (req, res) {
+    // const filename ="1585505272264_soccer_players.xlsx"
+    var filename =req.body.filename
+    xlsxtojson({
+        input: "./uploads/"+filename+"",  // input xls
+        output: "output.json", // output json
+        lowerCaseHeaders: true
+    }, function (err, result) {
+        if (err) {
+            res.json(err);
         } else {
-          let query = "INSERT INTO `product` (`product_year`, `inventorynumber`, `asset`, `subnumber`, `description`, `model`, `serialnumber`, `location`, `room`, `receive_date`, `originalvalue`, `costcenter`, `department`, `vendername`, `product_status`, `image`, `image_status`, `scan_date`, `committee`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, ?, ?);";
-          con.query(query, [rows], (error, response) => {
-          console.log(error || response);
-   
-          /**
-          OkPacket {
-          fieldCount: 0,
-          affectedRows: 5,
-          insertId: 0,
-          serverStatus: 2,
-          warningCount: 0,
-          message: '&amp;Records: 5  Duplicates: 0  Warnings: 0',
-          protocol41: true,
-          changedRows: 0 } 
-          */
-          });
+            res.json(result);
+            console.log(result[0].CITY)
         }
-      });
-    })
-  }
+    });
+});
 
-
-
-// app.post("/test", function (req, res) {
-//     date = new Date();
-//     const year = date.getFullYear();
-
-
-//     app.post('/csvfileupload', urlencodedParser, function (req, res) {
-
-//         if (req.url == '/csvfileupload') {
-//             var form = new formidable.IncomingForm();
-//             form.parse(req, function (err, fields, files) 
-//             {
-//                 var oldpath = files.filetoupload.path;
-//                 var newpath = 'C:/xampp/htdocs/nodejs/mvc/csvupload/uploads/' + files.filetoupload.name;
-//                 fs.rename(oldpath, newpath, function (err) {
-//                     if (err) throw err;
-//                     res.write('File uploaded and moved!');
-//                     res.end();
-//                 });
-//                 fs.readFile(oldpath, { encoding: 'utf-8' }, function(err, csvData) {
-    
-//                     if (err) 
-//                     {
-//                         console.log(err);
-//                     }
-    
-    
-//                     csvParser(csvData, { delimiter: ',' }, function(err, data) {
-//                         if (err)
-//                         {
-//                             console.log(err);
-//                         } 
-//                         else 
-//                         {      
-//                         console.log(data);    
-//                             var sql = "INSERT INTO `product` (`product_year`, `inventorynumber`, `asset`, `subnumber`, `description`, `model`, `serialnumber`, `location`, `room`, `receive_date`, `originalvalue`, `costcenter`, `department`, `vendername`, `product_status`, `image`, `image_status`, `scan_date`, `committee`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, ?, ?);";
-//                             con.query(sql, [data], function(err) {
-//                             if (err) throw err;
-//                             conn.end();
-//                             });   
-    
-//                         }
-//                     });
-//                 });
-//             });
-    
-//         } 
-    
-    
-//     })
-
-
-    // var optionsZ = {
-    //     mysql: {
-    //         host: 'localhost',
-    //         user: 'root',
-    //         database: 'itinventory',
-    //         table:'product',
-    //         password: '',
-    //         port: '3306'
-    //     },
-    //     csv: {
-    //         delimiter: '+'
-    //     }
-    // }
-    // var locationZ = __dirname + './it.xlsx';
-    // var waitT = 1000;
-    
-    
-    // XLSXtoMYSQL(locationZ,optionsZ,waitT);
-
-    // let file = req.files.filename;
-    // let filename = file.name;
-    // file.mv('./excel/' + filename, function (err) {
-    //     if (err) {
-    //         res.send('upload fail')
-    //         console.log(err)
-    //     }
-    //     else {
-    //         let result = importExcel({
-    //             sourceFile: './excel/' + filename
-    //         })
-    //         res.send(filename)
-    //     }
-    // })
-// })
 
 //get years
 app.get("/years", function (req, res) {

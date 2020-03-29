@@ -1,3 +1,5 @@
+post http://localhost:8080/test
+Content-Type: application/json
 
 //=========User========
 

@@ -1,2 +1,4 @@
 /node_modules/*
 /config/key.js
+/uploads/*
+output.json
