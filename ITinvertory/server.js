@@ -24,7 +24,7 @@ const datealert = require("./routes/datealertroute");
 
 const app = express();
 const con = mysql.createConnection(config);
-// global.__basedir = __dirname;
+
 
 
 const storageOption = multer.diskStorage({
@@ -48,17 +48,17 @@ app.use(body_parser.json());
 app.use("/img", express.static(path.join(__dirname, 'img')));
 app.use("/style.css", express.static(path.join(__dirname, 'style.css')));
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(upload());
 
-app.use("/product", product);
-app.use("/datealert", datealert);
 
-// authen
-app.use("/auth", authRoutes);
+app.use("/product", product);//about product
+app.use("/datealert", datealert);//date start and date end
+app.use("/auth", authRoutes);// authen
+
+
 
 //===========================User================================//
 
-// var filename
+// upload file
 app.post('/uploadfile', function (req, res) {
 
     upload(req, res, function (err, result) {
@@ -69,32 +69,20 @@ app.post('/uploadfile', function (req, res) {
         }
         else {
             // res.send("successed")
-            res.json(req.file)
+            res.json(req.file.filename)
             // filename = req.file.filename;
             console.log(req.file.filename)
-
-            // xlsxtojson({
-            //     // input: "./uploads/"+req.file.filename+"",
-            //     input: "./uploads/1585503413369_soccer_players.xlsx",  // input xls
-            //     output: "output.json", // output json
-            //     lowerCaseHeaders: true
-            // }, function (err, result) {
-            //     if (err) {
-            //         res.json(err);
-            //     } else {
-            //         res.json(result);
-            //         console.log(result)
-            //     }
-            // });
 
         }
     })
 
 });
 
+
+//convert excel to json
 app.post('/convertexcel', function (req, res) {
     // const filename ="1585505272264_soccer_players.xlsx"
-    var filename =req.body.filename
+    let filename =req.body.filename
     xlsxtojson({
         input: "./uploads/"+filename+"",  // input xls
         output: "output.json", // output json
@@ -104,7 +92,7 @@ app.post('/convertexcel', function (req, res) {
             res.json(err);
         } else {
             res.json(result);
-            console.log(result[0].CITY)
+            console.log(result)
         }
     });
 });
