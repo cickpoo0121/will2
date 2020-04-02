@@ -1,9 +1,9 @@
 module.exports={
     google:{
-        clientID:"560528177138-cdk7cg3ra6m7c96lhd28in75g86mpijv.apps.googleusercontent.com",
-        clientSecret:"lMzNRCihKkr979Mid2m4maPU"
+        clientID: "708094300424-28ipm4lonblkeohg3r7p97ml0lb2s3h4.apps.googleusercontent.com",
+        clientSecret: "t4cISo_blYiUPZVsITKE1seP"
     },
     cookie:{
-        secret:"itinv"
+        cookiekey:"mynameiskiller"
     }
 }
