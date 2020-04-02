@@ -13,7 +13,7 @@ router.get("/google", passport.authenticate("google",{scope:["profile","email"]}
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
     // res.send(req.user);
     // return res.redirect("./view/หน้าแรกกรรมการ.html");
-    return res.redirect('/homecommittee');
+     res.redirect('/guest');
 });
 
 //logout

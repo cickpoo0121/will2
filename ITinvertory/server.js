@@ -187,13 +187,14 @@ app.post("/assign/committee", function (req, res) {
 
 //root
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/login.html"))
+    res.sendFile(path.join(__dirname, "/views/login.html"))
     // res.render("login.ejs",{user:req.user});
 });
 
 //signup
 app.get("/guest", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/หน้าแรกผู้ใช้ทั่วไป.html"))
+    // res.sendFile(path.join(__dirname, "/view/หน้าแรกผู้ใช้ทั่วไป.ejs"))
+    res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
 });
 
 //login
@@ -208,7 +209,7 @@ app.get("/homecommittee", function (req, res) {
 
 //adminlogin
 app.get("/admin", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/HomeAdmin.html"))
+    res.sendFile(path.join(__dirname, "/view/แก้ไขวันที่.html"))
 });
 
 //printsheet
