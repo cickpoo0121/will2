@@ -121,7 +121,7 @@ app.get("/years", function (req, res) {
 //show committee in current year
 app.get("/committee/:years", function (req, res) {
     const years = req.params.years
-    const sql = "SELECT email FROM `workingyear` WHERE working_year=?";
+    const sql = "SELECT * FROM `workingyear` WHERE working_year=?";
     con.query(sql, [years], function (err, result, fields) {
         if (err) {
             // console.log(err)
@@ -169,13 +169,14 @@ app.put("/takephoto/:year", function (req, res) {
 
 //assign work to committee //working history page
 app.post("/assign/committee", function (req, res) {
-    date = new Date();
-    const year = date.getFullYear();
+    // date = new Date();
+    const year = req.body.year
     const email = req.body.email;
-    const sql = "INSERT INTO workingyear (year,email) VALUES (?,?)"
+    const sql = "INSERT INTO workingyear (working_year,email) VALUES (?,?)"
     con.query(sql, [year, email], function (err, result, fields) {
         if (err) {
             res.status(500).send("Server error");
+            console.log(err)
         }
         else {
             res.json(result);

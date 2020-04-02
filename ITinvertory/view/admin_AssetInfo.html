@@ -265,10 +265,6 @@
     $(document).ready(function () {
         var getyear
         dropdownyear();
-        // productadmin();
-
-        // getyear = $('#years').val();
-        // console.log(getyear)
 
         $('#yearmodal').val(year);
         $('#yearmodal').prop('disabled', true);
@@ -439,7 +435,7 @@
                 console.log()
 
 
-            }
+           getyear = $('#years').val(); }
             console.log(dataSet)
         }).fail(function (xhr, state, error) {
             //get data failed

@@ -21,7 +21,7 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
     <!-- <link rel="stylesheet" href="landingpage.css"> -->
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-    
+
     <!-- <link rel="stylesheet" href="style.css"> -->
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <title>คณะกรรมการ</title>
@@ -29,7 +29,15 @@
         #log {
             width: 100px;
         }
-        
+
+        #assign {
+            width: 100px;
+            height: 35px;
+        }
+        #years {
+        height: 35px;
+        width: 90px;
+    }
     </style>
 </head>
 
@@ -41,21 +49,20 @@
                 <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
             </div>
             <div class="col-1">
-               
-<<<<<<< HEAD
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../img/account.png"  id="log" class="user-avatar-md rounded-circle"></a>
-=======
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../img/  account.png"  id="log" class="user-avatar-md rounded-circle"></a>
->>>>>>> ef60a29eace4b6109f66121a150e0e4fd60741b8
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+
+                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="log"
+                        class="user-avatar-md rounded-circle"></a>
+                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                    aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
                         <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
-                        
+
                     </div>
-                
+
                     <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
-            </li>
+                </li>
             </div>
         </div>
 
@@ -96,7 +103,6 @@
 
     <div class="row mt-3">
         <div class="col-9">
-
         </div>
         <div class="col-3">
             <!-- Modal -->
@@ -111,13 +117,15 @@
                             </button>
                         </div>
                         <div class="modal-body">
+                            <p>ปี</p>
+                            <input type="text" id="yearmodal" disabled="">
                             <p>อีเมล์กรรมการ</p>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
+                            <input type="email" class="form-control" id="email"
                                 aria-describedby="emailHelp" placeholder="ป้อนอีเมลล์">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                            <button type="button" class="btn btn-primary">บันทึก</button>
+                            <button type="button" id="submit" class="btn btn-primary">บันทึก</button>
                         </div>
                     </div>
                 </div>
@@ -128,19 +136,17 @@
 
 
 
-  
-    <div class="container-fluid my-5">
+
+    <div class="container-fluid mt-5">
         <div class="row" style="margin-top: 20px;">
-            <div class="col-md-10 text-left">
+            <div class="col-md-10 text-center">
                 <div class="">
-                    <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</h2>
+                    <h2>คณะกรรมการ</h2>
                 </div>
             </div>
             <div class="col-md-1" style="text-align: right;">
-                <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                เพิ่มกรรมการ
-            </button>
+                <button id="assign" class="btn btn-primary float-right mb-2 mb-3 mr-3" data-toggle="modal"
+                    data-target="#exampleModalLong"> เพิ่มกรรมการ</button>
             </div>
             <div class="col-md-1 " style="text-align: right;">
                 <select id="years" class=" form-control float-right mb-2 mb-3 mr-3">
@@ -160,6 +166,7 @@
         <table class="table" id="mytable" style="width:100%">
             <thead>
                 <tr>
+                    <th>No.</th>
                     <th>ปี</th>
                     <th>อีเมล์กรรมการ</th>
                 </tr>
@@ -188,8 +195,46 @@
 
 <script>
     var tableUser;
-    // var locateroom;
+    date = new Date();
+    const year = date.getFullYear();
+    var getyear
     $(document).ready(function () {
+        dropdownyear();//show dropdownyear
+
+        $('#yearmodal').val(year);//set year assign is current year
+
+        $('#years').ready(function () {
+            getyear = $('#years').val();
+            // console.log(getyear)
+            getcommittee();
+
+        });
+
+        $('#years').change(function () {
+            getyear = $('#years').val();
+            console.log(getyear)
+            getcommittee();
+        });
+
+        $('#submit').click(function () {
+            const yrearassign=$('#yearmodal').val();
+            const email = $('#email').val();
+
+            $.ajax({
+                method:"POST",
+                url:"/assign/committee",
+                data:{year:yrearassign,email:email}
+            }).done(function(dataSet,state,xhr){
+                getcommittee();
+                console.log(dataSet)
+            }).fail(function(xhr,state,err){
+                console.log(err)
+            })
+            
+            
+        });
+
+
 
         var dataSet = [
             {
@@ -252,49 +297,56 @@
             "lengthChange": false,
             deferRender: true,
             columns: [
-                { data: "" },
-                { data: "description" },
+                { data: "No" },
+                { data: "working_year" },
+                { data: "email" },
             ],
             responsive: true
         });
 
-        $(".btn-primary").click(function () {
-
-            window.location.replace("/")
-        });
         getcommittee();
     });
 
-    function getcommittee() {
+    function getcommittee() { //get data committee
         //get users from DB
-        date = new Date();
-        const year = date.getFullYear();
+        getyear = $('#years').val();
         $.ajax({
             method: "GET",
-            url: "/product/guest/"+year
+            url: "/committee/" + getyear
         }).done(function (dataSet, state, xhr) {
 
             for (let i = 0; i < dataSet.length; i++) {
                 dataSet[i].No = i + 1;
-                dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
-                if (dataSet[i].product_status == 0) {
-                    dataSet[i].product_status = "สูญหาย"
-                }
-                else if (dataSet[i].product_status == 1) {
-                    dataSet[i].product_status = "ปกติ"
-                }
-                else if (dataSet[i].product_status == 2) {
-                    dataSet[i].product_status = "ส่งซ่อม"
-                }
-                else if (dataSet[i].product_status == 3) {
-                    dataSet[i].product_status = "ไม่ระบุ"
-                }
             }
             console.log(dataSet)
             //clear DataTable
             tableUser.clear();
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
+
+    function dropdownyear() { //get year
+
+        $.ajax({
+            method: "GET",
+            url: "/years"
+        }).done(function (dataSet, state, xhr) {
+
+            $("#years").empty();
+            $("#year").empty();
+            for (let i = dataSet.length - 1; i >= 0; i--) {
+                let id = dataSet[i].working_year;
+
+                $("#years").append("<option value='" + id + "'>" + id + "</option>");
+                console.log()
+
+
+            }
+            console.log(dataSet)
         }).fail(function (xhr, state, error) {
             //get data failed
             alert(xhr.responseText);
