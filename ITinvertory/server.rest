@@ -106,5 +106,6 @@ post http://localhost:8080/assign/committee
 Content-Type: application/json
 
 {
-   
+  "year":"2020",
+  "email":"testajax1@gmail.com"
 }
