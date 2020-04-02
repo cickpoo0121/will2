@@ -257,10 +257,8 @@
 </body>
 
 <script>
-    // "use strict";
+    
     var tableUser
-    var fileName
-
     date = new Date();
     const year = date.getFullYear();
 
@@ -400,7 +398,7 @@
                 file = dataSet
                 console.log(file)
                 // alert(file)
-                window.location.reload("/productadmin")
+                // window.location.reload("/productadmin")
 
                 $.ajax({
                     method:"POST",
@@ -408,6 +406,9 @@
                     data:{filename:file}
                 }).done(function(dataSet,state,xhr){
                     console.log(dataSet)
+
+                    //TODO: แอดเข้า DB
+                    
 
                 }).fail(function(xhr,state,err){
 
