@@ -216,9 +216,9 @@ app.get("/committee", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/assignCommittee.html"))
 });
 
-//printsheet
-app.get("/print", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/printuser.html"))
+//หน้าแรกของแิดมิน
+app.get("/adminfirstpage", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/adminFirstPage.html"))
 });
 
 //sheet
