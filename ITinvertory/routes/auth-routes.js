@@ -7,12 +7,13 @@ router.get("/login", (req, res) => {
 });
 
 // login using google
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/google", passport.authenticate("google",{scope:["profile","email"]}));
 
 //if login success, redirect here
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
     // res.send(req.user);
-    res.redirect("/หน้าแรกกรรมการ.html");
+    // return res.redirect("./view/หน้าแรกกรรมการ.html");
+     res.redirect('/guest');
 });
 
 //logout

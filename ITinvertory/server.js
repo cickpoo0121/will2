@@ -4,6 +4,7 @@ const path = require("path");
 const body_parser = require("body-parser");
 const mysql = require("mysql");
 const config = require("./dbConfig.js");
+const passportSetup = require("./config/passport-setup");
 var fs = require('fs');
 var cm = require('csv-mysql');
 var xlsxtojson = require("xlsx-to-json");
@@ -24,6 +25,7 @@ const datealert = require("./routes/datealertroute");
 
 const app = express();
 const con = mysql.createConnection(config);
+app.set("view engine", "ejs");
 
 
 
@@ -48,6 +50,7 @@ app.use(body_parser.json());
 app.use("/img", express.static(path.join(__dirname, 'img')));
 app.use("/style.css", express.static(path.join(__dirname, 'style.css')));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
 
 
 app.use("/product", product);//about product
@@ -82,6 +85,7 @@ app.post('/uploadfile', function (req, res) {
 //convert excel to json
 app.post('/convertexcel', function (req, res) {
     // const filename ="1585505272264_soccer_players.xlsx"
+    var abc="Inventory number"
     let filename =req.body.filename
     xlsxtojson({
         input: "./uploads/"+filename+"",  // input xls
@@ -92,7 +96,7 @@ app.post('/convertexcel', function (req, res) {
             res.json(err);
         } else {
             res.json(result);
-            console.log(result)
+            console.log(result[0].Room)
         }
     });
 });
@@ -183,12 +187,14 @@ app.post("/assign/committee", function (req, res) {
 
 //root
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/login.html"))
+    res.sendFile(path.join(__dirname, "/views/login.html"))
+    // res.render("login.ejs",{user:req.user});
 });
 
 //signup
 app.get("/guest", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/หน้าแรกผู้ใช้ทั่วไป.html"))
+    // res.sendFile(path.join(__dirname, "/view/หน้าแรกผู้ใช้ทั่วไป.ejs"))
+    res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
 });
 
 //login
@@ -197,13 +203,13 @@ app.get("/productadmin", function (req, res) {
 });
 
 //afterlogin
-app.get("/Home2", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/Home2.html"))
+app.get("/homecommittee", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/สถานะครุภัณฑ์แอดมิน.html"))
 });
 
 //adminlogin
 app.get("/admin", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/HomeAdmin.html"))
+    res.sendFile(path.join(__dirname, "/view/แก้ไขวันที่.html"))
 });
 
 //printsheet
