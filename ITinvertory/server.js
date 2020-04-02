@@ -104,7 +104,7 @@ app.post('/convertexcel', function (req, res) {
 
 //get years
 app.get("/years", function (req, res) {
-    const sql = "SELECT working_year FROM `workingyear`";
+    const sql = "SELECT DISTINCT working_year FROM `workingyear`";
     con.query(sql, function (err, result, fields) {
         if (err) {
             // console.log(err)
@@ -187,24 +187,24 @@ app.post("/assign/committee", function (req, res) {
 
 //root
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/views/login.html"))
+    res.sendFile(path.join(__dirname, "/view/login.html"))
     // res.render("login.ejs",{user:req.user});
 });
 
-//signup
+//ผู้ใช้ทั้วไป
 app.get("/guest", function (req, res) {
-    // res.sendFile(path.join(__dirname, "/view/หน้าแรกผู้ใช้ทั่วไป.ejs"))
-    res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
+    res.sendFile(path.join(__dirname, "/view/generalUser.html"))
+    // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
 });
 
-//login
+//ข้อมูลครุภัณฑ์
 app.get("/productadmin", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/ข้อมูลครุภัณฑ์แอดมิน.html"))
+    res.sendFile(path.join(__dirname, "/view/admin_AssetInfo.html"))
 });
 
-//afterlogin
-app.get("/homecommittee", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/สถานะครุภัณฑ์แอดมิน.html"))
+//คณะกรรมการ
+app.get("/committee", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/assignCommittee.html"))
 });
 
 //adminlogin
