@@ -192,12 +192,20 @@ app.get("/", function (req, res) {
     // res.render("login.ejs",{user:req.user});
 });
 
+//========= User ========//
 //ผู้ใช้ทั้วไป
 app.get("/guest", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/generalUser.html"))
     // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
 });
 
+//หน้าแรกcommittee
+app.get("/committeefirstpage", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
+});
+
+
+//========= Admin ========//
 //ข้อมูลครุภัณฑ์
 app.get("/productadmin", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/admin_AssetInfo.html"))
@@ -206,11 +214,6 @@ app.get("/productadmin", function (req, res) {
 //คณะกรรมการ
 app.get("/committee", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/assignCommittee.html"))
-});
-
-//adminlogin
-app.get("/admin", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/แก้ไขวันที่.html"))
 });
 
 //printsheet
