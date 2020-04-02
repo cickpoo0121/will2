@@ -204,6 +204,21 @@ app.get("/committeefirstpage", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
 });
 
+//สถานะครุภัณฑ์
+app.get("/committee_AssetStatus", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/committee_AssetStatus.html"))
+});
+
+//คณะกรรมการประจำปี
+app.get("/committeeBiodata", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/committeeBiodata.html"))
+});
+
+//เช็ควันที่
+app.get("/periodOfCheckingAsset", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/periodOfCheckingAsset.html"))
+});
+
 
 //========= Admin ========//
 //ข้อมูลครุภัณฑ์
@@ -216,10 +231,22 @@ app.get("/committee", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/assignCommittee.html"))
 });
 
-//printsheet
-app.get("/print", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/printuser.html"))
+//หน้าแรกของแิดมิน
+app.get("/adminfirstpage", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/adminFirstPage.html"))
 });
+
+//คณะกรรมการประจำปี
+app.get("/assignCommittee", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/assignCommittee.html"))
+});
+
+//เช็คเวลาแอดมิน 
+app.get("/assignCheckingDate", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/assignCheckingDate.html"))
+});
+
+
 
 //sheet
 app.get("/sheet", function (req, res) {
