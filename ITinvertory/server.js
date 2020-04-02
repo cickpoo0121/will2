@@ -199,8 +199,8 @@ app.get("/guest", function (req, res) {
 });
 
 //ข้อมูลครุภัณฑ์
-app.get("/productadmin", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/admin_AssetInfo.html"))
+app.get("/productstatusadmin", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/admin_AssetStatus.html"))
 });
 
 //คณะกรรมการ
