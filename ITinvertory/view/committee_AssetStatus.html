@@ -49,22 +49,92 @@
 
     #Qrcode {
         width: 130px;
-        
+
     }
 
     #barcode {
         width: 130px;
-        
-        
+
+
     }
-   
 </style>
 <style>
     #log {
         width: 100px;
     }
-    
 </style>
+
+<script>
+    $(document).ready(function () {
+
+        var tableUser
+        date = new Date();
+        var year = date.getFullYear();
+        console.log(year);
+
+        tableUser = $("#mytable").DataTable({
+            // data: dataSet,
+            // "searching": false,
+            // "paging": false,
+            "ordering": false,
+            "info": false,
+            "lengthChange": false,
+            deferRender: true,
+            columns: [
+                { data: "No" },
+                { defaultContent: '<input type="checkbox" name="" id="checkall"> ', orderable: false },
+                { data: "image" },
+                { defaultContent: '<input type="checkbox" name="" id="takephoto"> ', orderable: false },
+                { data: "inventorynumber" },
+                { data: "description" },
+                { data: "model" },
+                { data: "locateroom" },
+                { data: "committee" },
+                { data: "product_status" }
+            ],
+            responsive: true
+        });
+
+        productadmin();
+
+        function productadmin() {
+            // date = new Date();
+            // var year = date.getFullYear();
+            $.ajax({
+                method: "GET",
+                url: "/product/status/" + year
+            }).done(function (dataSet, state, xhr) {
+
+                for (let i = 0; i < dataSet.length; i++) {
+                    dataSet[i].No = i + 1;
+                    // dataSet[i].receive_date=dataSet[i].receive_date.getFullYear();
+                    dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
+                    if (dataSet[i].product_status == 0) {
+                        dataSet[i].product_status = "สูญหาย"
+                    }
+                    else if (dataSet[i].product_status == 1) {
+                        dataSet[i].product_status = "ปกติ"
+                    }
+                    else if (dataSet[i].product_status == 2) {
+                        dataSet[i].product_status = "ส่งซ่อม"
+                    }
+                    else if (dataSet[i].product_status == 3) {
+                        dataSet[i].product_status = "ไม่ระบุ"
+                    }
+                }
+                console.log(dataSet)
+                //clear DataTable
+                // tableUser.clear();
+                //display modified JSON in DataTable
+                tableUser.rows.add(dataSet).draw();
+            }).fail(function (xhr, state, error) {
+                //get data failed
+                alert(xhr.responseText);
+            });
+        }
+    });
+
+</script>
 
 <body>
     <!-- ============================================================== -->
@@ -76,19 +146,22 @@
                 <img src="logo.png" alt="LOGO" style="width: 100px;">
             </div> -->
             <div class="col-11 ">
-                <img src="../img/banner.png"  style="width: 450px;">
+                <img src="../img/banner.png" style="width: 450px;">
             </div>
             <div class="col-1">
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../img/account.png"  id="log" class="user-avatar-md rounded-circle"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="log"
+                        class="user-avatar-md rounded-circle"></a>
+                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                    aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
                         <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
-                        
+
                     </div>
-                
-                    <a class="dropdown-item" href="#" id= "logout"> <i class=  "fas fa-power-off mr-2" ></i>Logout</a>
+
+                    <a class="dropdown-item" href="#" id="logout"> <i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
-            </li>
+                </li>
             </div>
         </div>
 
@@ -104,7 +177,7 @@
                     <li class="nav-item active ml-5">
                         <a href="/committeefirstpage" class="nav-link text-light">หน้าแรก</a>
                     </li>
-                    
+
                     <li class="nav-item ml-5">
                         <a class="btn btn-rounded btn-light " href="/committee_AssetStatus">สถานะครุภัณฑ์</a>
                     </li>
@@ -129,17 +202,17 @@
         <div class="col-sm-12 ">
             <div class="card">
                 <h1 class="card-header">สถานะครุภัณฑ์</h1>
-                  
+
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered first">
+                        <!-- <table class="table table-striped table-bordered first">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th><input type="checkbox" >ทั้งหมด</th>
+                                    <th><input type="checkbox">ทั้งหมด</th>
                                     <th>image</th>
                                     <th>ถ่ายรูป</th>
-                   
+
                                     <th>Iventory Number</th>
                                     <th>Asset Description</th>
                                     <th>ยี่ห้อ/รุ่น</th>
@@ -154,7 +227,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td>ใช่</td>
-                         
+
                                     <td>749001500148005</td>
                                     <td>เครื่องทำลายเอกสาร</td>
                                     <td>HSM / 104.2</td>
@@ -168,7 +241,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td> ใช่</td>
-                            
+
                                     <td>711001401246097</td>
                                     <td>ตู้เอกสาร</td>
                                     <td>Welma</td>
@@ -182,7 +255,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td>ไม่ใช่</td>
-                               
+
                                     <td>711001401246098</td>
                                     <td>ตู้เอกสาร</td>
                                     <td>Welma</td>
@@ -196,7 +269,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td>ไม่ใช่</td>
-                   
+
                                     <td>711001401246101</td>
                                     <td>ตู้เก็บเอกสาร(90)</td>
                                     <td>WELMA</td>
@@ -210,7 +283,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td>ใช่</td>
-                              
+
                                     <td>744000902057002</td>
                                     <td>อุปกรณ์ Xbox + kinect </td>
                                     <td> </td>
@@ -224,7 +297,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td>ไม่ใช่</td>
-                            
+
                                     <td>74400901654001</td>
                                     <td>Digitizing tablet</td>
                                     <td>Wecom</td>
@@ -239,7 +312,7 @@
                                     <td> <input type="checkbox"></td>
                                     <td> - </td>
                                     <td>ไม่ใช่</td>
-                                
+
                                     <td>744004800253001</td>
                                     <td>เครื่องตัดต่อเสียง Digial</td>
                                     <td>DIGISIGN</td>
@@ -252,11 +325,34 @@
 
                             </tbody>
 
-                        </table>
+                        </table> -->
+
+
+                        <div class="container-fluid text-center">
+                            <!--Table-->
+                            <table class="table mt-2" id="mytable" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>ทั้งหมด</th>
+                                        <th>image</th>
+                                        <th>ถ่ายรูป</th>
+                                        <th>Iventory Number</th>
+                                        <th>Asset Description</th>
+                                        <th>ยี่ห้อ/รุ่น</th>
+                                        <th>Location</th>
+                                        <th>ผู้ตรวจสอบ</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
 
                         <div class="row">
                             <div class="col-12">
-                                <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้างQR-CODE</button>
+                                <button id="Qrcode"
+                                    class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้างQR-CODE</button>
                                 <button id="barcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
                                 </button>
 
@@ -266,8 +362,8 @@
                 </div>
             </div>
         </div>
-        
-           
+
+
         <!-- ============================================================== -->
         <!-- end basic table  -->
         <!-- ============================================================== -->
@@ -286,7 +382,7 @@
     <!-- end main wrapper -->
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
-    <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <!-- <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
@@ -304,7 +400,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script> -->
 
 </body>
 
