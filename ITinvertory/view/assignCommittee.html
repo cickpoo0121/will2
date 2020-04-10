@@ -31,7 +31,7 @@
         }
 
         #assign {
-            width: 100px;
+            width: 110px;
             height: 35px;
         }
         #years {
@@ -102,40 +102,6 @@
     <div class="row mt-3">
         <div class="col-9">
         </div>
-
-        <div class="col-2">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                เพิ่มกรรมการ
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">แต่งตั้งตณะกรรมการ</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>อีเมล์กรรมการ</p>
-                            <input type="email" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" placeholder="ป้อนอีเมลล์">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                            <button type="button" class="btn btn-primary">บันทึก</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
         <div class="col-3">
             <!-- Modal -->
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
@@ -168,24 +134,22 @@
 
 
 
+    <div class="container-fluid text-right mt-4 ">
+        <div class="row">
+            <div class="col-md-4 ">
+                    <h2>คณะกรรมการตรวจนับครุภัณฑ์​</h2>
+            </div>
+            <div class="col-md-6">
 
-    <div class="container-fluid mt-5">
-        <div class="row" style="margin-top: 20px;">
-            <div class="col-md-10 text-center">
-                <div class="">
-                    <h2>คณะกรรมการ</h2>
-                </div>
             </div>
-            <div class="col-md-1" style="text-align: right;">
-                <button id="assign" class="btn btn-primary float-right mb-2 mb-3 mr-3" data-toggle="modal"
-                    data-target="#exampleModalLong"> เพิ่มกรรมการ</button>
+            <div class="col-md-1">
+                 <button id="assign" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong" style="background-color: #dc3545;">
+                เพิ่มกรรมการ
+            </button>
             </div>
-            <div class="col-md-1 " style="text-align: right;">
-                <select id="years" class=" form-control float-right mb-2 mb-3 mr-3">
-                    <!-- <option value="2020 "> 2563</option>
-                    <option value="2019 "> 2562</option>
-                    <option value="2018 "> 2561</option>
-                    <option value="2017 "> 2560</option> -->
+            <div class="col-md-1 ">
+                <select id="years" class=" form-control">
+    
                 </select>
             </div>
         </div>
@@ -193,12 +157,12 @@
 
 
     <!-- Table -->
-    <div class="container-fluid text-center">
+    <div class="container-fluid text-center mt-3">
         <!--Table-->
-        <table class="table" id="mytable" style="width:100%">
+        <table class="table " id="mytable" style="width:100%">
             <thead>
                 <tr>
-                    <th>No.</th>
+                    <th>ลำดับ</th>
                     <th>ปี</th>
                     <th>อีเมล์กรรมการ</th>
                 </tr>
@@ -230,6 +194,7 @@
     date = new Date();
     const year = date.getFullYear();
     var getyear
+
     $(document).ready(function () {
         dropdownyear();//show dropdownyear
 

@@ -17,7 +17,7 @@ router.post("/insert", function (req, res) {
             console.log(err)
         }
         else {
-            resjson(result);
+            res.json(result);
             console.log()
         }
     });
@@ -42,7 +42,7 @@ router.put("/update/:year", function (req, res) {
 
 //date alert
 router.get("/", function (req, res) {
-    const sql = "SELECT * FROM `datealert`";
+    const sql = "SELECT date_format(date_start,'%Y-%m-%d') date_start, date_format(date_end,'%Y-%m-%d') date_end, year_alert FROM `datealert` ORDER BY `year_alert`  DESC";
     con.query(sql, function (err, result, fields) {
         if (err) {
             // console.log(err)
