@@ -111,7 +111,7 @@ router.get("/import/:years", function (req, res) {
 //show all status of product and who scan 
 router.get("/status/:years", function (req, res) {
     const years = req.params.years;
-    const sql = "SELECT image,image_status,inventorynumber,description,model,location,room,committee,product_status FROM `product` WHERE product_year=?";
+    const sql = "SELECT product_year,image,image_status,inventorynumber,description,model,location,room,committee,product_status FROM `product` WHERE product_year=?";
     con.query(sql, [years], function (err, result, fields) {
         if (err) {
             // console.log(err)
