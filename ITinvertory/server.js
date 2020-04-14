@@ -11,6 +11,7 @@ var xlsxtojson = require("xlsx-to-json");
 var xlstojson = require("xls-to-json");
 const multer = require("multer");
 const passport = require("passport");
+const readXlsxFile = require('read-excel-file/node');
 // let upload = require("express-fileupload");
 // const upload = require("express-fileupload");
 // const cookieSession = require("cookie-session");
@@ -71,10 +72,10 @@ app.post('/uploadfile', function (req, res) {
             return;
         }
         else {
-            // res.send("successed")
-            res.json(req.file.filename)
-            // filename = req.file.filename;
-            console.log(req.file.filename)
+
+            importExcelData2MySQL(__dirname + '/uploads/' + req.file.filename)
+            // res.send('/guest')
+            console.log(req.file.filename);
 
         }
     })
@@ -82,24 +83,82 @@ app.post('/uploadfile', function (req, res) {
 });
 
 
-//convert excel to json
-app.post('/convertexcel', function (req, res) {
-    // const filename ="1585505272264_soccer_players.xlsx"
-    var abc="Inventory number"
-    let filename =req.body.filename
-    xlsxtojson({
-        input: "./uploads/"+filename+"",  // input xls
-        output: "output.json", // output json
-        lowerCaseHeaders: true
-    }, function (err, result) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json(result);
-            console.log(result[0].Room)
+// -> Import Excel Data to MySQL database
+function importExcelData2MySQL(filePath) {
+    // File path.
+    readXlsxFile(filePath).then((rows) => {
+        // `rows` is an array of rows
+        // each row being an array of cells.   
+        console.log(rows);
+
+        // Remove Header ROW
+        rows.shift();
+
+        let sql = "INSERT INTO `product` (`asset`, `subnumber`, `inventorynumber`, `description`, `model`, `serialnumber`, `location`, `room`, `receive_date`, `originalvalue`, `costcenter`, `department`, `vendername`) VALUES ?";
+
+        //delete column 0,0 (ลำดับที่)
+        var idxToDelete = [0, 0];
+        for (var i = 0; i < rows.length; i++) {
+            var temp = rows[i];
+            rows[i] = [];
+            for (var j = 0; j < temp.length; j++) {
+                if (idxToDelete.indexOf(j) == -1) // dont delete
+                {
+                    rows[i].push(temp[j]);
+                }
+            }
         }
-    });
-});
+        console.log(rows);
+
+        //add excel to DB
+        con.query(sql, [rows], function (err, result, fields) {
+            if (err) {
+                // console.log(err)
+                console.log(err)
+            }
+            else {
+                date = new Date()
+                const year = date.getFullYear();
+
+                const sql = "UPDATE `product` SET `product_year` = ?,product_status=0 where product_year=0"
+                con.query(sql, [year], function (err, result, fields) {
+                    if (err) {
+                        // console.log(err)
+                        console.log(err)
+                    }
+                    else {
+                        // res.json(result);
+                        console.log(result)
+                    }
+                });
+                console.log(result)
+            }
+        });
+
+    })
+}
+
+
+
+
+//convert excel to json
+// app.post('/convertexcel', function (req, res) {
+//     // const filename ="1585505272264_soccer_players.xlsx"
+//     var abc="Inventory number"
+//     let filename =req.body.filename
+//     xlsxtojson({
+//         input: "./uploads/"+filename+"",  // input xls
+//         output: "output.json", // output json
+//         lowerCaseHeaders: true
+//     }, function (err, result) {
+//         if (err) {
+//             res.json(err);
+//         } else {
+//             res.json(result);
+//             console.log(result[0].Room)
+//         }
+//     });
+// });
 
 
 //get years

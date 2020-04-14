@@ -152,14 +152,15 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body" style="padding:25px 50px;">
-                        <form role="form">
-                            <div class="form-group">
-                                <br>
-                                <button>เลือกไฟล์</button>
-                            </div>
-
+                        <form  method="POST" enctype="multipart/form-data">
                             <div>
-                                <button class="btn btn-primary "><span class="glyphicon glyphicon-off"></span>
+                                
+                                <input type="file" name="fileUpload" id="">
+                                
+                            </div>
+                            <br>
+                            <div>
+                                <button class="btn btn-primary" id="upexcel" type="submit">
                                     บันทึก</button>
                                 <button class="btn btn-danger "><span
                                         class="glyphicon glyphicon-off "></span>ยกเลิก</button>
@@ -310,8 +311,8 @@
         });
 
 
-        $('form#upexcel').submit(function () {
-            var file = "";
+        $('form').submit(function () {
+            // var file = "";
             const formData = new FormData(this);
 
             $.ajax({
@@ -321,26 +322,9 @@
                 contentType: false,
                 processData: false
             }).done(function (dataSet, state, xhr) {
-
-                file = dataSet
-                console.log(file)
-                // alert(file)
-                // window.location.reload("/productadmin")
-
-                $.ajax({
-                    method: "POST",
-                    url: "/convertexcel",
-                    data: { filename: file }
-                }).done(function (dataSet, state, xhr) {
-                    console.log(dataSet)
-
-                    //TODO: แอดเข้า DB
-
-
-                }).fail(function (xhr, state, err) {
-
-                })
-
+                // console.log(dataSet)
+                window.location.reload(dataSet)
+                // alert("aaa")
 
             }).fail(function (xhr, state, err) {
                 console.log(err)
