@@ -1,0 +1,19 @@
+
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Js Barcode Demo</title>
+    <!-- เรียกใช้งาน JsBarcode.all.js -->
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    </head>
+<body>
+    <div>
+        <img id="barcode1"/><!-- สร้าง Tag img เพื่อแสดงภาพ Barcode-->
+        <img id="barcode"/><!-- สร้าง Tag img เพื่อแสดงภาพ Barcode-->
+    </div>
+    <script>
+        JsBarcode("#barcode1", "123456789");//เรียกใช้งาน JsBarcode 
+    </script>
+</body>
+</html>
