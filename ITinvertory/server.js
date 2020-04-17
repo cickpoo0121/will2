@@ -279,6 +279,10 @@ app.get("/periodOfCheckingAsset", function (req, res) {
 });
 
 
+app.get("/barcodepage", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/barcodepage.html"))
+});
+
 //========= Admin ========//
 //ข้อมูลครุภัณฑ์
 app.get("/productstatusadmin", function (req, res) {
