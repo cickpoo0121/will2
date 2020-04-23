@@ -274,8 +274,8 @@ app.get("/guest", function (req, res) {
 //หน้าแรกcommittee
 app.get("/committeefirstpage", function (req, res) {
     // console.log(req.user+"asdadasda")
-    res.end();
-    //res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
+    // res.end();
+    res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
     
 });
 
@@ -323,28 +323,6 @@ app.get("/assignCommittee", function (req, res) {
 //เช็คเวลาแอดมิน 
 app.get("/assignCheckingDate", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/assignCheckingDate.html"))
-});
-
-
-
-//sheet
-app.get("/sheet", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/usersheet.html"))
-});
-
-//history
-app.get("/history", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/History.html"))
-});
-
-//sheet require
-app.get("/require", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/printAdmin.html"))
-});
-
-//addsheet
-app.get("/addsheet", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/addsheet.html"))
 });
 
 
