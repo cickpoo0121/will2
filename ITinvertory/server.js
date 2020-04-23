@@ -4,20 +4,25 @@ const path = require("path");
 const body_parser = require("body-parser");
 const mysql = require("mysql");
 const config = require("./dbConfig.js");
-const passportSetup = require("./config/passport-setup");
-var fs = require('fs');
-var cm = require('csv-mysql');
-var xlsxtojson = require("xlsx-to-json");
-var xlstojson = require("xls-to-json");
 const multer = require("multer");
+const passportSetup = require("./config/passport-setup");
 const passport = require("passport");
+const cookieSession= require("cookie-session");
+const key = require("./config/key")
 const readXlsxFile = require('read-excel-file/node');
+
+
+// const passportSetup = require("./config/passport-setup");
+// var fs = require('fs');
+// var cm = require('csv-mysql');
+// var xlsxtojson = require("xlsx-to-json");
+// var xlstojson = require("xls-to-json");
 // let upload = require("express-fileupload");
 // const upload = require("express-fileupload");
-// const cookieSession = require("cookie-session");
 
 //import auth
 const authRoutes = require("./routes/auth-routes");
+const profile= require("./routes/profile-routes");
 
 const product = require("./routes/productroute");
 const datealert = require("./routes/datealertroute");
@@ -26,10 +31,10 @@ const datealert = require("./routes/datealertroute");
 
 const app = express();
 const con = mysql.createConnection(config);
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 
 
-
+//uploadfile
 const storageOption = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/')
@@ -39,10 +44,7 @@ const storageOption = multer.diskStorage({
     }
 });
 
-
-// const upload = multer({ storage: storageOption }).single("fileUpload");
 const upload = multer({ storage: storageOption }).single("fileUpload");
-// const upload1 = multer({ storage: storageOption }).array("addfileUpload");
 
 
 //Middleware
@@ -51,12 +53,21 @@ app.use(body_parser.json());
 app.use("/img", express.static(path.join(__dirname, 'img')));
 app.use("/style.css", express.static(path.join(__dirname, 'style.css')));
 app.use(express.static(path.join(__dirname, "public")));
+
 app.use(passport.initialize());
+//session
+app.use(passport.session());
+
+app.use(cookieSession({
+    maxAge: 60*60*1000,
+    keys: [key.cookie.cookiekey]
+}))
 
 
 app.use("/product", product);//about product
 app.use("/datealert", datealert);//date start and date end
 app.use("/auth", authRoutes);// authen
+app.use("/profile", profile);//profile
 
 
 
@@ -73,7 +84,7 @@ app.post('/uploadfile', function (req, res) {
         }
         else {
 
-            importExcelData2MySQL(__dirname + '/uploads/' + req.file.filename)
+            importExcelData2MySQL(res,__dirname + '/uploads/' + req.file.filename)
             // res.send('/guest')
             console.log(req.file.filename);
 
@@ -84,7 +95,7 @@ app.post('/uploadfile', function (req, res) {
 
 
 // -> Import Excel Data to MySQL database
-function importExcelData2MySQL(filePath) {
+function importExcelData2MySQL(res,filePath) {
     // File path.
     readXlsxFile(filePath).then((rows) => {
         // `rows` is an array of rows
@@ -129,6 +140,7 @@ function importExcelData2MySQL(filePath) {
                     else {
                         // res.json(result);
                         console.log(result)
+                        res.send("/productstatusadmin");
                     }
                 });
                 console.log(result)
@@ -254,13 +266,17 @@ app.get("/", function (req, res) {
 //========= User ========//
 //ผู้ใช้ทั้วไป
 app.get("/guest", function (req, res) {
+    console.log(req.user+"asdadasda")
     res.sendFile(path.join(__dirname, "/view/generalUser.html"))
     // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
 });
 
 //หน้าแรกcommittee
 app.get("/committeefirstpage", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
+    // console.log(req.user+"asdadasda")
+    res.end();
+    //res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
+    
 });
 
 //สถานะครุภัณฑ์

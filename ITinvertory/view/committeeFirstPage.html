@@ -22,132 +22,11 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script> -->
 
     <title>การตรวจสอบและนับครุภัณฑ์</title>
 </head>
-<script>
-    window.onload = function () {
 
-    }
-    $(document).ready(function () {
-        loadpage();
-        function loadpage() {
-            $.ajax({
-                method: "GET",
-                url: "/product/countstatus",
-            }).done(function (data, state, shr) {
-
-                let normal = "";
-                let missing = "";
-                let maintain = "";
-                let other = "";
-                normal = "<h2 class='card-text'>" + data[0].normal + " รายการ</h2>"
-                missing = "<h2 class='card-text'>" + data[0].missing + " รายการ</h2>"
-                maintain = "<h2 class='card-text'>" + data[0].repair + " รายการ</h2>"
-                other = "<h2 class='card-text'>" + data[0].other + " รายการ</h2>"
-
-                let all = "";
-                let allNum = Number(data[0].normal + data[0].missing + data[0].repair + data[0].other);
-                all = "<h2 class='card-text'>" + allNum + " รายการ</h2>";
-
-                $("#normal").html(normal);
-                $("#missing").html(missing);
-                $("#maintain").html(maintain);
-                $("#other").html(other);
-                $("#all").html(all);
-
-
-                // ----Chart canvas----
-                // var countn = Number(data[0].normal);
-                // var countm = Number(data[0].missing);
-                // var countr = Number(data[0].repair);
-                // var counto = Number(data[0].other);
-                // var options = {
-                //     title: {
-                //         text: "แผนภูมิสถานะครุภัณฑ์ ประจำปี 2563"
-                //     },
-                //     data: [
-                //         {
-                //             // Change type to "doughnut", "line", "splineArea", etc.
-                //             type: "column",
-                //             dataPoints: [
-                //                 { label: "ปกติ", y: countn },
-                //                 { label: "สูญหาย", y: countm },
-                //                 { label: "ส่งซ่อม", y: countr },
-                //                 { label: "ไม่ใช่ของสำนัก", y: counto }
-
-                //             ]
-                //         }
-                //     ]
-                // };
-
-                // $("#chartContainer").CanvasJSChart(options);
-
-                //highchart
-                var countn = Number(data[0].normal);
-                var countm = Number(data[0].missing);
-                var countr = Number(data[0].repair);
-                var counto = Number(data[0].other);
-                Highcharts.chart('highchart', {
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Amount of stuff in inventory'
-                    },
-                    subtitle: {
-                        text: 'ข้อมูลคุรุภัณฑ์ของสำนักวิชาเทคโนโลยีสารสนเทศ'
-                    },
-                    xAxis: {
-                        categories: [
-                            'item'
-                        ],
-                        crosshair: true
-                    },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: 'amount of item (จำนวนคุรุภัณฑ์)'
-                        }
-                    },
-                    tooltip: {
-
-                    },
-                    plotOptions: {
-                        column: {
-                            pointPadding: 0.2,
-                            borderWidth: 0
-                        }
-                    },
-                    series: [{
-                        name: 'Normal',
-                        data: [countn],
-                        color: '#4f81bc'
-
-                    }, {
-                        name: 'Missing',
-                        data: [countm],
-                        color: '#c0504e'
-
-                    }, {
-                        name: 'Repair',
-                        data: [countr],
-                        color: '#9bbb58'
-
-                    }, {
-                        name: 'Other',
-                        data: [counto],
-                        color: '#23bfaa'
-
-                    }]
-                });
-
-            }).fail(function (xhr, state) {
-
-            });
-        }
-    });
-</script>
 <style>
     #log {
         width: 100px;
@@ -157,7 +36,7 @@
 
 <body>
     <!-- Header -->
-
+<h1 id="gg">gg</h1>
     <div>
         <div class="row">
             <div class="col-11">
@@ -172,7 +51,7 @@
                         
                     </div>
                 
-                    <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                    <a class="dropdown-item" href="/auth/logout"><i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
             </li>
             </div>
@@ -291,5 +170,143 @@
     <!-- Footer -->
 
 </body>
+
+<script>
+    window.onload = function () {
+
+    }
+    $(document).ready(function () {
+
+        loadpage();
+        function loadpage() {
+            $.ajax({
+                method: "GET",
+                url: "/product/countstatus",
+            }).done(function (data, state, shr) {
+
+                let normal = "";
+                let missing = "";
+                let maintain = "";
+                let other = "";
+                normal = "<h2 class='card-text'>" + data[0].normal + " รายการ</h2>"
+                missing = "<h2 class='card-text'>" + data[0].missing + " รายการ</h2>"
+                maintain = "<h2 class='card-text'>" + data[0].repair + " รายการ</h2>"
+                other = "<h2 class='card-text'>" + data[0].other + " รายการ</h2>"
+
+                let all = "";
+                let allNum = Number(data[0].normal + data[0].missing + data[0].repair + data[0].other);
+                all = "<h2 class='card-text'>" + allNum + " รายการ</h2>";
+
+                $("#normal").html(normal);
+                $("#missing").html(missing);
+                $("#maintain").html(maintain);
+                $("#other").html(other);
+                $("#all").html(all);
+
+
+                // ----Chart canvas----
+                // var countn = Number(data[0].normal);
+                // var countm = Number(data[0].missing);
+                // var countr = Number(data[0].repair);
+                // var counto = Number(data[0].other);
+                // var options = {
+                //     title: {
+                //         text: "แผนภูมิสถานะครุภัณฑ์ ประจำปี 2563"
+                //     },
+                //     data: [
+                //         {
+                //             // Change type to "doughnut", "line", "splineArea", etc.
+                //             type: "column",
+                //             dataPoints: [
+                //                 { label: "ปกติ", y: countn },
+                //                 { label: "สูญหาย", y: countm },
+                //                 { label: "ส่งซ่อม", y: countr },
+                //                 { label: "ไม่ใช่ของสำนัก", y: counto }
+
+                //             ]
+                //         }
+                //     ]
+                // };
+
+                // $("#chartContainer").CanvasJSChart(options);
+
+                //highchart
+                var countn = Number(data[0].normal);
+                var countm = Number(data[0].missing);
+                var countr = Number(data[0].repair);
+                var counto = Number(data[0].other);
+                Highcharts.chart('highchart', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Amount of stuff in inventory'
+                    },
+                    subtitle: {
+                        text: 'ข้อมูลคุรุภัณฑ์ของสำนักวิชาเทคโนโลยีสารสนเทศ'
+                    },
+                    xAxis: {
+                        categories: [
+                            'item'
+                        ],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'amount of item (จำนวนคุรุภัณฑ์)'
+                        }
+                    },
+                    tooltip: {
+
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Normal',
+                        data: [countn],
+                        color: '#4f81bc'
+
+                    }, {
+                        name: 'Missing',
+                        data: [countm],
+                        color: '#c0504e'
+
+                    }, {
+                        name: 'Repair',
+                        data: [countr],
+                        color: '#9bbb58'
+
+                    }, {
+                        name: 'Other',
+                        data: [counto],
+                        color: '#23bfaa'
+
+                    }]
+                });
+
+            }).fail(function (xhr, state) {
+
+            });
+        }
+
+        // $.ajax({
+        //         method: "GET",
+        //         url: "/profile/userinfor"
+        //     }).done(function (dataSet, state, xhr) {
+        //         console.log(dataSet.name)
+        //         $('#gg').html(dataSet.name)
+        //         // window.location.replace('/committeefirstpage')
+
+        //     }).fail(function (xhr, state, err) {
+        //         // console.log(err)
+        //     })
+
+    });
+</script>
 
 </html>

@@ -1,25 +1,28 @@
 const router = require("express").Router();
 const passport = require("passport");
 
-// show login page
+//show login page
 router.get("/login", (req, res) => {
-    res.render("/login.html", {user: req.user});
+    res.render("Login.ejs", { user: req.user });
 });
 
-// login using google
-router.get("/google", passport.authenticate("google",{scope:["profile","email"]}));
+//login using Google
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 //if login success, redirect here
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
+    // res.send("Login OK, show profile");
     // res.send(req.user);
-    // return res.redirect("./view/หน้าแรกกรรมการ.html");
-     res.redirect('/guest');
+    console.log(req.user.name+"test");
+    // res.redirect("/committeefirstpage");
+    res.redirect("/product/testgoogle");
+
 });
 
-//logout
+//log out
 router.get("/logout", (req, res) => {
     req.logOut();
     res.redirect("/");
-});
+})
 
 module.exports = router;

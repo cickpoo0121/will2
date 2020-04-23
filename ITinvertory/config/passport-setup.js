@@ -13,24 +13,24 @@ passport.serializeUser((user,done)=>{
 
 passport.deserializeUser((id,done)=>{
     //TODO: generally, you must query for id in DB
-
-    con.query('SELECT * FROM workingyear WHERE email="'+id.email+'"',function(err,rows){
+    done(null,id);
+    // con.query('SELECT * FROM workingyear WHERE email="'+id.email+'"',function(err,rows){
         
-        if(err){
+    //     if(err){
             
-            // return redirect("/auth/login");
-            return done(err)
-        }
-        else{
-            if(rows.length==1){
-                done(null, id);
-            }
-            else{
-                return done(null,false)
-            }
-        }	
+    //         // return redirect("/auth/login");
+    //         return done(err)
+    //     }
+    //     else{
+    //         if(rows.length==1){
+    //             done(null, id);
+    //         }
+    //         else{
+    //             return done(null,false)
+    //         }
+    //     }	
         
-    });
+    // });
        
 })
 
@@ -44,9 +44,9 @@ passport.use(
         },
         (accessToken, refreshToken, profile, done) => {
             // console.log(profile)
-            console.log(profile.displayName)
-            console.log(profile.emails[0].value);
-            console.log(profile.photos[0].value);
+            // console.log(profile.displayName)
+            // console.log(profile.emails[0].value);
+            // console.log(profile.photos[0].value);
 
             const user = { name: profile.displayName, email: profile.emails[0].value, photo: profile.photos[0].value };
 

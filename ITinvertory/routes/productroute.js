@@ -125,4 +125,8 @@ router.get("/status/:years", function (req, res) {
     });
 });
 
+// router.get("/testgoogle", function (req, res) {
+//     console.log(req.user)
+//     res.end()
+// });
 module.exports = router;
