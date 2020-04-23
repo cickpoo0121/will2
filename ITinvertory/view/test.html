@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
     <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
     <!-- <link rel="stylesheet" href="styles.css"> -->
-    
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -21,22 +22,142 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
-<body>
-    <input type="file" name="aa">
-    <button id="gg">ok</button>
-</body>
-<script>
-    $("#gg").click(function (e) { 
 
-        $.ajax({
-        method:"POST",
-        url:"/uploadsheet"
-    }).done(function(data){
-        alert(data)
-    }).fail(function(err){
-alert(err)
-    })
+<body>
+    <!-- <div class="container">
+        <h3>Registration</h3>
+        <form method="POST" action="/register">
+            Username (6-8 characters)
+            <input type="text" name="username" class="form-control mb-3" placeholder="Username" required minlength="6" maxlength="8" oninvalid="this.setCustomValidity('กรุณาป้อนข้อมูล 6-8 ตัวอักษร')" oninput="this.setCustomValidity('')"> 
+            Password (at least 4 characters)
+            <input type="password" class="form-control mb-3" placeholder="Password" required minlength="4"> 
+            Email
+            <input type="email" class="form-control mb-3" placeholder="Email" required> 
+            Mobile Number 10 digits (0xxxxxxxxx)
+            <input type="text" class="form-control mb-3" placeholder="Mobile no." required pattern="[0]{1}[0-9]{9}" oninvalid="this.setCustomValidity('กรุณาป้อนตัวเลข 10 หลัก ขึ้นต้นด้วย 0')" oninput="this.setCustomValidity('')"> 
+            Birth Date
+            <input type="date" class="form-control mb-3" placeholder="Date" required> 
+            Age (6 years up)
+            <input type="number" class="form-control mb-3" placeholder="Age" required min="6"> 
+            Gender
+            <p>
+                <input type="radio" name="gender" value="female" checked> Female
+                <input type="radio" name="gender" value="male"> Male
+            </p>
+            Your personal Website (http://xxx)
+            <input type="url" class="form-control mb-3" placeholder="Web URL" required>
+            <button class="btn btn-primary my-3">Register</button>
+        </form>
+    </div> -->
+    <button id="assign" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong"
+        style="background-color: #dc3545;">
+        เพิ่มกรรมการ
+    </button>
+
+
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form>
+                        <div class="modal-content" style="width: 90%;">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">แต่งตั้งตณะกรรมการ</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>ปี <span id="yearmodal"></span></p>
+                                <!-- <input type="text" id="yearmodal" disabled=""> -->
+                                <p>อีเมล์กรรมการ</p>
+                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                    placeholder="ป้อนอีเมลล์" style="width: 80%;" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                                <button type="button" id="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+        Launch
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id="newModalForm">
+
+                        Email
+                        <input type="email" class="form-control mb-3" placeholder="Email" required>
+
+                        Email
+                        <input type="email" class="form-control mb-3" placeholder="Email" required>
+
+                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+                        <p align="right">
+                            <button class="btn btn-primary" >Register</button>
+                        </p>
+                        
+
+                    </form>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div> -->
+                <!-- </form> -->
+            </div>
+
+        </div>
+    </div>
+</body>
+
+<script>
+    //     $("#gg").click(function (e) { 
+
+    //         $.ajax({
+    //         method:"POST",
+    //         url:"/uploadsheet"
+    //     }).done(function(data){
+    //         alert(data)
+    //     }).fail(function(err){
+    // alert(err)
+    //     })
+    //     });
+
+    $("#newModalForm").validate({
+        rules: {
+            pName: {
+                required: true,
+                minlength: 8
+            },
+            action: "required"
+        },
+        messages: {
+            pName: {
+                required: "Please enter some data",
+                minlength: "Your data must be at least 8 characters"
+            },
+            action: "Please provide some data"
+        }
     });
-    
+
 </script>
+
 </html>

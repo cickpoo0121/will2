@@ -241,7 +241,7 @@ app.put("/takephoto/:year", function (req, res) {
 //assign work to committee //working history page
 app.post("/assign/committee", function (req, res) {
     // date = new Date();
-    const year = req.body.year
+    let year = req.body.year
     const email = req.body.email;
     const sql = "INSERT INTO workingyear (working_year,email) VALUES (?,?)"
     con.query(sql, [year, email], function (err, result, fields) {
@@ -251,6 +251,25 @@ app.post("/assign/committee", function (req, res) {
         }
         else {
             res.json(result);
+        }
+    });
+});
+
+//Update committee 
+app.put("/update/committee", function (req, res) {
+    // date = new Date();
+    const year     = req.body.year
+    const emailOld = req.body.emailOld;
+    const emailNew = req.body.emailNew;
+    const sql = "UPDATE `workingyear` SET `email` = ? WHERE `workingyear`.`working_year` = ? AND `workingyear`.`email` = ?;"
+    con.query(sql, [emailNew,year,emailOld], function (err, result, fields) {
+        if (err) {
+            res.status(500).send("Server error");
+            console.log(err)
+        }
+        else {
+            res.json(result);
+            console.log(result)
         }
     });
 });

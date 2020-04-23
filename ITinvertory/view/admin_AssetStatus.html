@@ -152,11 +152,11 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body" style="padding:25px 50px;">
-                        <form  enctype="multipart/form-data">
+                        <form enctype="multipart/form-data">
                             <div>
-                                
+
                                 <input type="file" name="fileUpload" id="">
-                                
+
                             </div>
                             <br>
                             <div>
@@ -175,12 +175,12 @@
     </div>
 
     <div class="container-fluid text-right mt-5">
-        <div class="row" >
+        <div class="row">
             <div class="col-md-4">
-                    <h2 class="text-right ml-3 ">ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</h2>
+                <h2 class="text-right ml-3 ">ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</h2>
             </div>
             <div class="col-md-6">
-                
+
             </div>
             <div class="col-md-1" style="text-align: right;">
                 <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
@@ -246,7 +246,7 @@
 </body>
 
 <script>
-
+    var getyear
     var tableUser
     date = new Date();
     const year = date.getFullYear();
@@ -285,17 +285,16 @@
                 { data: "No" },
                 { defaultContent: '<input type="checkbox" id="checkall"> ', orderable: false },
                 { data: "image" },
-                {data: "inventorynumber",
-                    // render: function (data, type, full, meta) {
-                    //     return data ? '<input type="checkbox" id="' + full.asset + '">' : '';
-                    // }
+                {
+                    data: "inventorynumber",
 
-                    render: function ( data, type, full ) {
-                    if ( type === 'display' ) {             //if column data is 1 then set attr to checked, use row id as input id (plus prefix)
-                        return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.inventorynumber + '" />';
+                    render: function (data, type, full) {
+                        if (type === 'display') {             //if column data is 1 then set attr to checked, use row id as input id (plus prefix)
+                            return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.inventorynumber + '" />';
+                        }
+                        return data;
+                        // console.log(type+"54645645646")
                     }
-                    return data;
-                  }
                 },
                 { data: "inventorynumber" },
                 { data: "description" },
@@ -328,8 +327,8 @@
             })
 
         });
-       
-        var getyear
+
+
         dropdownyear();
 
     });
@@ -400,12 +399,12 @@
             tableUser.clear();
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
-            $('#input4000000215').click(function(){
-        //     if(this.checked){
-        //     alert("ggg");
-        // }
-        alert("sdfsf")
-        })
+            $('#input711000100142038').click(function () {
+                //     if(this.checked){
+                //     alert("ggg");
+                // }
+                alert("sdfsf")
+            })
         }).fail(function (xhr, state, error) {
             //get data failed
             alert(xhr.responseText);
