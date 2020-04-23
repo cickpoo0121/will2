@@ -84,7 +84,7 @@
 
 <body>
     <!-- ============================================================== -->
-    <input type="checkbox" name="" id="aaa">asdfa
+    <!-- <input type="checkbox" name="" id="aaa">asdfa -->
     <!-- Header -->
     <div>
         <div class="row">
@@ -252,34 +252,10 @@
     const year = date.getFullYear();
 
     $(document).ready(function () {
-        // $('#4000000215').change(function(){
-        //     if(this.checked){
-        //         alert("dfgfdgsg")
-        //     }
-        // })
-        
-
-        var getyear
-        dropdownyear();
 
         $('#yearmodal').val(year);
         $('#yearmodal').prop('disabled', true);
 
-        productadmin();
-        // $('#input4000000215').click(function(){
-        // //     if(this.checked){
-        // //     alert("ggg");
-        // // }
-        // alert("sdfsf")
-        // })
-        
-
-        // $('#years').ready(function () {
-        //     getyear = $('#years').val();
-        //     // console.log(getyear)
-        //     productadmin();
-
-        // });
 
         $('#years').change(function () {
             getyear = $('#years').val();
@@ -309,14 +285,14 @@
                 { data: "No" },
                 { defaultContent: '<input type="checkbox" id="checkall"> ', orderable: false },
                 { data: "image" },
-                {data: "asset",
+                {data: "inventorynumber",
                     // render: function (data, type, full, meta) {
                     //     return data ? '<input type="checkbox" id="' + full.asset + '">' : '';
                     // }
 
                     render: function ( data, type, full ) {
                     if ( type === 'display' ) {             //if column data is 1 then set attr to checked, use row id as input id (plus prefix)
-                        return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.asset + '"  />';
+                        return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.inventorynumber + '" />';
                     }
                     return data;
                   }
@@ -353,6 +329,8 @@
 
         });
        
+        var getyear
+        dropdownyear();
 
     });
 
@@ -374,6 +352,7 @@
 
                 // getyear = $('#years').val();
             }
+            productadmin();
             console.log(dataSet)
         }).fail(function (xhr, state, error) {
             //get data failed
@@ -394,13 +373,13 @@
                 dataSet[i].No = i + 1;
                 dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
 
-                if (dataSet[i].image_status == 1) {
-                    $('input:checkbox').prop("checked", true)
-                    if ($('#4000000215').prop("checked") == true) {
-                        console.log("Checkbox is checked.");
-                    }
-                    console.log("gggg")
-                }
+                // if (dataSet[i].image_status == 1) {
+                //     $('input:checkbox').prop("checked", true)
+                //     if ($('#4000000215').prop("checked") == true) {
+                //         console.log("Checkbox is checked.");
+                //     }
+                //     console.log("gggg")
+                // }
 
                 if (dataSet[i].product_status == 0) {
                     dataSet[i].product_status = "สูญหาย"

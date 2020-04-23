@@ -203,12 +203,12 @@
 
         $('#yearmodal').val(year);//set year assign is current year
 
-        $('#years').ready(function () {
-            getyear = $('#years').val();
-            // console.log(getyear)
-            getcommittee();
+        // $('#years').ready(function () {
+        //     getyear = $('#years').val();
+        //     // console.log(getyear)
+        //     getcommittee();
 
-        });
+        // });
 
         $('#years').change(function () {
             getyear = $('#years').val();
@@ -219,6 +219,9 @@
         $('#submit').click(function () {
             const yrearassign=$('#yearmodal').val();
             const email = $('#email').val();
+            if(email===""){
+            
+            }
 
             $.ajax({
                 method:"POST",
@@ -226,6 +229,7 @@
                 data:{year:yrearassign,email:email}
             }).done(function(dataSet,state,xhr){
                 getcommittee();
+                $("#exampleModalLong").modal(toggle)
                 console.log(dataSet)
             }).fail(function(xhr,state,err){
                 console.log(err)
@@ -234,59 +238,6 @@
             
         });
 
-
-
-        var dataSet = [
-            {
-                "No": "1",
-                "desc": "เครื่องถ่ายเอกสาร",
-                "brand": "HSM/104.2",
-                "location": "E3A-401",
-                "status": "ปกติ"
-
-            },
-            {
-                "No": "2",
-                "desc": "โต๊ะ",
-                "brand": "-",
-                "location": "S7-401",
-                "status": "สูญหาย"
-
-            },
-            {
-                "No": "3",
-                "desc": "กล้อง",
-                "brand": "fujiXA-2",
-                "location": "S7-401",
-                "status": "ปกติ"
-
-            },
-            {
-                "No": "4",
-                "desc": "เครื่องถ่ายเอกสาร",
-                "brand": "HSM/104.2",
-                "location": "E3A-401",
-                "status": "ปกติ"
-
-            },
-            {
-                "No": "5",
-                "desc": "โต๊ะ",
-                "brand": "-",
-                "location": "S7-401",
-                "status": "สูญหาย"
-
-            },
-            {
-                "No": "6",
-                "desc": "กล้อง",
-                "brand": "fujiXA-2",
-                "location": "S7-401",
-                "status": "ปกติ"
-
-            },
-
-        ];
 
         tableUser = $("#mytable").DataTable({
             // data: dataSet,
@@ -304,7 +255,7 @@
             responsive: true
         });
 
-        getcommittee();
+        dropdownyear()
     });
 
     function getcommittee() { //get data committee
@@ -346,6 +297,7 @@
 
 
             }
+            getcommittee();
             console.log(dataSet)
         }).fail(function (xhr, state, error) {
             //get data failed
