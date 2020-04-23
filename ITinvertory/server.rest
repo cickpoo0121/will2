@@ -86,16 +86,13 @@ Content-Type: application/json
 }
 
 ### 
-put http://localhost:8080/takephoto/2019
+put http://localhost:8080/takephoto/2020
 Content-Type: application/json
 
 {
-"records":[{"invenNum":"1"},
-            {"invenNum":"2"}]
+"records":[{"invenNum":"711000100142033"},
+            {"invenNum":"711000100142038"}]
 }
-
-
-
 
 ### working history page
 get http://localhost:8080/workingHistory
@@ -108,4 +105,14 @@ Content-Type: application/json
 {
   "year":"2020",
   "email":"testajax1@gmail.com"
+}
+
+### update email
+put http://localhost:8080/update/committee
+Content-Type: application/json
+
+{
+  "emailNew":"abc@gmail.com", 
+  "year":"2020",
+  "emailOld":"mrxstar3131@gmail.com"  
 }

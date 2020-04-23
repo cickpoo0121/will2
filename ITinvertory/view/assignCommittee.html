@@ -12,13 +12,16 @@
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/localization/messages_th.min.js"></script>
     <!-- <link rel="stylesheet" href="landingpage.css"> -->
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 
@@ -34,10 +37,16 @@
             width: 110px;
             height: 35px;
         }
+
         #years {
-        height: 35px;
-        width: 90px;
-    }
+            height: 35px;
+            width: 90px;
+        }
+
+        .errorMessage {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -79,10 +88,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item active ml-5">
-                        <a  href="/adminfirstpage" class="nav-link text-light  ">หน้าแรก</a>
+                        <a href="/adminfirstpage" class="nav-link text-light  ">หน้าแรก</a>
                     </li>
                     <li class="nav-item ml-5">
-                        <a class="nav-link text-light" href="/productstatusadmin" >สถานะครุภัณฑ์</a>
+                        <a class="nav-link text-light" href="/productstatusadmin">สถานะครุภัณฑ์</a>
                     </li>
                     <li class="nav-item ml-5">
                         <a class="nav-link text-light " href="/assignCommittee">คณะกรรมการประจำปี</a>
@@ -101,35 +110,34 @@
     <!-- Menu -->
 
     <!-- Add Commitee -->
-
-    <div class="row mt-3">
-        <div class="col-9">
-        </div>
-        <div class="col-3">
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">แต่งตั้งตณะกรรมการ</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>ปี</p>
-                            <input type="text" id="yearmodal" disabled="">
-                            <p>อีเมล์กรรมการ</p>
-                            <input type="email" class="form-control" id="email"
-                                aria-describedby="emailHelp" placeholder="ป้อนอีเมลล์">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-                            <button type="button" id="submit" class="btn btn-primary">บันทึก</button>
-                        </div>
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="addcomModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">แต่งตั้งคณะกรรมการประจำปี <span id="yearmodal"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <form role="form" id="setvalidation">
+                        <!-- <p>ประจำปี <span id="yearmodal"></span></p> -->
+                        <p>อีเมล์กรรมการ</p>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
+                            placeholder="ป้อนอีเมลล์" required>
+                        <p align="right">
+                            <span><button type="button" class="btn btn-secondary mt-4" data-dismiss="modal" style="width: 15%;">ปิด</button></span>
+                            <button class="btn btn-primary mt-4" id="submitAdd">บันทึก</button>
+                            <button class="btn btn-primary mt-4" id="submitUpdate">บันทึก</button>
+                        </p>
+                    </form>
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div> -->
             </div>
         </div>
     </div>
@@ -140,19 +148,20 @@
     <div class="container-fluid text-right mt-4 ">
         <div class="row">
             <div class="col-md-4 ">
-                    <h2>คณะกรรมการตรวจนับครุภัณฑ์​</h2>
+                <h2>คณะกรรมการตรวจนับครุภัณฑ์​</h2>
             </div>
             <div class="col-md-6">
 
             </div>
             <div class="col-md-1">
-                 <button id="assign" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong" style="background-color: #dc3545;">
-                เพิ่มกรรมการ
-            </button>
+                <button id="assign" class="btn btn-danger" data-toggle="modal" data-target="#addcomModal"
+                    style="background-color: #dc3545;">
+                    เพิ่มกรรมการ
+                </button>
             </div>
             <div class="col-md-1 ">
                 <select id="years" class=" form-control">
-    
+
                 </select>
             </div>
         </div>
@@ -168,16 +177,12 @@
                     <th>ลำดับ</th>
                     <th>ปี</th>
                     <th>อีเมล์กรรมการ</th>
+                    <th>แก้ไขอีเมล์</th>
                 </tr>
             </thead>
         </table>
     </div>
     <!-- Table -->
-
-
-
-
-
 
 
     <!-- Footer -->
@@ -197,18 +202,23 @@
     date = new Date();
     const year = date.getFullYear();
     var getyear
+    // var selectedData
 
     $(document).ready(function () {
-        dropdownyear();//show dropdownyear
 
-        $('#yearmodal').val(year);//set year assign is current year
 
-        // $('#years').ready(function () {
-        //     getyear = $('#years').val();
-        //     // console.log(getyear)
-        //     getcommittee();
+        $("#setvalidation").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                }
+            },
+            errorClass: "errorMessage"
+        });
 
-        // });
+
+        $('#yearmodal').html(year);//set year assign is current year
 
         $('#years').change(function () {
             getyear = $('#years').val();
@@ -216,27 +226,33 @@
             getcommittee();
         });
 
-        $('#submit').click(function () {
-            const yrearassign=$('#yearmodal').val();
-            const email = $('#email').val();
-            if(email===""){
-            
-            }
+        $('#assign').click(function () {
+            $('#submitAdd').show();
+            $('#submitUpdate').hide()
 
-            $.ajax({
-                method:"POST",
-                url:"/assign/committee",
-                data:{year:yrearassign,email:email}
-            }).done(function(dataSet,state,xhr){
-                getcommittee();
-                $("#exampleModalLong").modal(toggle)
-                console.log(dataSet)
-            }).fail(function(xhr,state,err){
-                console.log(err)
-            })
-            
-            
-        });
+            $('#submitAdd').click(function () {
+                const yrearassign = year
+                const email = $('#email').val();
+                if (email == "") {
+
+                } else {
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/assign/committee",
+                        data: { year: yrearassign, email: email }
+                    }).done(function (dataSet, state, xhr) {
+                        getcommittee();
+                        // $("#exampleModalLong").modal(toggle)
+                        console.log(dataSet)
+                    }).fail(function (xhr, state, err) {
+                        console.log(err)
+                    })
+                }
+            });
+
+        })
+
 
 
         tableUser = $("#mytable").DataTable({
@@ -251,34 +267,18 @@
                 { data: "No" },
                 { data: "working_year" },
                 { data: "email" },
+                {
+                    data: "No",
+                    render: function (data, type, full, meta) {
+                        return data ? '<button class="btn btn-primary editMail"  id="' + full.No + '">แก้ไข</button>' : '';
+                    }
+                }
             ],
             responsive: true
         });
 
         dropdownyear()
     });
-
-    function getcommittee() { //get data committee
-        //get users from DB
-        getyear = $('#years').val();
-        $.ajax({
-            method: "GET",
-            url: "/committee/" + getyear
-        }).done(function (dataSet, state, xhr) {
-
-            for (let i = 0; i < dataSet.length; i++) {
-                dataSet[i].No = i + 1;
-            }
-            console.log(dataSet)
-            //clear DataTable
-            tableUser.clear();
-            //display modified JSON in DataTable
-            tableUser.rows.add(dataSet).draw();
-        }).fail(function (xhr, state, error) {
-            //get data failed
-            alert(xhr.responseText);
-        });
-    }
 
     function dropdownyear() { //get year
 
@@ -291,7 +291,6 @@
             $("#year").empty();
             for (let i = dataSet.length - 1; i >= 0; i--) {
                 let id = dataSet[i].working_year;
-
                 $("#years").append("<option value='" + id + "'>" + id + "</option>");
                 console.log()
 
@@ -304,6 +303,58 @@
             alert(xhr.responseText);
         });
     }
+
+    function getcommittee() { //get data committee
+        //get users from DB
+        getyear = $('#years').val();
+        $.ajax({
+            method: "GET",
+            url: "/committee/" + getyear
+        }).done(function (dataSet, state, xhr) {
+
+            for (let i = 0; i < dataSet.length; i++) {
+                dataSet[i].No = i + 1;
+                dataSet[i].yearemail = dataSet[i].working_year + dataSet[i].email
+            }
+            console.log(dataSet)
+            //clear DataTable
+            tableUser.clear();
+            //display modified JSON in DataTable
+            tableUser.rows.add(dataSet).draw();
+
+            //editEmail
+            $('#mytable tbody').on('click', '.editMail', function () {
+                const currentRow = $(this).parents('tr')
+                selectedData = tableUser.row(currentRow).data();
+                $('#addcomModal').modal()
+                $('#submitAdd').hide();
+                $('#submitUpdate').show();
+                let emailold = selectedData.email
+                $('#email').val(selectedData.email)
+                let yearTable = selectedData.working_year;
+                // alert(emailold + " " + yearTable + " " + emailnew)
+
+                $('#submitUpdate').click(function () {
+                    let emailnew = $('#email').val();
+                    // alert(emailold + " " + yearTable + " " + emailnew)
+                    $.ajax({
+                        method: "PUT",
+                        url: "/update/committee",
+                        data: { emailNew: emailnew, year: yearTable, emailOld: emailold }
+                    }).done(function (dataSet, state, xhr) {
+                    }).fail(function (xhr, sate, err) {
+                        console.log(err)
+                    })
+                });
+            });
+
+
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
+
 
 </script>
 
