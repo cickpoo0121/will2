@@ -54,14 +54,16 @@ app.use("/img", express.static(path.join(__dirname, 'img')));
 app.use("/style.css", express.static(path.join(__dirname, 'style.css')));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(passport.initialize());
-//session
-app.use(passport.session());
 
 app.use(cookieSession({
     maxAge: 60*60*1000,
     keys: [key.cookie.cookiekey]
 }))
+
+app.use(passport.initialize());
+//session
+app.use(passport.session());
+
 
 
 app.use("/product", product);//about product

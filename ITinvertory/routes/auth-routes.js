@@ -13,9 +13,8 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
     // res.send("Login OK, show profile");
     // res.send(req.user);
-    console.log(req.user.name+"test");
-    // res.redirect("/committeefirstpage");
-    res.redirect("/product/testgoogle");
+    res.redirect("/committeefirstpage");
+    // res.redirect("/product/testgoogle");
 
 });
 

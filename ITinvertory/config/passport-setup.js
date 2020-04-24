@@ -13,24 +13,24 @@ passport.serializeUser((user,done)=>{
 
 passport.deserializeUser((id,done)=>{
     //TODO: generally, you must query for id in DB
-    done(null,id);
-    // con.query('SELECT * FROM workingyear WHERE email="'+id.email+'"',function(err,rows){
+    // done(null,id);
+    con.query('SELECT * FROM workingyear WHERE email="'+id.email+'"',function(err,rows){
         
-    //     if(err){
+        if(err){
             
-    //         // return redirect("/auth/login");
-    //         return done(err)
-    //     }
-    //     else{
-    //         if(rows.length==1){
-    //             done(null, id);
-    //         }
-    //         else{
-    //             return done(null,false)
-    //         }
-    //     }	
+            // return redirect("/auth/login");
+            return done(err)
+        }
+        else{
+            if(rows.length==1){
+                done(null, id);
+            }
+            else{
+                return done(null,false)
+            }
+        }	
         
-    // });
+    });
        
 })
 

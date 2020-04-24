@@ -36,7 +36,7 @@
 
 <body>
     <!-- Header -->
-<h1 id="gg">gg</h1>
+<!-- <h1 id="gg">gg</h1> -->
     <div>
         <div class="row">
             <div class="col-11">
@@ -44,10 +44,10 @@
             </div>
             <div class="col-1">
               
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../img/account.png"  id="log" class="user-avatar-md rounded-circle"></a>
+                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="imguser" src="../img/account.png" class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
+                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​ ชาวคูเวียง</span></p>
                         
                     </div>
                 
@@ -294,17 +294,18 @@
             });
         }
 
-        // $.ajax({
-        //         method: "GET",
-        //         url: "/profile/userinfor"
-        //     }).done(function (dataSet, state, xhr) {
-        //         console.log(dataSet.name)
-        //         $('#gg').html(dataSet.name)
-        //         // window.location.replace('/committeefirstpage')
+        $.ajax({
+                method: "GET",
+                url: "/profile/userinfor"
+            }).done(function (dataSet, state, xhr) {
+                console.log(dataSet.name)
+                $('#NameUser').html(dataSet.name)
+                $('#imguser').attr("src", ""+dataSet.photo+"");
+                // window.location.replace('/committeefirstpage')
 
-        //     }).fail(function (xhr, state, err) {
-        //         // console.log(err)
-        //     })
+            }).fail(function (xhr, state, err) {
+                // console.log(err)
+            })
 
     });
 </script>
