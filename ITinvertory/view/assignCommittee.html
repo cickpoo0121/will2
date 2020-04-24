@@ -24,6 +24,8 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/localization/messages_th.min.js"></script>
     <!-- <link rel="stylesheet" href="landingpage.css"> -->
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
     <!-- <link rel="stylesheet" href="style.css"> -->
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
@@ -128,7 +130,8 @@
                         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
                             placeholder="ป้อนอีเมลล์" required>
                         <p align="right">
-                            <span><button type="button" class="btn btn-secondary mt-4" data-dismiss="modal" style="width: 15%;">ปิด</button></span>
+                            <span><button type="button" class="btn btn-secondary mt-4" data-dismiss="modal"
+                                    style="width: 15%;">ปิด</button></span>
                             <button class="btn btn-primary mt-4" id="submitAdd">บันทึก</button>
                             <button class="btn btn-primary mt-4" id="submitUpdate">บันทึก</button>
                         </p>
@@ -145,7 +148,7 @@
 
 
 
-    <div class="container-fluid text-right mt-4 ">
+    <!-- <div class="container-fluid text-right mt-4 ">
         <div class="row">
             <div class="col-md-4 ">
                 <h2>คณะกรรมการตรวจนับครุภัณฑ์​</h2>
@@ -168,9 +171,9 @@
     </div>
 
 
-    <!-- Table -->
+    
     <div class="container-fluid text-center mt-3">
-        <!--Table-->
+        
         <table class="table " id="mytable" style="width:100%">
             <thead>
                 <tr>
@@ -181,8 +184,50 @@
                 </tr>
             </thead>
         </table>
+    </div> -->
+
+    <div class="row">
+        <div class="col-sm-12 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2>คณะกรรมการตรวจนับครุภัณฑ์ </h2>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-1 mt-2" style="text-align: right;">
+                        </div>
+                        <div class="col-md-1 mt-2" style="text-align: right;">
+                            <input type="button" id="assign" class="btn btn-danger  " data-toggle="modal"
+                                data-target="#addcomModal" style="background-color: #dc3545;" value="เพิ่มกรรมการ">
+                        </div>
+                    </div>
+                </div>
+                <p align="right" class="mt-4 mr-3">
+                    <select id="years" class="form-control">
+                    </select>
+                </p>
+
+                <div class="container-fluid text-center">
+                    <!--Table-->
+                    <table class="table mt-2" id="mytable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ลำดับ</th>
+                                <th>ปี</th>
+                                <th>อีเมล์กรรมการ</th>
+                                <th>แก้ไขอีเมล์</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
     </div>
-    <!-- Table -->
+
 
 
     <!-- Footer -->

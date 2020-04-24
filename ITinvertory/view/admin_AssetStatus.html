@@ -24,6 +24,36 @@
     <!-- <link rel="stylesheet" href="landingpage.css"> -->
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
 
+    <!-- button in table -->
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <style>
     .dot1 {
@@ -71,10 +101,24 @@
         width: 100px;
     }
 
-    #insert {
+    #insert,
+    #Export {
         width: 100px;
         height: 35px;
     }
+
+    /* .buttons-excel {
+        background-color: blue;
+        color: white;
+    }
+
+    .buttons-pdf {
+        background: #d10909;
+    }
+
+    .buttons-print {
+        background: #1167d3;
+    } */
 </style>
 
 
@@ -174,26 +218,22 @@
         </div>
     </div>
 
-    <div class="container-fluid text-right mt-5">
+    <!-- <div class="container-fluid text-right">
         <div class="row">
             <div class="col-md-4">
-                <h2 class="text-right ml-3 ">ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</h2>
             </div>
             <div class="col-md-6">
-
             </div>
-            <div class="col-md-1" style="text-align: right;">
-                <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
+            <div class="col-md-1 my-4" style="text-align: right;">
+
             </div>
             <div class="col-md-1 " style="text-align: right;">
-                <select id="years" class="form-control">
-
-                </select>
+                <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="container-fluid text-center mt-2">
+    <!-- <div class="container-fluid text-center mt-2">
         <table class="table  mt-2" id="mytable" style="width:100%">
             <thead>
                 <tr>
@@ -221,12 +261,87 @@
             </button>
             <button id="save" class="btn btn-primary float-right mb-2 mt-3 mr-3"> บันทึก
             </button>
-            <!-- <input type="checkbox" name="" id=""> -->
+
 
         </div>
 
 
+    </div> -->
+
+
+    <div class="row">
+        <div class="col-sm-12 mt-3">
+            <!-- <p align="right">
+            <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
+        </p> -->
+            <div class="card">
+                <!-- <div class="card-header"><span style="font-size: 30px;"></strong>ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</strong></span> 
+                <p align="right">
+                    <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                </p>
+            </div> -->
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ </h2>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-1 mt-2" style="text-align: right;">
+                            <!-- <input type="button" id="Export" class="btn btn-primary" value="Excel"> -->
+                        </div>
+                        <div class="col-md-1 mt-2" style="text-align: right;">
+                            <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                        </div>
+                    </div>
+                </div>
+                <!-- <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>  -->
+                <p align="right" class="mt-4 mr-3">
+                    <select id="years" class="form-control">
+                    </select>
+                </p>
+
+                <div class="container-fluid text-center">
+                    <!--Table-->
+                    <table class="table mt-2" id="mytable" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>product_year</th>
+                                <th>ลำดับ</th>
+                                <th>เลือกทั้งหมด</th>
+                                <th>รูปถ่าย</th>
+                                <th>ถ่ายรูป</th>
+                                <th>รหัสผลิตภัณฑ์</th>
+                                <th>คำอธิบาย</th>
+                                <th>ยี่ห้อ</th>
+                                <th>สถานที่</th>
+                                <th>ผู้ตรวจสอบ</th>
+                                <th>สถานะครุภัณฑ์</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้าง
+                            QR-CODE</button>
+                        <button id="barcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
+                        </button>
+                        <button id="save" class="btn btn-primary float-right mb-2 mt-3 mr-3"> บันทึก
+                        </button>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
     </div>
+
+
     <!-- </div>
     </div>
     </div>
@@ -303,8 +418,21 @@
                 { data: "committee" },
                 { data: "product_status" }
             ],
+            dom: 'Bfrtip',
+            buttons: [
+                // 'copyHtml5',
+                'excelHtml5',
+                // 'csvHtml5',
+                'pdfHtml5',
+                'print',
+                // 'colvis'
+            ],
             responsive: true
         });
+
+        $('.buttons-excel, .buttons-print').each(function () {
+            $(this).removeClass('btn-default').addClass('btn-primary')
+        })
 
 
         $('form').submit(function () {
@@ -331,10 +459,12 @@
 
         dropdownyear();
 
-        $("#Qrcode").click(function(){
-        
-         window.location.replace("qrcode.html");
-       });
+        $("#Qrcode").click(function () {
+
+            window.location.replace("qrcode.html");
+        });
+
+
 
     });
 
