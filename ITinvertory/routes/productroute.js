@@ -46,7 +46,7 @@ router.get("/guest", function (req, res) {
 router.get("/guest/:year", function (req, res) {
     date = new Date();
     const year = date.getFullYear();
-    const sql = "SELECT description,model,location,room,product_status,image FROM `product` WHERE product_status=1 and product_year =?";
+    const sql = 'SELECT description,model,location,room,product_status,image FROM `product` WHERE product_status=1 and product_year =? ORDER BY asset ASC';
     con.query(sql, [year], function (err, result, fields) {
         if (err) {
             // console.log(err)
@@ -111,7 +111,7 @@ router.get("/import/:years", function (req, res) {
 //show all status of product and who scan 
 router.get("/status/:years", function (req, res) {
     const years = req.params.years;
-    const sql = "SELECT product_year,image,image_status,inventorynumber,description,model,location,room,committee,product_status FROM `product` WHERE product_year=?";
+    const sql = "SELECT product_year,image,image_status,inventorynumber,asset,description,model,location,room,committee,product_status FROM `product` WHERE product_year=?";
     con.query(sql, [years], function (err, result, fields) {
         if (err) {
             // console.log(err)

@@ -10,19 +10,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"> -->
-    <!-- <link rel="stylesheet" href="styles.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
-    <!-- <link rel="stylesheet" href="landingpage.css"> -->
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <script text="script" src="qrcode.min.js"></script>
+    <script text="script" src="barcode.min.js"></script>
+
 
     <!-- button in table -->
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
@@ -35,19 +34,12 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
 
-
-
-
-
-
-
-
-
-
-
+    <!-- check all -->
+    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css"
+        rel="stylesheet" />
+    <script type="text/javascript"
+        src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
 
 
@@ -129,6 +121,7 @@
 <body>
     <!-- ============================================================== -->
     <!-- <input type="checkbox" name="" id="aaa">asdfa -->
+    <!-- <h1 id="demo" onmouseover="mouseOver()">asdfsdfsf</h1> -->
     <!-- Header -->
     <div>
         <div class="row">
@@ -216,137 +209,115 @@
 
             </div>
         </div>
+
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <!-- <div id="caption"></div> -->
+        </div>
     </div>
 
-    <!-- <div class="container-fluid text-right">
+    <div id="first">
         <div class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-6">
-            </div>
-            <div class="col-md-1 my-4" style="text-align: right;">
-
-            </div>
-            <div class="col-md-1 " style="text-align: right;">
-                <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="container-fluid text-center mt-2">
-        <table class="table  mt-2" id="mytable" style="width:100%">
-            <thead>
-                <tr>
-                    <th>product_year</th>
-                    <th>ลำดับ</th>
-                    <th>เลือกทั้งหมด</th>
-                    <th>รูปถ่าย</th>
-                    <th>ถ่ายรูป</th>
-                    <th>รหัสผลิตภัณฑ์</th>
-                    <th>คำอธิบาย</th>
-                    <th>ยี่ห้อ</th>
-                    <th>สถานที่</th>
-                    <th>ผู้ตรวจสอบ</th>
-                    <th>สถานะครุภัณฑ์</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-
-    <div class="row">
-        <div class="col-12">
-            <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้าง
-                QR-CODE</button>
-            <button id="barcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
-            </button>
-            <button id="save" class="btn btn-primary float-right mb-2 mt-3 mr-3"> บันทึก
-            </button>
-
-
-        </div>
-
-
-    </div> -->
-
-
-    <div class="row">
-        <div class="col-sm-12 mt-3">
-            <!-- <p align="right">
+            <div class="col-sm-12 mt-3">
+                <!-- <p align="right">
             <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
         </p> -->
-            <div class="card">
-                <!-- <div class="card-header"><span style="font-size: 30px;"></strong>ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</strong></span> 
+                <div class="card">
+                    <!-- <div class="card-header"><span style="font-size: 30px;"></strong>ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</strong></span> 
                 <p align="right">
                     <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
                 </p>
             </div> -->
-                <div class="card-header">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ </h2>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-1 mt-2" style="text-align: right;">
+                                <!-- <input type="button" id="Export" class="btn btn-primary" value="Excel"> -->
+                            </div>
+                            <div class="col-md-1 mt-2" style="text-align: right;">
+                                <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>  -->
+                    <p align="right" class="mt-4 mr-3">
+                        <select id="years" class="form-control">
+                        </select>
+                    </p>
+                    <!-- <form id="frm-example"> -->
+                    <div class="container-fluid text-center">
+                        <!--Table-->
+
+                        <table class="table mt-2" id="mytable" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ลำดับ</th>
+                                    <!-- <th>เลือกทั้งหมด</th> -->
+                                    <th>รูปถ่าย</th>
+                                    <th>ถ่ายรูป</th>
+                                    <th>รหัสผลิตภัณฑ์</th>
+                                    <th>คำอธิบาย</th>
+                                    <th>ยี่ห้อ</th>
+                                    <th>สถานที่</th>
+                                    <th>ผู้ตรวจสอบ</th>
+                                    <th>สถานะครุภัณฑ์</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+
                     <div class="row">
-                        <div class="col-md-4">
-                            <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ </h2>
-                        </div>
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-1 mt-2" style="text-align: right;">
-                            <!-- <input type="button" id="Export" class="btn btn-primary" value="Excel"> -->
-                        </div>
-                        <div class="col-md-1 mt-2" style="text-align: right;">
-                            <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                        <div class="col-12">
+
+                            <div id="test"></div>
+
+                            <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้าง
+                                QR-CODE</button>
+                            <button id="Barcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
+                            </button>
+                            <button id="save" type="submit" class="btn btn-primary float-right mb-2 mt-3 mr-3"> บันทึก
+                            </button>
+
                         </div>
                     </div>
+
+                    <!-- </form> -->
                 </div>
-                <!-- <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>  -->
-                <p align="right" class="mt-4 mr-3">
-                    <select id="years" class="form-control">
-                    </select>
-                </p>
-
-                <div class="container-fluid text-center">
-                    <!--Table-->
-                    <table class="table mt-2" id="mytable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>product_year</th>
-                                <th>ลำดับ</th>
-                                <th>เลือกทั้งหมด</th>
-                                <th>รูปถ่าย</th>
-                                <th>ถ่ายรูป</th>
-                                <th>รหัสผลิตภัณฑ์</th>
-                                <th>คำอธิบาย</th>
-                                <th>ยี่ห้อ</th>
-                                <th>สถานที่</th>
-                                <th>ผู้ตรวจสอบ</th>
-                                <th>สถานะครุภัณฑ์</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-12">
-
-                        <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้าง
-                            QR-CODE</button>
-                        <button id="barcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
-                        </button>
-                        <button id="save" class="btn btn-primary float-right mb-2 mt-3 mr-3"> บันทึก
-                        </button>
-
-                    </div>
-                </div>
-
-
             </div>
         </div>
     </div>
 
+    <div id="second">
+        <div class="container-fluid my-4">
+            <div>
+                <div id="qrcode" class="my-4"></div>
+            </div>
+        </div>
+        <!-- <input type="text" name="" id="qrdata"> -->
 
-    <!-- </div>
+        <!-- <div id="name"></div> -->
+        <!-- <button class="btn btn-primary" id="close">close</button> -->
     </div>
+
+    <div id="third">
+        <div class="container-fluid my-4">
+            <div id="barcode">
+                <!-- <div id="qrcode" class="my-4"></div> -->
+            </div>
+        </div>
+        <!-- <input type="text" name="" id="qrdata"> -->
+
+        <!-- <div id="name"></div> -->
+        <!-- <button class="btn btn-primary" id="close">close</button> -->
     </div>
-    </div>
-    </div> -->
+
 
     <!-- Footer -->
     <footer class="page-footer font-small blue " style="background-color: #fe0000;">
@@ -368,6 +339,22 @@
 
     $(document).ready(function () {
 
+        $("#second").hide();
+        $("#third").hide();
+
+        function mouseOver() {
+            document.getElementById("demo").style.color = "red";
+        }
+        // function mouseOver() {
+        //         // x.style.height = "64px";
+        //         // x.style.width = "64px";
+        //         alert("ggggg")
+        //         var modal = document.getElementById("myModal");
+        //         modal.style.display = "block";
+        //         modalImg.src = this.src;
+        //         // captionText.innerHTML = this.alt;
+        //     }
+
         $('#yearmodal').val(year);
         $('#yearmodal').prop('disabled', true);
 
@@ -387,28 +374,44 @@
 
 
         tableUser = $("#mytable").DataTable({
-            // data: dataSet,
-            // "searching": false,
-            // "paging": false,
             "ordering": false,
             "info": false,
             "lengthChange": false,
             "pageLength": 100,
+            'columnDefs': [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                }
+            ],
+            'select': {
+                'style': 'multi'
+            },
+            'order': [[1, 'asc']],
             deferRender: true,
             columns: [
-                { data: "product_year", visible: false },
+                { data: "asset" },
                 { data: "No" },
-                { defaultContent: '<input type="checkbox" id="checkall"> ', orderable: false },
-                { data: "image" },
                 {
-                    data: "inventorynumber",
-
+                    data: "image",
                     render: function (data, type, full) {
-                        if (type === 'display') {             //if column data is 1 then set attr to checked, use row id as input id (plus prefix)
-                            return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.inventorynumber + '" />';
+                        if (type === 'display') {             //if column 
+                            return '<img id="imgg" ' + ((full.image != null) ? 'src="../img/' + full.image + '"' : '') + 'style="width: 100%;"  alt=""> ';
+                            // return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.image + '" />';
                         }
                         return data;
-                        // console.log(type+"54645645646")
+                    }
+                },
+                {
+                    data: "asset",
+
+                    render: function (data, type, full) {
+                        if (type === 'display') {             //if column 
+                            return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.asset + '" />';
+                        }
+                        return data;
                     }
                 },
                 { data: "inventorynumber" },
@@ -423,16 +426,32 @@
                 // 'copyHtml5',
                 'excelHtml5',
                 // 'csvHtml5',
-                'pdfHtml5',
+                // 'pdfHtml5',
                 'print',
                 // 'colvis'
             ],
             responsive: true
         });
 
-        $('.buttons-excel, .buttons-print').each(function () {
-            $(this).removeClass('btn-default').addClass('btn-primary')
-        })
+        // var table = $('#mytable').DataTable({
+        //     'ajax': 'https://gyrocode.github.io/files/jquery-datatables/arrays_id.json',
+        //     'columnDefs': [
+        //         {
+        //             'targets': 0,
+        //             'checkboxes': {
+        //                 'selectRow': true
+        //             }
+        //         }
+        //     ],
+        //     'select': {
+        //         'style': 'multi'
+        //     },
+        //     'order': [[1, 'asc']]
+        // });
+
+        // $('.buttons-excel, .buttons-print').each(function () {
+        //     $(this).removeClass('btn-default').addClass('btn-primary')
+        // })
 
 
         $('form').submit(function () {
@@ -459,10 +478,10 @@
 
         dropdownyear();
 
-        $("#Qrcode").click(function () {
+        // $("#Qrcode").click(function () {
 
-            window.location.replace("qrcode.html");
-        });
+        //     window.location.replace("qrcode.html");
+        // });
 
 
 
@@ -507,12 +526,9 @@
                 dataSet[i].No = i + 1;
                 dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
 
-                // if (dataSet[i].image_status == 1) {
-                //     $('input:checkbox').prop("checked", true)
-                //     if ($('#4000000215').prop("checked") == true) {
-                //         console.log("Checkbox is checked.");
-                //     }
-                //     console.log("gggg")
+                // if(dataSet[i].image!=null){
+                //     $('#imggg').attr("src", "../img/"+dataSet[i].image+"");
+                //     console.log(dataSet[0].image)
                 // }
 
                 if (dataSet[i].product_status == 0) {
@@ -534,12 +550,110 @@
             tableUser.clear();
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
-            $('#input711000100142038').click(function () {
-                //     if(this.checked){
-                //     alert("ggg");
-                // }
-                alert("sdfsf")
+
+
+            // function mouseOver() {
+            //     x.style.height = "64px";
+            //     x.style.width = "64px";
+            //     alert("ggggg")
+            //     // var modal = document.getElementById("myModal");
+            //     // modal.style.display = "block";
+            //     // modalImg.src = this.src;
+            //     // captionText.innerHTML = this.alt;
+            // }
+
+            $('#save').on('click', function (e) {
+                var form = this;
+                var rows_selected = tableUser.column(0).checkboxes.selected();
+                let rowdata = rows_selected.join(",")
+                // alert(getyear);
+
+                if (rows_selected.length != 0) {
+                    $.ajax({
+                        method: "PUT",
+                        url: "/takephoto/" + getyear,
+                        data: { year: getyear, records: rowdata }
+                    }).done(function (dataSet, state, xhr) {
+                        window.location.replace("/productstatusadmin")
+                    }).fail(function (xhr, state, error) {
+                        console.log(error)
+                    })
+                }else{
+                    alert("Please select item")
+                }
+
+
+
+                // Iterate over all selected checkboxes
+                // $.each(rows_selected, function (index, rowId) {
+                //     // Create a hidden element 
+                //     $(form).append(
+                //         $('input[type="checkbox"]')
+                //             // .prop('type', 'hidden')
+                //             .prop('name', 'id[]')
+                //             .val(rowId)
+                //     );
+                // });
+
+                $('#test').text(rows_selected.join(","));
+                console.log(rowdata)
+
+                // Output form data to a console     
+                //   $('#example-console-form').text($(form).serialize());
+
+                // Remove added elements
+                //   $('input[name="id\[\]"]', form).remove();
+
+                // Prevent actual form submission
+                // e.preventDefault();
+            });
+
+            // if (tableUser.column(0).checkboxes.selected()) {
+            $("#Qrcode").click(function () {
+                var rows_selected1 = tableUser.column(0).checkboxes.selected();
+                console.log(rows_selected1)
+                if (rows_selected1.length != 0) {
+                    $("#first").hide();
+                    $("#second").show();
+                    $("#third").hide();
+
+                    for (let i = 0; i < rows_selected1.length; i++) {
+                        var dataqr = new QRCode(document.querySelector("#qrcode"));
+
+                        $("#qrcode").append("<div>AssetNumber" + rows_selected1[i] + "</div>")
+                        dataqr.makeCode("AssetNumber:" + rows_selected1[i])
+                    }
+                } else {
+                    alert("Please select item")
+                }
             })
+
+            $("#Barcode").click(function () {
+                var rows_selected1 = tableUser.column(0).checkboxes.selected();
+                console.log(rows_selected1)
+                if (rows_selected1.length != 0) {
+                    $("#first").hide();
+                    $("#second").hide();
+                    $("#third").show();
+
+                    for (let i = 0; i < rows_selected1.length; i++) {
+                        $("#barcode").append("<img class='my-4' id='aa" + [i] + "' ></img><br>")
+                    }
+
+                    for (let i = 0; i < rows_selected1.length; i++) {
+                        JsBarcode("#aa" + [i] + "", "AssetNumber:" + rows_selected1[i]);
+                    }
+                } else {
+                    alert("Please select item")
+                }
+            })
+
+            // $('#input711000100142038').click(function () {
+            //     //     if(this.checked){
+            //     //     alert("ggg");
+            //     // }
+            //     alert("sdfsf")
+            // })
         }).fail(function (xhr, state, error) {
             //get data failed
             alert(xhr.responseText);

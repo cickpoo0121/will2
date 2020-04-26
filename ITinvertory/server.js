@@ -27,6 +27,8 @@ const profile= require("./routes/profile-routes");
 const product = require("./routes/productroute");
 const datealert = require("./routes/datealertroute");
 
+// const qr = require("./config/")
+
 
 
 const app = express();
@@ -52,7 +54,10 @@ app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 app.use("/img", express.static(path.join(__dirname, 'img')));
 app.use("/style.css", express.static(path.join(__dirname, 'style.css')));
+app.use("/qrcode.min.js", express.static(path.join(__dirname, 'qrcode.min.js')));
+app.use("/barcode.min.js", express.static(path.join(__dirname, 'barcode.min.js')));
 app.use(express.static(path.join(__dirname, "public")));
+// app.use("/static", express.static('./static/'));
 
 
 app.use(cookieSession({
@@ -214,30 +219,29 @@ app.get("/committee/:years", function (req, res) {
 
 //===========================Admin================================
 
-//must be take photo แก้ติ๊กหลสยๆอัน 
+//must be take photo ติดส่งค่าไม่ไป
 app.put("/takephoto/:year", function (req, res) {
     const year = req.params.year;
     const records = req.body.records;
+    console.log(records)
 
     // const invenNum = req.body.invenNum;
-    const sql = "UPDATE `product` SET `image_status` = 4 WHERE product_year=? AND inventorynumber IN (?)"
+    const sql = "UPDATE `product` SET `image_status` = 1 WHERE product_year=? AND asset IN (?)"
 
-    // connection.query('update UserRequests set RequestStatus = ?, ReqCompletedDateTime = ? where idRequest IN (?)', ['Completed', new Date(), idsArray.join()], function(err, rows){
-    //     connection.release();
-    //   });
-    for (i = 0; i <= records.length; i++) {
-        con.query(sql, [year, records[i].invenNum], function (err, result, fields) {
+    // for (i = 0; i <= records.length; i++) {
+        con.query(sql, [year,records], function (err, result, fields) {
             if (err) {
                 res.status(500).send("Server error");
-                console.log(err);
+                // console.log(err);
+                console.log("[mysql error]",err);
             }
             else {
                 res.json(result);
-                console.log(records.length)
+                console.log(result);
             }
 
         });
-    }
+    // }
 });
 
 //assign work to committee //working history page

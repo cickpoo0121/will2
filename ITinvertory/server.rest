@@ -90,8 +90,8 @@ put http://localhost:8080/takephoto/2020
 Content-Type: application/json
 
 {
-"records":[{"invenNum":"711000100142033"},
-            {"invenNum":"711000100142038"}]
+"records":[{"invenNum":"4000000220"},
+            {"invenNum":"4000000217"}]
 }
 
 ### working history page
