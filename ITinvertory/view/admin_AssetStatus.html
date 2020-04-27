@@ -294,30 +294,13 @@
         </div>
     </div>
 
-    <div id="second">
+    <!-- <div id="second">
         <div class="container-fluid my-4">
             <div>
                 <div id="qrcode" class="my-4"></div>
             </div>
         </div>
-        <!-- <input type="text" name="" id="qrdata"> -->
-
-        <!-- <div id="name"></div> -->
-        <!-- <button class="btn btn-primary" id="close">close</button> -->
-    </div>
-
-    <div id="third">
-        <div class="container-fluid my-4">
-            <div id="barcode">
-                <!-- <div id="qrcode" class="my-4"></div> -->
-            </div>
-        </div>
-        <!-- <input type="text" name="" id="qrdata"> -->
-
-        <!-- <div id="name"></div> -->
-        <!-- <button class="btn btn-primary" id="close">close</button> -->
-    </div>
-
+    </div> -->
 
     <!-- Footer -->
     <footer class="page-footer font-small blue " style="background-color: #fe0000;">
@@ -339,21 +322,9 @@
 
     $(document).ready(function () {
 
-        $("#second").hide();
-        $("#third").hide();
-
         function mouseOver() {
             document.getElementById("demo").style.color = "red";
         }
-        // function mouseOver() {
-        //         // x.style.height = "64px";
-        //         // x.style.width = "64px";
-        //         alert("ggggg")
-        //         var modal = document.getElementById("myModal");
-        //         modal.style.display = "block";
-        //         modalImg.src = this.src;
-        //         // captionText.innerHTML = this.alt;
-        //     }
 
         $('#yearmodal').val(year);
         $('#yearmodal').prop('disabled', true);
@@ -432,27 +403,6 @@
             ],
             responsive: true
         });
-
-        // var table = $('#mytable').DataTable({
-        //     'ajax': 'https://gyrocode.github.io/files/jquery-datatables/arrays_id.json',
-        //     'columnDefs': [
-        //         {
-        //             'targets': 0,
-        //             'checkboxes': {
-        //                 'selectRow': true
-        //             }
-        //         }
-        //     ],
-        //     'select': {
-        //         'style': 'multi'
-        //     },
-        //     'order': [[1, 'asc']]
-        // });
-
-        // $('.buttons-excel, .buttons-print').each(function () {
-        //     $(this).removeClass('btn-default').addClass('btn-primary')
-        // })
-
 
         $('form').submit(function () {
             // var file = "";
@@ -551,17 +501,6 @@
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
 
-
-            // function mouseOver() {
-            //     x.style.height = "64px";
-            //     x.style.width = "64px";
-            //     alert("ggggg")
-            //     // var modal = document.getElementById("myModal");
-            //     // modal.style.display = "block";
-            //     // modalImg.src = this.src;
-            //     // captionText.innerHTML = this.alt;
-            // }
-
             $('#save').on('click', function (e) {
                 var form = this;
                 var rows_selected = tableUser.column(0).checkboxes.selected();
@@ -578,51 +517,27 @@
                     }).fail(function (xhr, state, error) {
                         console.log(error)
                     })
-                }else{
+                } else {
                     alert("Please select item")
                 }
-
-
-
-                // Iterate over all selected checkboxes
-                // $.each(rows_selected, function (index, rowId) {
-                //     // Create a hidden element 
-                //     $(form).append(
-                //         $('input[type="checkbox"]')
-                //             // .prop('type', 'hidden')
-                //             .prop('name', 'id[]')
-                //             .val(rowId)
-                //     );
-                // });
-
-                $('#test').text(rows_selected.join(","));
-                console.log(rowdata)
-
-                // Output form data to a console     
-                //   $('#example-console-form').text($(form).serialize());
-
-                // Remove added elements
-                //   $('input[name="id\[\]"]', form).remove();
-
-                // Prevent actual form submission
-                // e.preventDefault();
             });
 
-            // if (tableUser.column(0).checkboxes.selected()) {
             $("#Qrcode").click(function () {
+
                 var rows_selected1 = tableUser.column(0).checkboxes.selected();
-                console.log(rows_selected1)
+                var dataArray = [];
+
                 if (rows_selected1.length != 0) {
-                    $("#first").hide();
-                    $("#second").show();
-                    $("#third").hide();
 
-                    for (let i = 0; i < rows_selected1.length; i++) {
-                        var dataqr = new QRCode(document.querySelector("#qrcode"));
+                    $.each(rows_selected1, function (index, value) {
+                        dataArray.push(value);
+                        // console.log(`${index}: ${value}`);
+                    });
+                    console.log(dataArray[0]);
+                    let jsobject = JSON.stringify(dataArray)
+                    sessionStorage.dataArray = jsobject
 
-                        $("#qrcode").append("<div>AssetNumber" + rows_selected1[i] + "</div>")
-                        dataqr.makeCode("AssetNumber:" + rows_selected1[i])
-                    }
+                    window.open('/qrcode', '_blank');
                 } else {
                     alert("Please select item")
                 }
@@ -630,19 +545,17 @@
 
             $("#Barcode").click(function () {
                 var rows_selected1 = tableUser.column(0).checkboxes.selected();
-                console.log(rows_selected1)
+                var dataArray = [];
                 if (rows_selected1.length != 0) {
-                    $("#first").hide();
-                    $("#second").hide();
-                    $("#third").show();
+                    $.each(rows_selected1, function (index, value) {
+                        dataArray.push(value);
+                        // console.log(`${index}: ${value}`);
+                    });
+                    console.log(dataArray[0]);
+                    let jsobject = JSON.stringify(dataArray)
+                    sessionStorage.dataArray = jsobject
 
-                    for (let i = 0; i < rows_selected1.length; i++) {
-                        $("#barcode").append("<img class='my-4' id='aa" + [i] + "' ></img><br>")
-                    }
-
-                    for (let i = 0; i < rows_selected1.length; i++) {
-                        JsBarcode("#aa" + [i] + "", "AssetNumber:" + rows_selected1[i]);
-                    }
+                    window.open('/barcode', '_blank');
                 } else {
                     alert("Please select item")
                 }

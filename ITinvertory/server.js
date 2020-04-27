@@ -288,10 +288,24 @@ app.get("/", function (req, res) {
     // res.render("login.ejs",{user:req.user});
 });
 
+//QeCode
+app.get("/qrcode", function (req, res) {
+    // console.log(req.user+"asdadasda")
+    res.sendFile(path.join(__dirname, "/view/qrcode.html"))
+    // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
+});
+
+//QeCode
+app.get("/barcode", function (req, res) {
+    // console.log(req.user+"asdadasda")
+    res.sendFile(path.join(__dirname, "/view/barcode.html"))
+    // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
+});
+
 //========= User ========//
 //ผู้ใช้ทั้วไป
 app.get("/guest", function (req, res) {
-    console.log(req.user+"asdadasda")
+    // console.log(req.user+"asdadasda")
     res.sendFile(path.join(__dirname, "/view/generalUser.html"))
     // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
 });
