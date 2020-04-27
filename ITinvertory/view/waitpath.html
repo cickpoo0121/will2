@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <title>Document</title>
+</head>
+<script>
+    $(document).ready(function () {
+
+        // $.ajax({
+        //     method: "GET",
+        //     url: "/profile/userinfor"
+        // }).done(function (dataSet, state, xhr) {
+        //     console.log(dataSet.name)
+        //     var email = dataSet.email;
+        //     if (dataSet.name == undefined) {
+        //         alert('บัญชีไม่ถูกต้อง')
+        //         window.location.replace('/');
+        //     } else {
+
+
+        //         window.location.replace("/committeefirstpage");
+        //     }
+        //     // window.location.replace('/committeefirstpage')
+
+        // }).fail(function (xhr, state, err) {
+        //     // console.log(err)
+        // })
+
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            // console.log(dataSet.name)
+            var email = dataSet.email;
+
+            if (dataSet.name == undefined) {
+                alert('บัญชีไม่ถูกต้อง')
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].role == 1) {
+                        window.location.replace("/adminfirstpage");
+                    } else if (data[0].role == 0) {
+                        window.location.replace("/committeefirstpage");
+                    } else if (email == undefined) {
+                        window.location.replace('/');
+                    }
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+
+            }
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
+
+    });
+</script>
+
+<body>
+
+</body>
+
+</html>

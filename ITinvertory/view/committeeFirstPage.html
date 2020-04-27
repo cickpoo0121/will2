@@ -36,24 +36,28 @@
 
 <body>
     <!-- Header -->
-<!-- <h1 id="gg">gg</h1> -->
+    <!-- <h1 id="gg">gg</h1> -->
     <div>
         <div class="row">
             <div class="col-11">
                 <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
             </div>
             <div class="col-1">
-              
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img id="imguser" src="../img/account.png" class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+
+                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img id="imguser" src="../img/account.png"
+                        class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
+                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                    aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​ ชาวคูเวียง</span></p>
-                        
+                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​
+                                ชาวคูเวียง</span></p>
+
                     </div>
-                
+
                     <a class="dropdown-item" href="/auth/logout"><i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
-            </li>
+                </li>
             </div>
         </div>
 
@@ -71,7 +75,7 @@
                     <li class="nav-item active ml-5">
                         <a href="/committeefirstpage" class="btn btn-rounded btn-light ">หน้าแรก</a>
                     </li>
-                  
+
                     <li class="nav-item ml-5">
                         <a class="nav-link text-light" href="/committee_AssetStatus">สถานะครุภัณฑ์</a>
                     </li>
@@ -294,18 +298,56 @@
             });
         }
 
-        $.ajax({
-                method: "GET",
-                url: "/profile/userinfor"
-            }).done(function (dataSet, state, xhr) {
-                console.log(dataSet.name)
-                $('#NameUser').html(dataSet.name)
-                $('#imguser').attr("src", ""+dataSet.photo+"");
-                // window.location.replace('/committeefirstpage')
+        // $.ajax({
+        //     method: "GET",
+        //     url: "/profile/userinfor"
+        // }).done(function (dataSet, state, xhr) {
+        //     console.log(dataSet.name)
+        //     console.log(dataSet.email)
+        //     if (dataSet.name == undefined) {
+        //         window.location.replace('/');
+        //     } else {
+        //         $('#NameUser').html(dataSet.name)
+        //         $('#imguser').attr("src", "" + dataSet.photo + "");
+        //     }
+        //     // window.location.replace('/committeefirstpage')
 
-            }).fail(function (xhr, state, err) {
-                // console.log(err)
-            })
+        // }).fail(function (xhr, state, err) {
+        //     // console.log(err)
+        // })
+
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            var email = dataSet.email;
+            console.log(dataSet.name);
+            console.log(dataSet.email);
+            if (dataSet.name == undefined) {
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].role == 1) {
+                        window.location.replace("/committee");
+                    } else if (data[0].role == 0) {
+                        $('#NameUser').html(dataSet.name)
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
+                    } else if (email == undefined) {
+                        window.location.replace('/');
+                    }
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+            }
+            // window.location.replace('/committeefirstpage')
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
 
     });
 </script>
