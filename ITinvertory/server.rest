@@ -116,3 +116,7 @@ Content-Type: application/json
   "year":"2020",
   "emailOld":"mrxstar3131@gmail.com"  
 }
+
+### check role
+get http://localhost:8080/CheckRole/6131302008@lamduan.mfu.ac.th
+Content-Type: application/json

@@ -280,11 +280,30 @@ app.put("/update/committee", function (req, res) {
     });
 });
 
+//user or admin check
+app.get("/CheckRole/:email", function (req, res){
+    const email = req.params.email;
+    const sql = "SELECT * FROM `workingyear` WHERE email = ?";
+    con.query(sql, [email], function(err, result, fields){
+        if(err){
+            res.status(500).send("Server error");
+            console.log(err)
+        }else{
+            res.json(result);
+        }
+    })
+})
+
 //
 
 //root
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "/view/login.html"))
+    // res.render("login.ejs",{user:req.user});
+});
+
+app.get("/path", function (req, res) {
+    res.sendFile(path.join(__dirname, "/view/waitpath.html"))
     // res.render("login.ejs",{user:req.user});
 });
 

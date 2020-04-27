@@ -23,7 +23,6 @@
         #log {
             width: 100px;
         }
-        
     </style>
 </head>
 
@@ -35,17 +34,21 @@
                 <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
             </div>
             <div class="col-1">
-             
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../img/account.png"  id="log" class="user-avatar-md rounded-circle"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+
+                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><img id="imguser" src="../img/account.png"
+                        class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
+                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
+                    aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
-                        
+                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​
+                                ชาวคูเวียง</span></p>
+
                     </div>
-                
+
                     <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
-            </li>
+                </li>
             </div>
         </div>
 
@@ -62,13 +65,13 @@
                     <li class="nav-item active ml-5">
                         <a href="/committeefirstpage" class="nav-link text-light">หน้าแรก</a>
                     </li>
-                    
+
                     <li class="nav-item ml-5">
                         <a class="nav-link text-light" href="/committee_AssetStatus">สถานะครุภัณฑ์</a>
                     </li>
                     <li class="nav-item ml-5">
                         <a class="btn btn-rounded btn-light  " href="/committeeBiodata">คณะกรรมการประจำปี</a>
-                        
+
                     </li>
                     <li class="nav-item ml-5">
                         <a class=" nav-link text-light " href="/periodOfCheckingAsset">เวลาการตรวจสอบครุภัณฑ์</a>
@@ -82,15 +85,15 @@
     <div class="container-fluid text-right mt-4 ">
         <div class="row">
             <div class="col-md-4 ">
-                    <h2>คณะกรรมการตรวจนับครุภัณฑ์​</h2>
+                <h2>คณะกรรมการตรวจนับครุภัณฑ์​</h2>
             </div>
             <div class="col-md-6">
 
             </div>
-            
+
             <div class="col-md-1 ">
                 <select id="years" class=" form-control">
-    
+
                 </select>
             </div>
         </div>
@@ -113,18 +116,18 @@
     <!-- Table -->
 
 
-            <!-- Footer -->
-            <div class="mt-5">
-                <footer class="page-footer font-small blue " style="background-color: #253b6d;">
+    <!-- Footer -->
+    <div class="mt-5">
+        <footer class="page-footer font-small blue " style="background-color: #253b6d;">
 
-                    <!-- Copyright -->
-                    <div class="footer-copyright text-center py-3 text-light">© 2020 POWERSOL</div>
-                    <!-- Copyright -->
-    
-                </footer>
-            </div>
-            
-            <!-- Footer -->
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3 text-light">© 2020 POWERSOL</div>
+            <!-- Copyright -->
+
+        </footer>
+    </div>
+
+    <!-- Footer -->
 
 </body>
 <script>
@@ -135,6 +138,40 @@
 
     $(document).ready(function () {
         dropdownyear();//show dropdownyear
+
+        //check login status
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            var email = dataSet.email;
+            console.log(dataSet.name);
+            console.log(dataSet.email);
+            if (dataSet.name == undefined) {
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].role == 1) {
+                        window.location.replace("/committee");
+                    } else if (data[0].role == 0) {
+                        $('#NameUser').html(dataSet.name)
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
+                    } else if (email == undefined) {
+                        window.location.replace('/');
+                    }
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+            }
+            // window.location.replace('/committeefirstpage')
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
 
         $('#yearmodal').val(year);//set year assign is current year
 
@@ -152,21 +189,21 @@
         });
 
         $('#submit').click(function () {
-            const yrearassign=$('#yearmodal').val();
+            const yrearassign = $('#yearmodal').val();
             const email = $('#email').val();
 
             $.ajax({
-                method:"POST",
-                url:"/assign/committee",
-                data:{year:yrearassign,email:email}
-            }).done(function(dataSet,state,xhr){
+                method: "POST",
+                url: "/assign/committee",
+                data: { year: yrearassign, email: email }
+            }).done(function (dataSet, state, xhr) {
                 getcommittee();
                 console.log(dataSet)
-            }).fail(function(xhr,state,err){
+            }).fail(function (xhr, state, err) {
                 console.log(err)
             })
-            
-            
+
+
         });
 
 
@@ -289,4 +326,5 @@
     }
 
 </script>
+
 </html>

@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
-    
-     <!-- export excel -->
+
+    <!-- export excel -->
     <script src="jquery.min.js"></script>
     <script src="jquery.btechco.excelexport.js"></script>
     <script src="jquery.base64.js"></script>
-    
-     <!-- Barcode -->
-     <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+
+    <!-- Barcode -->
+    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
 
 </head>
 <style>
@@ -142,32 +142,83 @@
             });
         }
 
+        // $.ajax({
+        //         method: "GET",
+        //         url: "/profile/userinfor"
+        //     }).done(function (dataSet, state, xhr) {
+        //         console.log(dataSet.name)
+        //         if(dataSet.name == undefined){
+        //             window.location.replace('/');
+        //         }else{
+
+        //             $('#NameUser').html(dataSet.name)
+        //             $('#imguser').attr("src", ""+dataSet.photo+"");
+        //         }
+        //         // window.location.replace('/committeefirstpage')
+
+        //     }).fail(function (xhr, state, err) {
+        //         // console.log(err)
+        //     })
+
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            var email = dataSet.email;
+            console.log(dataSet.name);
+            console.log(dataSet.email);
+            if (dataSet.name == undefined) {
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].role == 1) {
+                        window.location.replace("/productstatusadmin");
+                    } else if (data[0].role == 0) {
+                        $('#NameUser').html(dataSet.name)
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
+                    } else if (email == undefined) {
+                        window.location.replace('/');
+                    }
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+            }
+            // window.location.replace('/committeefirstpage')
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
+
 
     });
 
 </script>
 <script>
-    function exportGrid(gridID,filename) {
-    var html = $('#' + gridID).html();
-    var a = document.createElement('a');
-    a.id = 'ExcelDL';
-    a.href = 'data:application/vnd.ms-excel,' + html;
-    a.download = filename + ".xls";
-    document.body.appendChild(a);
-    a.click(); // Downloads the excel document
-    document.getElementById('ExcelDL').remove();
-}
-$(document).ready(function() {
-    $("#Export").click(function(){
-        exportGrid("mytable","Download");
-    });
+    function exportGrid(gridID, filename) {
+        var html = $('#' + gridID).html();
+        var a = document.createElement('a');
+        a.id = 'ExcelDL';
+        a.href = 'data:application/vnd.ms-excel,' + html;
+        a.download = filename + ".xls";
+        document.body.appendChild(a);
+        a.click(); // Downloads the excel document
+        document.getElementById('ExcelDL').remove();
+    }
+    $(document).ready(function () {
+        $("#Export").click(function () {
+            exportGrid("mytable", "Download");
+        });
 
-    $("#btbrcode").click(function(){
-        window.location.replace("/barcodepage");
-      
+        $("#btbrcode").click(function () {
+            window.location.replace("/barcodepage");
+
+        });
+
     });
- 
-});
 </script>
 
 <body>
@@ -184,16 +235,18 @@ $(document).ready(function() {
             </div>
             <div class="col-1">
                 <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="log"
-                        class="user-avatar-md rounded-circle"></a>
+                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="imguser"
+                        class="user-avatar-md rounded-circle  mt-3 ml-4" style="width: 50px;height: 50px;"></a>
                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
                     aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
+                        <p class="mb-0 text-dark nav-user-name text-center" id="NameUser"><span id="NameUser">ธิดาพร​
+                                ชาวคูเวียง</span></p>
 
                     </div>
 
-                    <a class="dropdown-item" href="#" id="logout"> <i class="fas fa-power-off mr-2"></i>Logout</a>
+                    <a class="dropdown-item" href="/auth/logout" id="logout"> <i
+                            class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
                 </li>
             </div>
@@ -236,8 +289,8 @@ $(document).ready(function() {
         <div class="col-sm-12 ">
             <div class="card">
                 <h1 class="card-header">สถานะครุภัณฑ์</h1>
-                <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button> 
-                 
+                <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>
+
 
                 <!-- <div class="card-body">
                     <div class="table-responsive"> -->
@@ -369,7 +422,7 @@ $(document).ready(function() {
                 </div> -->
 
                 <div class="container-fluid text-center">
-                   
+
                     <!--Table-->
                     <table class="table mt-2" id="mytable" style="width:100%">
                         <thead>
@@ -392,9 +445,9 @@ $(document).ready(function() {
 
                 <div class="row">
                     <div class="col-12">
-                        
+
                         <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2  ">สร้างQR-CODE</button>
-                        <button id="btbrcode" class="btn btn-primary float-right mb-2 mt-3 mr-3" > สร้างบาร์โค้ด
+                        <button id="btbrcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
                         </button>
 
                     </div>

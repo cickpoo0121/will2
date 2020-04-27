@@ -44,16 +44,16 @@
             <div class="col-1">
 
                 <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="log"
-                        class="user-avatar-md rounded-circle"></a>
+                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="imguser"
+                        class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
                     aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"> ธิดาพร​ ชาวคูเวียง</p>
+                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​ ชาวคูเวียง</span></p>
 
                     </div>
 
-                    <a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                    <a class="dropdown-item" href="/auth/logout"><i class="fas fa-power-off mr-2"></i>Logout</a>
                 </div>
                 </li>
             </div>
@@ -175,6 +175,42 @@
     }
     $(document).ready(function () {
         loadpage();
+
+        //check login
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            var email = dataSet.email;
+            console.log(dataSet.name);
+            console.log(dataSet.email);
+            if (dataSet.name == undefined) {
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].role == 1) {
+                        $('#NameUser').html(dataSet.name)
+                        $('#imguser').attr("src", "" + dataSet.photo + "");     
+                    } else if (data[0].role == 0) {
+                        window.location.replace("/committeefirstpage");
+                    } else if (email == undefined) {
+                        window.location.replace('/');
+                    }
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+            }
+            // window.location.replace('/committeefirstpage')
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
+
+
         function loadpage() {
             $.ajax({
                 method: "GET",
