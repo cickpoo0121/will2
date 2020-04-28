@@ -13,31 +13,52 @@
 </head>
 
 <body>
-    <div>
-        <div id="third">
-            <div class="container-fluid my-4">
-                <div id="barcode">
-                    <!-- <div id="qrcode" class="my-4"></div> -->
-                </div>
-            </div>
-        </div>
+    <div class="container-fluid my-4">
+        <div id="qrcode" class="my-4"></div>
     </div>
 </body>
 
 <script>
+    // if (sessionStorage !== undefined) {
+    //     let array = sessionStorage.dataArray;
+    //     let data = JSON.parse(array)
+    //     console.log(data[0])
+
+    //     for (let i = 0; i < data.length; i++) {
+    //         $("#barcode").append("<img class='my-4' id='aa" + [i] + "' ></img><br>")
+    //     }
+
+    //     for (let i = 0; i < data.length; i++) {
+    //         JsBarcode("#aa" + [i] + "", + data[i], {
+    //             height: 25
+    //         });
+    //     }
+
+    // } 
+
+    var k = 0;
     if (sessionStorage !== undefined) {
         let array = sessionStorage.dataArray;
         let data = JSON.parse(array)
         console.log(data[0])
+        var k = 0;
+        for (var i = 0; i < Math.ceil(data.length / 4); i++) {
+            $("#qrcode").append("<div class='row my-3' id='aa" + [i] + "' ></div>")
+            for (let j = 0; j < 4; j++) {
+                if (k==data.length) {
 
-        for (let i = 0; i < data.length; i++) {
-            $("#barcode").append("<img class='my-4' id='aa" + [i] + "' ></img><br>")
-        }
+                }
+                else {
+                    $("#aa" + [i] + "").append("<img class='col-md-3 col-sm-2 col-lg-3' id='bb" + [j] + "' ></img> ")
 
-        for (let i = 0; i < data.length; i++) {
-            JsBarcode("#aa" + [i] + "", + data[i], {
-                height: 25
-            });
+                    JsBarcode("#aa" + [i] + " #bb" + [j] + "", + data[k], {
+                        height: 30
+                    });
+                    k++
+                }
+
+            }
+
         }
 
     } 

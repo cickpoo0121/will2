@@ -371,10 +371,15 @@
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
 
+            selectedData = tableUser.row(1).data();
+                // var aa=tableUser.row(':eq(0)', { page: 'email' }).select();
+                console.log(selectedData.email)
             //editEmail
             $('#mytable tbody').on('click', '.editMail', function () {
                 const currentRow = $(this).parents('tr')
                 selectedData = tableUser.row(currentRow).data();
+                // var aa=tableUser.row(':eq(0)', { page: 'email' }).select();
+                // console.log(selectedData)
                 $('#addcomModal').modal()
                 $('#submitAdd').hide();
                 $('#submitUpdate').show();

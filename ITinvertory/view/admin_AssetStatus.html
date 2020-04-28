@@ -29,11 +29,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+
+
 
     <!-- check all -->
     <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css"
@@ -73,14 +76,15 @@
     }
 
     #Qrcode,
-    #barcode,
+    #Barcode,
     #save {
-        width: 130px;
+        width: 107px;
+        font-size: 14px;
     }
 
     #years {
         width: 90px;
-        height: 35px;
+        /* height: 35px; */
     }
 
     .modal-header,
@@ -93,18 +97,26 @@
         width: 100px;
     }
 
-    #insert,
-    #Export {
+    #insert {
         width: 100px;
         height: 35px;
     }
 
-    /* .buttons-excel {
-        background-color: blue;
+    /* .dt-button.buttons-excel.buttons-html5 {
+        background: #1b6f41;
+        border: 1.5px solid #4CAF50;
         color: white;
+        border: none;
     }
 
-    .buttons-pdf {
+    .dt-button.buttons-print {
+        background: red;
+        border: 1.5px solid #4CAF50;
+        color: white;
+        border: none;
+    } */
+
+    /* .buttons-pdf {
         background: #d10909;
     }
 
@@ -217,7 +229,7 @@
         </div>
     </div>
 
-    <div id="first">
+    <div>
         <div class="row">
             <div class="col-sm-12 mt-3">
                 <!-- <p align="right">
@@ -245,15 +257,56 @@
                         </div>
                     </div>
                     <!-- <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>  -->
-                    <p align="right" class="mt-4 mr-3">
-                        <select id="years" class="form-control">
-                        </select>
-                    </p>
+                    <div class="container-fluid mt-2 mb-4">
+                        <!-- <div class="row">
+                            <div class="col-md-12 mt-2">
+                                <select id="years" class="form-control float-right">
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-10 mt-2">
+                                <!-- <div id="test"></div> -->
+                                <button id="Qrcode"  class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
+                                <button id="Barcode" class="btn btn-primary text-center">สร้างบาร์โค้ด</button>
+                                <button id="save" type="submit" class="btn btn-primary text-center">บังคับถ่ายรูป</button>
+                                <!-- <select id="years" class="form-control">
+                                </select> -->
+
+                            </div>
+
+                            <div class="col-md-2 mt-2">
+                                <!-- <p align="right" class="mt-4 mr-3"> -->
+                                <!-- <div class="container-fluid"> -->
+                                <div class="row ">
+                                    <div class="col-md-12">
+                                        <!-- <button id="save" type="submit"
+                                            class="btn btn-primary float-right ml-1 "
+                                            style="width: 10%;">
+                                            บังคับถ่ายรูป
+                                        </button>
+                                        <button id="Qrcode"  class="btn btn-primary float-right mb-2  mr-2 ">สร้างคิวอาร์โค้ด</button>
+                                        <button id="Barcode" class="btn btn-primary float-right mb-2 mr-3"> สร้างบาร์โค้ด -->
+                                        <select id="years" class="form-control float-right">
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+
+                                <!-- </p> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
                     <!-- <form id="frm-example"> -->
                     <div class="container-fluid text-center">
                         <!--Table-->
 
-                        <table class="table mt-2" id="mytable" style="width:100%">
+                        <table class="table mt-2 " id="mytable" style="width:100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -273,20 +326,7 @@
 
                     </div>
 
-                    <div class="row">
-                        <div class="col-12">
 
-                            <div id="test"></div>
-
-                            <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2 ">สร้าง
-                                QR-CODE</button>
-                            <button id="Barcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
-                            </button>
-                            <button id="save" type="submit" class="btn btn-primary float-right mb-2 mt-3 mr-3"> บันทึก
-                            </button>
-
-                        </div>
-                    </div>
 
                     <!-- </form> -->
                 </div>
@@ -380,7 +420,7 @@
 
                     render: function (data, type, full) {
                         if (type === 'display') {             //if column 
-                            return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.asset + '" />';
+                            return '<span class="badge  "style="font-size: 14px;">' + ((full.image_status == '1') ? 'ถ่ายรูป' : 'ไม่ถ่ายรูป') + '</span>';
                         }
                         return data;
                     }
@@ -394,10 +434,10 @@
             ],
             dom: 'Bfrtip',
             buttons: [
-                // 'copyHtml5',
+                'copyHtml5',
                 'excelHtml5',
-                // 'csvHtml5',
-                // 'pdfHtml5',
+                'csvHtml5',
+                'pdfHtml5',
                 'print',
                 // 'colvis'
             ],
@@ -482,16 +522,16 @@
                 // }
 
                 if (dataSet[i].product_status == 0) {
-                    dataSet[i].product_status = "สูญหาย"
+                    dataSet[i].product_status = '<span class="badge badge-danger "style="font-size: 14px;">สูญหาย</span>'
                 }
                 else if (dataSet[i].product_status == 1) {
-                    dataSet[i].product_status = "ปกติ"
+                    dataSet[i].product_status = '<span class="badge badge-success "style="font-size: 14px;">ปกติ</span>'
                 }
                 else if (dataSet[i].product_status == 2) {
-                    dataSet[i].product_status = "ส่งซ่อม"
+                    dataSet[i].product_status = '<span class="badge badge-primary "style="font-size: 14px;">ส่งซ่อม</span>'
                 }
                 else if (dataSet[i].product_status == 3) {
-                    dataSet[i].product_status = "ไม่ระบุ"
+                    dataSet[i].product_status = '<span class="badge badge-dark "style="font-size: 14px;">ไม่ระบุ</span>'
                 }
 
             }
@@ -500,6 +540,9 @@
             tableUser.clear();
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
+
+            // $('.dt-button.buttons-excel.buttons-html5').addClass('btn')
+            // $('.dt-button.buttons-print').addClass('btn')
 
             $('#save').on('click', function (e) {
                 var form = this;
