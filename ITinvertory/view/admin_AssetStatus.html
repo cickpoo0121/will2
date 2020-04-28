@@ -147,7 +147,8 @@
                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
                     aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​ ชาวคูเวียง</span></p>
+                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​
+                                ชาวคูเวียง</span></p>
 
                     </div>
 
@@ -267,9 +268,10 @@
                         <div class="row">
                             <div class="col-md-10 mt-2">
                                 <!-- <div id="test"></div> -->
-                                <button id="Qrcode"  class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
+                                <button id="Qrcode" class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
                                 <button id="Barcode" class="btn btn-primary text-center">สร้างบาร์โค้ด</button>
-                                <button id="save" type="submit" class="btn btn-primary text-center">บังคับถ่ายรูป</button>
+                                <button id="save" type="submit"
+                                    class="btn btn-primary text-center">บังคับถ่ายรูป</button>
                                 <!-- <select id="years" class="form-control">
                                 </select> -->
 
@@ -362,9 +364,9 @@
 
     $(document).ready(function () {
 
-        function mouseOver() {
-            document.getElementById("demo").style.color = "red";
-        }
+        // function mouseOver() {
+        //     document.getElementById("demo").style.color = "red";
+        // }
 
         $('#yearmodal').val(year);
         $('#yearmodal').prop('disabled', true);
@@ -437,7 +439,7 @@
                 'copyHtml5',
                 'excelHtml5',
                 'csvHtml5',
-                'pdfHtml5',
+                'pdf',
                 'print',
                 // 'colvis'
             ],
@@ -497,7 +499,7 @@
                     console.log(data[0].role);
                     if (data[0].role == 1) {
                         $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");     
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
                     } else if (data[0].role == 0) {
                         window.location.replace("/committee_AssetStatus");
                     } else if (email == undefined) {

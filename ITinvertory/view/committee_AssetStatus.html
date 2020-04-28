@@ -5,30 +5,49 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Data Tables</title>
+    <title>สถานะครุภัณฑ์</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+    <script text="script" src="qrcode.min.js"></script>
+    <script text="script" src="barcode.min.js"></script>
 
-    <!-- export excel -->
-    <script src="jquery.min.js"></script>
-    <script src="jquery.btechco.excelexport.js"></script>
-    <script src="jquery.base64.js"></script>
 
-    <!-- Barcode -->
-    <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+    <!-- button in table -->
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+
+
+
+    <!-- check all -->
+    <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css"
+        rel="stylesheet" />
+    <script type="text/javascript"
+        src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+
+
+
+
+
 
 </head>
 <style>
@@ -56,170 +75,55 @@
         display: inline-block;
     }
 
-    #Qrcode {
-        width: 130px;
-
+    #Qrcode,
+    #Barcode,
+    #save {
+        width: 107px;
+        font-size: 14px;
     }
 
-    #barcode {
-        width: 130px;
-
-
+    #years {
+        width: 90px;
+        /* height: 35px; */
     }
-</style>
-<style>
+
+    .modal-header,
+    h3 {
+        background-color: red;
+        color: white;
+    }
+
     #log {
         width: 100px;
     }
-</style>
 
-<script>
-    $(document).ready(function () {
-
-        var tableUser
-        date = new Date();
-        var year = date.getFullYear();
-        console.log(year);
-
-        tableUser = $("#mytable").DataTable({
-            // data: dataSet,
-            // "searching": false,
-            // "paging": false,
-            "ordering": false,
-            "info": false,
-            "lengthChange": false,
-            deferRender: true,
-            columns: [
-                { data: "No" },
-                { defaultContent: '<input type="checkbox" name="" id="checkall"> ', orderable: false },
-                { data: "image" },
-                { defaultContent: '<input type="checkbox" name="" id="takephoto"> ', orderable: false },
-                { data: "inventorynumber" },
-                { data: "description" },
-                { data: "model" },
-                { data: "locateroom" },
-                { data: "committee" },
-                { data: "product_status" }
-            ],
-            responsive: true
-        });
-
-        productadmin();
-
-        function productadmin() {
-            // date = new Date();
-            // var year = date.getFullYear();
-            $.ajax({
-                method: "GET",
-                url: "/product/status/" + year
-            }).done(function (dataSet, state, xhr) {
-
-                for (let i = 0; i < dataSet.length; i++) {
-                    dataSet[i].No = i + 1;
-                    // dataSet[i].receive_date=dataSet[i].receive_date.getFullYear();
-                    dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
-                    if (dataSet[i].product_status == 0) {
-                        dataSet[i].product_status = "สูญหาย"
-                    }
-                    else if (dataSet[i].product_status == 1) {
-                        dataSet[i].product_status = "ปกติ"
-                    }
-                    else if (dataSet[i].product_status == 2) {
-                        dataSet[i].product_status = "ส่งซ่อม"
-                    }
-                    else if (dataSet[i].product_status == 3) {
-                        dataSet[i].product_status = "ไม่ระบุ"
-                    }
-                }
-                console.log(dataSet)
-                //clear DataTable
-                // tableUser.clear();
-                //display modified JSON in DataTable
-                tableUser.rows.add(dataSet).draw();
-            }).fail(function (xhr, state, error) {
-                //get data failed
-                alert(xhr.responseText);
-            });
-        }
-
-        // $.ajax({
-        //         method: "GET",
-        //         url: "/profile/userinfor"
-        //     }).done(function (dataSet, state, xhr) {
-        //         console.log(dataSet.name)
-        //         if(dataSet.name == undefined){
-        //             window.location.replace('/');
-        //         }else{
-
-        //             $('#NameUser').html(dataSet.name)
-        //             $('#imguser').attr("src", ""+dataSet.photo+"");
-        //         }
-        //         // window.location.replace('/committeefirstpage')
-
-        //     }).fail(function (xhr, state, err) {
-        //         // console.log(err)
-        //     })
-
-        $.ajax({
-            method: "GET",
-            url: "/profile/userinfor"
-        }).done(function (dataSet, state, xhr) {
-            var email = dataSet.email;
-            console.log(dataSet.name);
-            console.log(dataSet.email);
-            if (dataSet.name == undefined) {
-                window.location.replace('/');
-            } else {
-                $.ajax({
-                    type: "GET",
-                    url: "/CheckRole/" + email
-                }).done(function (data, state, xhr) {
-                    console.log(data[0].role);
-                    if (data[0].role == 1) {
-                        window.location.replace("/productstatusadmin");
-                    } else if (data[0].role == 0) {
-                        $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");
-                    } else if (email == undefined) {
-                        window.location.replace('/');
-                    }
-                }).fail(function (xhr, state, err) {
-                    console.log(err);
-                })
-            }
-            // window.location.replace('/committeefirstpage')
-
-        }).fail(function (xhr, state, err) {
-            // console.log(err)
-        })
-
-
-    });
-
-</script>
-<script>
-    function exportGrid(gridID, filename) {
-        var html = $('#' + gridID).html();
-        var a = document.createElement('a');
-        a.id = 'ExcelDL';
-        a.href = 'data:application/vnd.ms-excel,' + html;
-        a.download = filename + ".xls";
-        document.body.appendChild(a);
-        a.click(); // Downloads the excel document
-        document.getElementById('ExcelDL').remove();
+    #insert {
+        width: 100px;
+        height: 35px;
     }
-    $(document).ready(function () {
-        $("#Export").click(function () {
-            exportGrid("mytable", "Download");
-        });
 
-        $("#btbrcode").click(function () {
-            window.location.replace("/barcodepage");
+    /* .dt-button.buttons-excel.buttons-html5 {
+            background: #1b6f41;
+            border: 1.5px solid #4CAF50;
+            color: white;
+            border: none;
+        }
+    
+        .dt-button.buttons-print {
+            background: red;
+            border: 1.5px solid #4CAF50;
+            color: white;
+            border: none;
+        } */
 
-        });
-
-    });
-</script>
+    /* .buttons-pdf {
+            background: #d10909;
+        }
+    
+        .buttons-print {
+            background: #1167d3;
+        } */
+</style>
 
 <body>
     <!-- ============================================================== -->
@@ -280,187 +184,150 @@
             </div>
         </nav>
     </div>
-    <!-- Menu -->
-    <!-- ============================================================== -->
+
     <div class="row">
-        <!-- ============================================================== -->
-        <!-- basic table  -->
-        <!-- ============================================================== -->
-        <div class="col-sm-12 ">
-            <div class="card">
-                <h1 class="card-header">สถานะครุภัณฑ์</h1>
-                <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
-
-                <!-- <div class="card-body">
-                    <div class="table-responsive"> -->
-                <!-- <table class="table table-striped table-bordered first">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th><input type="checkbox">ทั้งหมด</th>
-                                    <th>image</th>
-                                    <th>ถ่ายรูป</th>
-
-                                    <th>Iventory Number</th>
-                                    <th>Asset Description</th>
-                                    <th>ยี่ห้อ/รุ่น</th>
-                                    <th>Location</th>
-                                    <th>ผู้ตรวจสอบ</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td>ใช่</td>
-
-                                    <td>749001500148005</td>
-                                    <td>เครื่องทำลายเอกสาร</td>
-                                    <td>HSM / 104.2</td>
-                                    <td>E3A/315/1</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td> <span class="dot1"></span> ปกติ</td>
-
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td> ใช่</td>
-
-                                    <td>711001401246097</td>
-                                    <td>ตู้เอกสาร</td>
-                                    <td>Welma</td>
-                                    <td>IB/211</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td><span class="dot1"></span> ปกติ</td>
-
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td>ไม่ใช่</td>
-
-                                    <td>711001401246098</td>
-                                    <td>ตู้เอกสาร</td>
-                                    <td>Welma</td>
-                                    <td>E1สัก1/330</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td><span class="dot1"></span> ปกติ</td>
-
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td>ไม่ใช่</td>
-
-                                    <td>711001401246101</td>
-                                    <td>ตู้เก็บเอกสาร(90)</td>
-                                    <td>WELMA</td>
-                                    <td>E1/324</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td><span class="dot1"></span> ปกติ</td>
-
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td>ใช่</td>
-
-                                    <td>744000902057002</td>
-                                    <td>อุปกรณ์ Xbox + kinect </td>
-                                    <td> </td>
-                                    <td>S7B/306</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td><span class="dot3"></span> สูญหาย</td>
-
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td>ไม่ใช่</td>
-
-                                    <td>74400901654001</td>
-                                    <td>Digitizing tablet</td>
-                                    <td>Wecom</td>
-                                    <td>S7B/306</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td><span class="dot2"></span> ส่งซ่อม</td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td> <input type="checkbox"></td>
-                                    <td> - </td>
-                                    <td>ไม่ใช่</td>
-
-                                    <td>744004800253001</td>
-                                    <td>เครื่องตัดต่อเสียง Digial</td>
-                                    <td>DIGISIGN</td>
-                                    <td>S7B/306</td>
-                                    <td>ดร.สมใจ</td>
-                                    <td><span class="dot3"></span> สูญหาย</td>
-
-                                </tr>
-
-
-                            </tbody>
-
-                        </table> -->
-
-
-
-                <!-- </div>
-                </div> -->
-
-                <div class="container-fluid text-center">
-
-                    <!--Table-->
-                    <table class="table mt-2" id="mytable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>ลำดับ</th>
-                                <th>ทั้งหมด</th>
-                                <th>image</th>
-                                <th>ถ่ายรูป</th>
-                                <th>Iventory Number</th>
-                                <th>Asset Description</th>
-                                <th>ยี่ห้อ/รุ่น</th>
-                                <th>Location</th>
-                                <th>ผู้ตรวจสอบ</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-12">
-
-                        <button id="Qrcode" class="btn btn-primary float-right mb-2 mt-3 mr-2  ">สร้างQR-CODE</button>
-                        <button id="btbrcode" class="btn btn-primary float-right mb-2 mt-3 mr-3"> สร้างบาร์โค้ด
-                        </button>
-
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="padding:20px 40px;">
+                        <h3><span class="glyphicon glyphicon-lock"></span> นำเข้าข้อมูล</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                </div>
+                    <div class="modal-body" style="padding:25px 50px;">
+                        <form enctype="multipart/form-data">
+                            <div>
 
+                                <input type="file" name="fileUpload" id="">
+
+                            </div>
+                            <br>
+                            <div>
+                                <button class="btn btn-primary" id="upexcel" type="submit">
+                                    บันทึก</button>
+                                <button class="btn btn-danger "><span
+                                        class="glyphicon glyphicon-off "></span>ยกเลิก</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
 
             </div>
         </div>
 
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <!-- <div id="caption"></div> -->
+        </div>
+    </div>
 
-        <!-- ============================================================== -->
-        <!-- end basic table  -->
-        <!-- ============================================================== -->
+    <div>
+        <div class="row">
+            <div class="col-sm-12 mt-3">
+                <!-- <p align="right">
+            <button id="insert" class="btn btn-danger "> นำเข้าข้อมูล</button>
+        </p> -->
+                <div class="card">
+                    <!-- <div class="card-header"><span style="font-size: 30px;"></strong>ข้อมูลครุภัณฑ์​ ประจำปี​ 2563</strong></span> 
+                <p align="right">
+                    <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                </p>
+            </div> -->
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ </h2>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-1 mt-2" style="text-align: right;">
+                                <!-- <input type="button" id="Export" class="btn btn-primary" value="Excel"> -->
+                            </div>
+                            <div class="col-md-1 mt-2" style="text-align: right;">
+                                <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button id="Export" style="width:5%" class="btn btn-primary float-right mb-2 mt-3 mr-3">Excel</button>  -->
+                    <div class="container-fluid mt-2 mb-4">
+                        <!-- <div class="row">
+                            <div class="col-md-12 mt-2">
+                                <select id="years" class="form-control float-right">
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-md-10 mt-2">
+                                <!-- <div id="test"></div> -->
+                                <button id="Qrcode" class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
+                                <button id="Barcode" class="btn btn-primary text-center">สร้างบาร์โค้ด</button>
+                                <button id="save" type="submit"
+                                    class="btn btn-primary text-center">บังคับถ่ายรูป</button>
+                                <!-- <select id="years" class="form-control">
+                                </select> -->
+
+                            </div>
+
+                            <div class="col-md-2 mt-2">
+                                <!-- <p align="right" class="mt-4 mr-3"> -->
+                                <!-- <div class="container-fluid"> -->
+                                <div class="row ">
+                                    <div class="col-md-12">
+                                        <!-- <button id="save" type="submit"
+                                            class="btn btn-primary float-right ml-1 "
+                                            style="width: 10%;">
+                                            บังคับถ่ายรูป
+                                        </button>
+                                        <button id="Qrcode"  class="btn btn-primary float-right mb-2  mr-2 ">สร้างคิวอาร์โค้ด</button>
+                                        <button id="Barcode" class="btn btn-primary float-right mb-2 mr-3"> สร้างบาร์โค้ด -->
+                                        <select id="years" class="form-control float-right">
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+
+                                <!-- </p> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- <form id="frm-example"> -->
+                    <div class="container-fluid text-center">
+                        <!--Table-->
+
+                        <table class="table mt-2 " id="mytable" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ลำดับ</th>
+                                    <!-- <th>เลือกทั้งหมด</th> -->
+                                    <th>รูปถ่าย</th>
+                                    <th>ถ่ายรูป</th>
+                                    <th>รหัสผลิตภัณฑ์</th>
+                                    <th>คำอธิบาย</th>
+                                    <th>ยี่ห้อ</th>
+                                    <th>สถานที่</th>
+                                    <th>ผู้ตรวจสอบ</th>
+                                    <th>สถานะครุภัณฑ์</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+
+
+
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -473,30 +340,297 @@
     </footer>
 
 
-    <!-- ============================================================== -->
-    <!-- end main wrapper -->
-    <!-- ============================================================== -->
-    <!-- Optional JavaScript -->
-    <!-- <script src="../assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-    <script src="../assets/vendor/multi-select/js/jquery.multi-select.js"></script>
-    <script src="../assets/libs/js/main-js.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="../assets/vendor/datatables/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-    <script src="../assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
-    <script src="../assets/vendor/datatables/js/data-table.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script> -->
-
 </body>
+
+<script>
+    var getyear
+    var tableUser
+    date = new Date();
+    const year = date.getFullYear();
+
+    $(document).ready(function () {
+
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            var email = dataSet.email;
+            console.log(dataSet.name);
+            console.log(dataSet.email);
+            if (dataSet.name == undefined) {
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].role == 1) {
+                        window.location.replace("/productstatusadmin");
+                    } else if (data[0].role == 0) {
+                        $('#NameUser').html(dataSet.name)
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
+                    } else if (email == undefined) {
+                        window.location.replace('/');
+                    }
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+            }
+            // window.location.replace('/committeefirstpage')
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
+
+        $('#yearmodal').val(year);
+        $('#yearmodal').prop('disabled', true);
+
+
+        $('#years').change(function () {
+            getyear = $('#years').val();
+            // console.log(getyear)
+            productadmin();
+        });
+
+
+        $("#insert").click(function () {
+            $("#myModal").modal();
+
+
+        });
+
+
+        tableUser = $("#mytable").DataTable({
+            "ordering": false,
+            "info": false,
+            "lengthChange": false,
+            "pageLength": 100,
+            'columnDefs': [
+                {
+                    'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                }
+            ],
+            'select': {
+                'style': 'multi'
+            },
+            'order': [[1, 'asc']],
+            deferRender: true,
+            columns: [
+                { data: "asset" },
+                { data: "No" },
+                {
+                    data: "image",
+                    render: function (data, type, full) {
+                        if (type === 'display') {             //if column 
+                            return '<img id="imgg" ' + ((full.image != null) ? 'src="../img/' + full.image + '"' : '') + 'style="width: 100%;"  alt=""> ';
+                            // return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.image + '" />';
+                        }
+                        return data;
+                    }
+                },
+                {
+                    data: "asset",
+
+                    render: function (data, type, full) {
+                        if (type === 'display') {             //if column 
+                            return '<span class="badge  "style="font-size: 14px;">' + ((full.image_status == '1') ? 'ถ่ายรูป' : 'ไม่ถ่ายรูป') + '</span>';
+                        }
+                        return data;
+                    }
+                },
+                { data: "inventorynumber" },
+                { data: "description" },
+                { data: "model" },
+                { data: "locateroom" },
+                { data: "committee" },
+                { data: "product_status" }
+            ],
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdf',
+                'print',
+                // 'colvis'
+            ],
+            responsive: true
+        });
+
+        $('form').submit(function () {
+            // var file = "";
+            const formData = new FormData(this);
+
+            $.ajax({
+                method: "POST",
+                url: "/uploadfile",
+                data: formData,
+                contentType: false,
+                processData: false
+            }).done(function (dataSet, state, xhr) {
+                // console.log(dataSet)
+                window.location.replace(dataSet)
+                // alert("aaa")
+
+            }).fail(function (xhr, state, err) {
+                console.log(err)
+            })
+
+        });
+
+
+        dropdownyear();
+
+        // $("#Qrcode").click(function () {
+
+        //     window.location.replace("qrcode.html");
+        // });
+
+    });
+
+    function dropdownyear() {
+
+        $.ajax({
+            method: "GET",
+            url: "/years"
+        }).done(function (dataSet, state, xhr) {
+
+            $("#years").empty();
+            $("#year").empty();
+            for (let i = dataSet.length - 1; i >= 0; i--) {
+                let id = dataSet[i].working_year;
+
+                $("#years").append("<option value='" + id + "'>" + id + "</option>");
+                console.log()
+
+
+                // getyear = $('#years').val();
+            }
+            productadmin();
+            console.log(dataSet)
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
+
+    function productadmin() {
+
+        getyear = $('#years').val();
+
+        $.ajax({
+            method: "GET",
+            url: "/product/status/" + getyear
+        }).done(function (dataSet, state, xhr) {
+
+            for (let i = 0; i < dataSet.length; i++) {
+                dataSet[i].No = i + 1;
+                dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
+
+                // if(dataSet[i].image!=null){
+                //     $('#imggg').attr("src", "../img/"+dataSet[i].image+"");
+                //     console.log(dataSet[0].image)
+                // }
+
+                if (dataSet[i].product_status == 0) {
+                    dataSet[i].product_status = '<span class="badge badge-danger "style="font-size: 14px;">สูญหาย</span>'
+                }
+                else if (dataSet[i].product_status == 1) {
+                    dataSet[i].product_status = '<span class="badge badge-success "style="font-size: 14px;">ปกติ</span>'
+                }
+                else if (dataSet[i].product_status == 2) {
+                    dataSet[i].product_status = '<span class="badge badge-primary "style="font-size: 14px;">ส่งซ่อม</span>'
+                }
+                else if (dataSet[i].product_status == 3) {
+                    dataSet[i].product_status = '<span class="badge badge-dark "style="font-size: 14px;">ไม่ระบุ</span>'
+                }
+
+            }
+            console.log(dataSet)
+            //clear DataTable
+            tableUser.clear();
+            //display modified JSON in DataTable
+            tableUser.rows.add(dataSet).draw();
+
+            // $('.dt-button.buttons-excel.buttons-html5').addClass('btn')
+            // $('.dt-button.buttons-print').addClass('btn')
+
+            $('#save').on('click', function (e) {
+                var form = this;
+                var rows_selected = tableUser.column(0).checkboxes.selected();
+                let rowdata = rows_selected.join(",")
+                // alert(getyear);
+
+                if (rows_selected.length != 0) {
+                    $.ajax({
+                        method: "PUT",
+                        url: "/takephoto/" + getyear,
+                        data: { year: getyear, records: rowdata }
+                    }).done(function (dataSet, state, xhr) {
+                        window.location.replace("/committee_AssetStatus")
+                    }).fail(function (xhr, state, error) {
+                        console.log(error)
+                    })
+                } else {
+                    alert("Please select item")
+                }
+            });
+
+            $("#Qrcode").click(function () {
+
+                var rows_selected1 = tableUser.column(0).checkboxes.selected();
+                var dataArray = [];
+
+                if (rows_selected1.length != 0) {
+
+                    $.each(rows_selected1, function (index, value) {
+                        dataArray.push(value);
+                        // console.log(`${index}: ${value}`);
+                    });
+                    console.log(dataArray[0]);
+                    let jsobject = JSON.stringify(dataArray)
+                    sessionStorage.dataArray = jsobject
+
+                    window.open('/qrcode', '_blank');
+                } else {
+                    alert("Please select item")
+                }
+            })
+
+            $("#Barcode").click(function () {
+                var rows_selected1 = tableUser.column(0).checkboxes.selected();
+                var dataArray = [];
+                if (rows_selected1.length != 0) {
+                    $.each(rows_selected1, function (index, value) {
+                        dataArray.push(value);
+                        // console.log(`${index}: ${value}`);
+                    });
+                    console.log(dataArray[0]);
+                    let jsobject = JSON.stringify(dataArray)
+                    sessionStorage.dataArray = jsobject
+
+                    window.open('/barcode', '_blank');
+                } else {
+                    alert("Please select item")
+                }
+            })
+
+            // $('#input711000100142038').click(function () {
+            //     //     if(this.checked){
+            //     //     alert("ggg");
+            //     // }
+            //     alert("sdfsf")
+            // })
+        }).fail(function (xhr, state, error) {
+            //get data failed
+            alert(xhr.responseText);
+        });
+    }
+
+</script>
 
 </html>
