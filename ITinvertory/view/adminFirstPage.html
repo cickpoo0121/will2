@@ -16,7 +16,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -30,36 +30,33 @@
     #log {
         width: 100px;
     }
-    
 </style>
 
 
 <body>
     <!-- Header -->
-    <div>
         <div class="row">
-            <div class="col-11">
+            <div class="col-md-9">
                 <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
             </div>
-            <div class="col-1">
+            <div class="col-md-3">
 
+                <!-- <li class="nav-item dropdown nav-user"> -->
                 <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="imguser"
-                        class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
+                    aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
+                        class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
                 <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
                     aria-labelledby="navbarDropdownMenuLink2">
                     <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​ ชาวคูเวียง</span></p>
+                        <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
 
                     </div>
-
-                    <a class="dropdown-item" href="/auth/logout"><i class="fas fa-power-off mr-2"></i>Logout</a>
+                    <a class="dropdown-item" href="/auth/logout"><h6><i class="fas fa-power-off mr-2"></i>Logout</h6></a>
                 </div>
-                </li>
+                <!-- </li> -->
+
             </div>
         </div>
-
-    </div>
     <!-- Header -->
 
     <!-- Menu -->
@@ -73,7 +70,7 @@
                     <li class="nav-item active ml-5">
                         <a href="/adminfirstpage" class="btn btn-rounded btn-light  ">หน้าแรก</a>
                     </li>
-                  
+
                     <li class="nav-item ml-5">
                         <a class="nav-link text-light" href="/productstatusadmin">สถานะครุภัณฑ์</a>
                     </li>
@@ -194,7 +191,7 @@
                     console.log(data[0].role);
                     if (data[0].role == 1) {
                         $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");     
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
                     } else if (data[0].role == 0) {
                         window.location.replace("/committeefirstpage");
                     } else if (email == undefined) {

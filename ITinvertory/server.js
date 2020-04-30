@@ -199,7 +199,7 @@ app.get("/years", function (req, res) {
 //show committee in current year
 app.get("/committee/:years", function (req, res) {
     const years = req.params.years
-    const sql = "SELECT * FROM `workingyear` WHERE working_year=?";
+    const sql = "SELECT * FROM `workingyear` WHERE role=0 and working_year=?";
     con.query(sql, [years], function (err, result, fields) {
         if (err) {
             // console.log(err)

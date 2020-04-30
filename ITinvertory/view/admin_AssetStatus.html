@@ -6,7 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>สถานะครุภัณฑ์</title>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
@@ -35,9 +38,6 @@
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-
-
-
     <!-- check all -->
     <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css"
         rel="stylesheet" />
@@ -102,6 +102,76 @@
         height: 35px;
     }
 
+    .nav-user-dropdown {
+        margin-top: 65px;
+    }
+    
+    .nav-user {}
+
+.nav-user-dropdown {
+    padding: 0px;
+    min-width: 230px;
+    margin: 0px;
+}
+
+.nav-user-name {}
+
+.nav-user-info {
+    background-color: red;
+    line-height: 1.2;
+    padding: 12px;
+    color: #fff;
+    font-size: 13px;
+    border-radius: 2px 2px 0 0;
+}
+
+.nav-user-info .status {
+    float: left;
+    top: 7px;
+    left: 0px;
+}
+
+.nav-user-dropdown {}
+
+.nav-user-dropdown .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 12px 22px 15px;
+    clear: both;
+    font-weight: 400;
+    color: #686972;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    font-size: 13px;
+    line-height: 0.4;
+}
+
+.nav-user-dropdown .dropdown-item:hover {
+    /* background-color: #f7f7fb; */
+    color: red;
+}
+
+.nav-user .dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border: none;
+}
+.nav-user-dropdown {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 74px;
+    
+}
+ 
+
+
+
     /* .dt-button.buttons-excel.buttons-html5 {
         background: #1b6f41;
         border: 1.5px solid #4CAF50;
@@ -131,34 +201,28 @@
 
 
 <body>
-    <!-- ============================================================== -->
-    <!-- <input type="checkbox" name="" id="aaa">asdfa -->
-    <!-- <h1 id="demo" onmouseover="mouseOver()">asdfsdfsf</h1> -->
-    <!-- Header -->
-    <div>
-        <div class="row">
-            <div class="col-11">
-                <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
-            </div>
-            <div class="col-1">
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="../img/account.png" id="imguser"
-                        class="user-avatar-md rounded-circle mt-3 ml-4" style="width: 50px;height: 50px;"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
-                    aria-labelledby="navbarDropdownMenuLink2">
-                    <div class="nav-user-info">
-                        <p class="mb-0 text-dark nav-user-name text-center"><span id="NameUser">ธิดาพร​
-                                ชาวคูเวียง</span></p>
-
-                    </div>
-
-                    <a class="dropdown-item" href="/auth/logout"><i class="fas fa-power-off mr-2"></i>Logout</a>
-                </div>
-                </li>
-
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
         </div>
+        <div class="col-md-3">
 
+            <!-- <li class="nav-item dropdown nav-user"> -->
+            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
+                    class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
+            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                <div class="nav-user-info">
+                    <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
+
+                </div>
+                <a class="dropdown-item" href="/auth/logout">
+                    <h6><i class="fas fa-power-off mr-2"></i>Logout</h6>
+                </a>
+            </div>
+            <!-- </li> -->
+
+        </div>
     </div>
     <!-- Header -->
 
@@ -469,6 +533,7 @@
 
 
         dropdownyear();
+        // productadmin();
 
         // $("#Qrcode").click(function () {
 
