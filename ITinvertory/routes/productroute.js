@@ -91,10 +91,27 @@ router.get("/user", function (req, res) {
     });
 });
 
-//show import information
-router.get("/import/:years", function (req, res) {
+//delete database
+router.delete("/delete/:years", function (req, res) {
     const years = req.params.years;
-    const sql = "SELECT inventorynumber,description,model,serialnumber,location,room,receive_date,originalvalue,costcenter,department,vendername FROM `product` WHERE product_year=?";
+    const sql = "DELETE FROM `product` WHERE product_year=?";
+    con.query(sql, [years], function (err, result, fields) {
+        if (err) {
+            // console.log(err)
+            res.status(500).send("Server error");
+            console.log(err)
+        }
+        else {
+            res.json(result);
+            console.log(err)
+        }
+    });
+});
+
+//check scan or not
+router.get("/checkscan/:years", function (req, res) {
+    const years = req.params.years;
+    const sql = "SELECT product_status,product_year FROM `product` WHERE product_status=1 and product_year=?";
     con.query(sql, [years], function (err, result, fields) {
         if (err) {
             // console.log(err)

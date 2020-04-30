@@ -27,6 +27,12 @@
 
 
     <!-- button in table -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <!-- <script text="script" src="../vfs_fonts.js"></script>
+    <script text="script" src="../pdfmake.min.js"></script> -->
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
@@ -97,78 +103,79 @@
         width: 100px;
     }
 
-    #insert {
+    /* #insert,#delete {
         width: 100px;
         height: 35px;
-    }
+    } */
 
     .nav-user-dropdown {
         margin-top: 65px;
     }
-    
+
     .nav-user {}
 
-.nav-user-dropdown {
-    padding: 0px;
-    min-width: 230px;
-    margin: 0px;
-}
+    .nav-user-dropdown {
+        padding: 0px;
+        min-width: 230px;
+        margin: 0px;
+    }
 
-.nav-user-name {}
+    .nav-user-name {}
 
-.nav-user-info {
-    background-color: red;
-    line-height: 1.2;
-    padding: 12px;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 2px 2px 0 0;
-}
+    .nav-user-info {
+        background-color: red;
+        line-height: 1.2;
+        padding: 12px;
+        color: #fff;
+        font-size: 13px;
+        border-radius: 2px 2px 0 0;
+    }
 
-.nav-user-info .status {
-    float: left;
-    top: 7px;
-    left: 0px;
-}
+    .nav-user-info .status {
+        float: left;
+        top: 7px;
+        left: 0px;
+    }
 
-.nav-user-dropdown {}
+    .nav-user-dropdown {}
 
-.nav-user-dropdown .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 12px 22px 15px;
-    clear: both;
-    font-weight: 400;
-    color: #686972;
-    text-align: inherit;
-    white-space: nowrap;
-    background-color: transparent;
-    border: 0;
-    font-size: 13px;
-    line-height: 0.4;
-}
+    .nav-user-dropdown .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 12px 22px 15px;
+        clear: both;
+        font-weight: 400;
+        color: #686972;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+        font-size: 13px;
+        line-height: 0.4;
+    }
 
-.nav-user-dropdown .dropdown-item:hover {
-    /* background-color: #f7f7fb; */
-    color: red;
-}
+    .nav-user-dropdown .dropdown-item:hover {
+        /* background-color: #f7f7fb; */
+        color: red;
+    }
 
-.nav-user .dropdown-toggle::after {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    border: none;
-}
-.nav-user-dropdown {
-    padding: 0px;
-    margin: 0px;
-    margin-top: 74px;
-    
-}
- 
+    .nav-user .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        border: none;
+    }
+
+    .nav-user-dropdown {
+        padding: 0px;
+        margin: 0px;
+        margin-top: 74px;
+
+    }
+
 
 
 
@@ -255,42 +262,63 @@
     </div>
 
 
-    <div class="row">
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
+    <!-- <div class="row"> -->
+    <div class="modal fade" tabindex="-1" id="myModal" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">นำเข้าข้อมูล</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header" style="padding:20px 40px;">
-                        <h3><span class="glyphicon glyphicon-lock"></span> นำเข้าข้อมูล</h3>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body" style="padding:25px 50px;">
-                        <form enctype="multipart/form-data">
-                            <div>
-
-                                <input type="file" name="fileUpload" id="">
-
-                            </div>
-                            <br>
-                            <div>
-                                <button class="btn btn-primary" id="upexcel" type="submit">
-                                    บันทึก</button>
-                                <button class="btn btn-danger "><span
-                                        class="glyphicon glyphicon-off "></span>ยกเลิก</button>
-                            </div>
-                        </form>
-                    </div>
-
+                <div class="modal-body" style="padding:25px 50px;">
+                    <form enctype="multipart/form-data">
+                        <div>
+                            <input type="file" name="fileUpload" id="">
+                        </div>
+                        <br>
+                        <div class="float-right">
+                            <button class="btn btn-primary" id="upexcel" type="submit">
+                                บันทึก</button>
+                            <button class="btn btn-danger "><span
+                                    class="glyphicon glyphicon-off "></span>ยกเลิก</button>
+                        </div>
+                    </form>
                 </div>
 
             </div>
-        </div>
 
-        <div id="myModal" class="modal">
-            <span class="close">&times;</span>
-            <img class="modal-content" id="img01">
-            <!-- <div id="caption"></div> -->
+        </div>
+    </div>
+
+    <!-- <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div> -->
+    <!-- </div> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ลบข้อมูลออก</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    คำเตือน: หากกดยืนยันข้อมูลครุภัณฑ์จะถูกลบออกไปหมด
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">ปิด</button>
+                    <button type="button" class="btn btn-danger" id="savedelete">ยืนยัน</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -311,13 +339,22 @@
                             <div class="col-md-4">
                                 <h2>ข้อมูลครุภัณฑ์​ ประจำปี​ </h2>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-2">
                             </div>
-                            <div class="col-md-1 mt-2" style="text-align: right;">
-                                <!-- <input type="button" id="Export" class="btn btn-primary" value="Excel"> -->
-                            </div>
-                            <div class="col-md-1 mt-2" style="text-align: right;">
-                                <input type="button" id="insert" class="btn btn-danger" value="นำเข้าข้อมูล">
+                            <!-- <div class="col-md-1 mt-2" style="text-align: right;">
+                                <input type="button" id="Export" class="btn btn-primary" value="Excel">
+                            </div> -->
+                            <div class="col-md-6 mt-2" style="text-align: right;">
+                                <!-- <div class="col-md-1 mt-2 "> -->
+                                <input type="button" id="delete" class="btn btn-danger float-right ml-2"
+                                    data-toggle="modal" data-target="#modelId" value="ลบข้อมูลออก">
+
+                                <button type="button" id="insert" class="btn btn-danger float-right ">นำเข้าข้อมูล
+                                </button>
+                                <!-- </div> -->
+                                <!-- <div class="col-md-1 mt-2"> -->
+
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
@@ -346,26 +383,12 @@
                                 <!-- <div class="container-fluid"> -->
                                 <div class="row ">
                                     <div class="col-md-12">
-                                        <!-- <button id="save" type="submit"
-                                            class="btn btn-primary float-right ml-1 "
-                                            style="width: 10%;">
-                                            บังคับถ่ายรูป
-                                        </button>
-                                        <button id="Qrcode"  class="btn btn-primary float-right mb-2  mr-2 ">สร้างคิวอาร์โค้ด</button>
-                                        <button id="Barcode" class="btn btn-primary float-right mb-2 mr-3"> สร้างบาร์โค้ด -->
                                         <select id="years" class="form-control float-right">
                                         </select>
-
-
                                     </div>
                                 </div>
-                                <!-- </div> -->
-
-                                <!-- </p> -->
                             </div>
-
                         </div>
-
                     </div>
 
                     <!-- <form id="frm-example"> -->
@@ -400,13 +423,7 @@
         </div>
     </div>
 
-    <!-- <div id="second">
-        <div class="container-fluid my-4">
-            <div>
-                <div id="qrcode" class="my-4"></div>
-            </div>
-        </div>
-    </div> -->
+
 
     <!-- Footer -->
     <footer class="page-footer font-small blue " style="background-color: #fe0000;">
@@ -428,9 +445,25 @@
 
     $(document).ready(function () {
 
-        // function mouseOver() {
-        //     document.getElementById("demo").style.color = "red";
+        // pdfMake.fonts = {
+        //     THSarabun: {
+        //         normal: 'THSarabun.ttf',
+        //         bold: './font/THSarabun-Bold.ttf',
+        //         italics: './font/THSarabun-Italic.ttf',
+        //         bolditalics: './font/THSarabun-BoldItalic.ttf'
+        //     }
         // }
+
+        // this.pdfMake = this.pdfMake || {};
+        // this.pdfMake.vfs = {
+
+        //     THSarabun: {
+        //         normal: './font/THSarabun-Bold Italic.ttf',
+        //         bold: './font/THSarabun-Bold.ttf',
+        //         italics: './font/THSarabun-Italic.ttf',
+        //         bolditalics: './font/THSarabun-BoldItalic.ttf'
+        //     }
+        // };
 
         $('#yearmodal').val(year);
         $('#yearmodal').prop('disabled', true);
@@ -499,47 +532,67 @@
                 { data: "product_status" }
             ],
             dom: 'Bfrtip',
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdf',
-                'print',
-                // 'colvis'
-            ],
+            buttons:
+                [
+                    'copyHtml5',
+                    'excelHtml5',
+                    // 'csvHtml5',
+                    // 'pdf',
+                    'print',
+                    // 'colvis',
+                    // { // กำหนดพิเศษเฉพาะปุ่ม pdf
+                    //     "extend": 'pdf', // ปุ่มสร้าง pdf ไฟล์
+                    //     "text": 'PDF', // ข้อความที่แสดง
+                    //     // "pageSize": 'A4',   // ขนาดหน้ากระดาษเป็น A4            
+                    //     "customize": function (doc) { // ส่วนกำหนดเพิ่มเติม ส่วนนี้จะใช้จัดการกับ pdfmake
+                    //         // กำหนด style หลัก
+                    //         doc.defaultStyle = {
+                    //             // font: 'THSarabun',
+                    //             fontSize: 16
+                    //         };
+                    //         // กำหนดความกว้างของ header แต่ละคอลัมน์หัวข้อ
+                    //         doc.content[1].table.widths = [50, 'auto', '*', '*'];
+                    //         doc.styles.tableHeader.fontSize = 16; // กำหนดขนาด font ของ header
+                    //         var rowCount = doc.content[1].table.body.length; // หาจำนวนแะวทั้งหมดในตาราง
+                    //         // วนลูปเพื่อกำหนดค่าแต่ละคอลัมน์ เช่นการจัดตำแหน่ง
+                    //         for (i = 1; i < rowCount; i++) { // i เริ่มที่ 1 เพราะ i แรกเป็นแถวของหัวข้อ
+                    //             doc.content[1].table.body[i][0].alignment = 'center'; // คอลัมน์แรกเริ่มที่ 0
+                    //             doc.content[1].table.body[i][1].alignment = 'center';
+                    //             doc.content[1].table.body[i][2].alignment = 'left';
+                    //             doc.content[1].table.body[i][3].alignment = 'right';
+                    //         };
+                    //         console.log(doc); // เอาไว้ debug ดู doc object proptery เพื่ออ้างอิงเพิ่มเติม
+                    //     }
+                    // },
+
+                ],
             responsive: true
         });
 
-        $('form').submit(function () {
-            // var file = "";
-            const formData = new FormData(this);
+        // $('form').submit(function () {
+        //     // var file = "";
+        //     const formData = new FormData(this);
 
-            $.ajax({
-                method: "POST",
-                url: "/uploadfile",
-                data: formData,
-                contentType: false,
-                processData: false
-            }).done(function (dataSet, state, xhr) {
-                // console.log(dataSet)
-                window.location.replace(dataSet)
-                // alert("aaa")
+        //     $.ajax({
+        //         method: "POST",
+        //         url: "/uploadfile",
+        //         data: formData,
+        //         contentType: false,
+        //         processData: false
+        //     }).done(function (dataSet, state, xhr) {
+        //         // console.log(dataSet)
+        //         window.location.replace(dataSet)
+        //         // alert("aaa")
 
-            }).fail(function (xhr, state, err) {
-                console.log(err)
-            })
+        //     }).fail(function (xhr, state, err) {
+        //         console.log(err)
+        //     })
 
-        });
+        // });
 
 
         dropdownyear();
         // productadmin();
-
-        // $("#Qrcode").click(function () {
-
-        //     window.location.replace("qrcode.html");
-        // });
-
 
 
     });
@@ -613,14 +666,25 @@
             url: "/product/status/" + getyear
         }).done(function (dataSet, state, xhr) {
 
+            if (dataSet.length == 0) {
+                $("#delete").hide();
+            }
+            else {
+                $("#delete").show();
+                $("#insert").hide();
+                console.log(dataSet[0].product_status)
+                for (let i = 0; i < dataSet.length; i++) {
+                    if (dataSet[i].product_status == 1) {
+                        $("#delete").prop('disabled', true);
+                        console.log("aaaaaa")
+                        // $("#dateStart").prop('disabled', true);
+                    }
+                }
+            }
+
             for (let i = 0; i < dataSet.length; i++) {
                 dataSet[i].No = i + 1;
                 dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
-
-                // if(dataSet[i].image!=null){
-                //     $('#imggg').attr("src", "../img/"+dataSet[i].image+"");
-                //     console.log(dataSet[0].image)
-                // }
 
                 if (dataSet[i].product_status == 0) {
                     dataSet[i].product_status = '<span class="badge badge-danger "style="font-size: 14px;">สูญหาย</span>'
@@ -644,18 +708,117 @@
 
             // $('.dt-button.buttons-excel.buttons-html5').addClass('btn')
             // $('.dt-button.buttons-print').addClass('btn')
+            $("#insert").click(function () {
+
+                $('form').submit(function () {
+                    // var file = "";
+                    const formData = new FormData(this);
+                    $.ajax({
+                        method: "POST",
+                        url: "/uploadfile",
+                        data: formData,
+                        contentType: false,
+                        processData: false
+                    }).done(function (dataSet, state, xhr) {
+                        // console.log(dataSet)
+                        window.location.replace(dataSet)
+                        // alert("aaa")
+
+                    }).fail(function (xhr, state, err) {
+                        console.log(err)
+                    })
+
+                });
+
+                // $.ajax({
+                //     method: "GET",
+                //     url: "product/checkscan/" + new Date().getFullYear()
+                // }).done(function (dataSet2, state, xhr) {
+                //     console.log(dataSet2)
+                //     if (dataSet2.length == 0) {
+                //         $('form').submit(function () {
+                //             // var file = "";
+                //             const formData = new FormData(this);
+                //             $.ajax({
+                //                 method: "POST",
+                //                 url: "/uploadfile",
+                //                 data: formData,
+                //                 contentType: false,
+                //                 processData: false
+                //             }).done(function (dataSet, state, xhr) {
+                //                 // console.log(dataSet)
+                //                 window.location.replace(dataSet)
+                //                 // alert("aaa")
+
+                //             }).fail(function (xhr, state, err) {
+                //                 console.log(err)
+                //             })
+
+                //         });
+                //     }
+
+                //     for (let i = 0; i < dataSet2.length; i++) {
+                //         if (dataSet2[i].product_year == dataSet.product_year && dataSet2[i].product_status == 1) {
+                //             alert("ไม่สามารถนำเข้าได้เนื่องจากได้เริ่มตรวจนับแล้ว")
+                //         }
+                //         else if (dataSet2[i].product_year == dataSet.product_year) {
+                //             alert("ไม่สามารถนำเข้าได้เนื่องกรุณาลบข้อมูล")
+                //         }
+                //         else {
+                //             $('form').submit(function () {
+                //                 // var file = "";
+                //                 const formData = new FormData(this);
+
+                //                 $.ajax({
+                //                     method: "POST",
+                //                     url: "/uploadfile",
+                //                     data: formData,
+                //                     contentType: false,
+                //                     processData: false
+                //                 }).done(function (dataSet, state, xhr) {
+                //                     // console.log(dataSet)
+                //                     window.location.replace(dataSet)
+                //                     // alert("aaa")
+
+                //                 }).fail(function (xhr, state, err) {
+                //                     console.log(err)
+                //                 })
+
+                //             });
+                //         }
+
+                //     }
+
+                // }).fail(function (xhr, state, err) {
+
+                // })
+            })
+            $("#savedelete").click(function () {
+                // alert("คำเตือน:ข่อมูลครุภันฑ์จะหายทั้งหมด")
+                $.ajax({
+                    method: "delete",
+                    url: "/product/delete/" + dataSet[0].product_year
+                }).done(function (dataSet, state, xhr) {
+                    window.location.replace("/productstatusadmin")
+                }).fail(function (xhr, state, err) {
+
+                })
+            })
+
 
             $('#save').on('click', function (e) {
                 var form = this;
                 var rows_selected = tableUser.column(0).checkboxes.selected();
                 let rowdata = rows_selected.join(",")
+                const arr = rowdata.split(",");
+                // console.log(arr)
                 // alert(getyear);
 
                 if (rows_selected.length != 0) {
                     $.ajax({
                         method: "PUT",
                         url: "/takephoto/" + getyear,
-                        data: { year: getyear, records: rowdata }
+                        data: { year: getyear, records: arr }
                     }).done(function (dataSet, state, xhr) {
                         window.location.replace("/productstatusadmin")
                     }).fail(function (xhr, state, error) {
