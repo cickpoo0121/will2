@@ -53,94 +53,97 @@
     .highlightRow {
         color: red;
     }
+
     .nav-user {}
 
-.nav-user-dropdown {
-    padding: 0px;
-    min-width: 230px;
-    margin: 0px;
-}
+    .nav-user-dropdown {
+        padding: 0px;
+        min-width: 230px;
+        margin: 0px;
+    }
 
-.nav-user-name {}
+    .nav-user-name {}
 
-.nav-user-info {
-    background-color: red;
-    line-height: 1.2;
-    padding: 12px;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 2px 2px 0 0;
-}
+    .nav-user-info {
+        background-color: red;
+        line-height: 1.2;
+        padding: 12px;
+        color: #fff;
+        font-size: 13px;
+        border-radius: 2px 2px 0 0;
+    }
 
-.nav-user-info .status {
-    float: left;
-    top: 7px;
-    left: 0px;
-}
+    .nav-user-info .status {
+        float: left;
+        top: 7px;
+        left: 0px;
+    }
 
-.nav-user-dropdown {}
+    .nav-user-dropdown {}
 
-.nav-user-dropdown .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 12px 22px 15px;
-    clear: both;
-    font-weight: 400;
-    color: #686972;
-    text-align: inherit;
-    white-space: nowrap;
-    background-color: transparent;
-    border: 0;
-    font-size: 13px;
-    line-height: 0.4;
-}
+    .nav-user-dropdown .dropdown-item {
+        display: block;
+        width: 100%;
+        padding: 12px 22px 15px;
+        clear: both;
+        font-weight: 400;
+        color: #686972;
+        text-align: inherit;
+        white-space: nowrap;
+        background-color: transparent;
+        border: 0;
+        font-size: 13px;
+        line-height: 0.4;
+    }
 
-.nav-user-dropdown .dropdown-item:hover {
-    /* background-color: #f7f7fb; */
-    color: red;
-}
+    .nav-user-dropdown .dropdown-item:hover {
+        /* background-color: #f7f7fb; */
+        color: red;
+    }
 
-.nav-user .dropdown-toggle::after {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    border: none;
-}
-.nav-user-dropdown {
-    padding: 0px;
-    margin: 0px;
-    margin-top: 74px;
-    
-}
+    .nav-user .dropdown-toggle::after {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: .255em;
+        vertical-align: .255em;
+        content: "";
+        border: none;
+    }
+
+    .nav-user-dropdown {
+        padding: 0px;
+        margin: 0px;
+        margin-top: 74px;
+
+    }
 </style>
 
 <body>
     <!-- Header -->
-        <div class="row">
-            <div class="col-md-9">
-                <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
-            </div>
-            <div class="col-md-3">
-
-                <!-- <li class="nav-item dropdown nav-user"> -->
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
-                        class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
-                    aria-labelledby="navbarDropdownMenuLink2">
-                    <div class="nav-user-info">
-                        <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
-
-                    </div>
-                    <a class="dropdown-item" href="/auth/logout"><h6><i class="fas fa-power-off mr-2"></i>Logout</h6></a>
-                </div>
-                <!-- </li> -->
-
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
         </div>
+        <div class="col-md-3">
+
+            <!-- <li class="nav-item dropdown nav-user"> -->
+            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
+                    class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
+            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                <div class="nav-user-info">
+                    <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
+
+                </div>
+                <a class="dropdown-item" href="/auth/logout">
+                    <h6><i class="fas fa-power-off mr-2"></i>Logout</h6>
+                </a>
+            </div>
+            <!-- </li> -->
+
+        </div>
+    </div>
     <!-- Header -->
 
     <!-- Menu -->
@@ -315,7 +318,7 @@
                     console.log(data[0].role);
                     if (data[0].role == 1) {
                         $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");     
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
                     } else if (data[0].role == 0) {
                         window.location.replace("/periodOfCheckingAsset");
                     } else if (email == undefined) {
@@ -414,6 +417,13 @@
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
 
+            if (dataSet.length == 0) {
+                $("#btnedit").hide();
+            }
+            else {
+                $("#btnedit").show();
+            }
+
             for (let i = 0; i < dataSet.length; i++) {
                 if (dataSet[i].year_alert == new Date().getFullYear()) {
                     // $("#btnadd").prop('disabled', true);
@@ -457,6 +467,7 @@
                         }).done(function (dataSet, state, xhr) {
                             productadmin();
                             $("#exampleModalLong").modal("toggle");
+                            // $("#editdate").show();
                         }).fail(function (xhr, state, error) {
 
                         })
@@ -473,8 +484,21 @@
                 $("#dateStart").val(selectedData.date_start);
                 $("#dateEnd").val(selectedData.date_end);
 
-                $("#editdate").click(function () {
+                $.ajax({
+                    method: "GET",
+                    url: "product/checkscan/" + selectedData.year_alert
+                }).done(function (dataSet, state, xhr) {
+                    // console.log(dataSet[0])
+                    for (let i = 0; i < dataSet.length; i++) {
+                        if (dataSet[0].product_status == 1) {
+                            $("#dateStart").prop('disabled', true);
+                        }
+                    }
+                }).fail(function (xhr, sate, err) {
 
+                })
+
+                $("#editdate").click(function () {
 
                     let dateStart = $("#dateStart").val();
                     let dateEnd = $("#dateEnd").val();
@@ -495,7 +519,7 @@
                     else {
                         $.ajax({
                             method: "PUT",
-                            url: "/datealert/update/"+year,
+                            url: "/datealert/update/" + year,
                             data: { datestart: dateStart, dateend: dateEnd }
                         }).done(function (dataSet, state, xhr) {
                             productadmin();
