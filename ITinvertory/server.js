@@ -53,6 +53,7 @@ const upload = multer({ storage: storageOption }).single("fileUpload");
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 app.use("/img", express.static(path.join(__dirname, 'img')));
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 app.use("/style.css", express.static(path.join(__dirname, 'style.css')));
 app.use("/qrcode.min.js", express.static(path.join(__dirname, 'qrcode.min.js')));
 app.use("/barcode.min.js", express.static(path.join(__dirname, 'barcode.min.js')));
