@@ -102,6 +102,7 @@
         width: 100px;
         height: 35px;
     }
+
     .nav-user {}
 
     .nav-user-dropdown {
@@ -165,7 +166,6 @@
         margin-top: 74px;
 
     }
-
 </style>
 
 <body>
@@ -286,7 +286,7 @@
                                 <!-- <input type="button" id="Export" class="btn btn-primary" value="Excel"> -->
                             </div>
                             <div class="col-md-1 mt-2" style="text-align: right;">
-                               
+
                             </div>
                         </div>
                     </div>
@@ -303,11 +303,8 @@
                                 <!-- <div id="test"></div> -->
                                 <button id="Qrcode" class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
                                 <button id="Barcode" class="btn btn-primary text-center">สร้างบาร์โค้ด</button>
-                                <button id="save" type="submit"
-                                    class="btn btn-primary text-center">บังคับถ่ายรูป</button>
-                                <!-- <select id="years" class="form-control">
-                                </select> -->
-
+                                <!-- <button id="save" type="submit"
+                                    class="btn btn-primary text-center">บังคับถ่ายรูป</button> -->
                             </div>
 
                             <div class="col-md-2 mt-2">
@@ -492,35 +489,13 @@
             buttons: [
                 'copyHtml5',
                 'excelHtml5',
-                'csvHtml5',
-                'pdf',
+                // 'csvHtml5',
+                // 'pdf',
                 'print',
                 // 'colvis'
             ],
             responsive: true
         });
-
-        $('form').submit(function () {
-            // var file = "";
-            const formData = new FormData(this);
-
-            $.ajax({
-                method: "POST",
-                url: "/uploadfile",
-                data: formData,
-                contentType: false,
-                processData: false
-            }).done(function (dataSet, state, xhr) {
-                // console.log(dataSet)
-                window.location.replace(dataSet)
-                // alert("aaa")
-
-            }).fail(function (xhr, state, err) {
-                console.log(err)
-            })
-
-        });
-
 
         dropdownyear();
 
@@ -570,10 +545,6 @@
                 dataSet[i].No = i + 1;
                 dataSet[i].locateroom = dataSet[i].location + "-" + dataSet[i].room
 
-                // if(dataSet[i].image!=null){
-                //     $('#imggg').attr("src", "../img/"+dataSet[i].image+"");
-                //     console.log(dataSet[0].image)
-                // }
 
                 if (dataSet[i].product_status == 0) {
                     dataSet[i].product_status = '<span class="badge badge-danger "style="font-size: 14px;">สูญหาย</span>'
@@ -598,26 +569,26 @@
             // $('.dt-button.buttons-excel.buttons-html5').addClass('btn')
             // $('.dt-button.buttons-print').addClass('btn')
 
-            $('#save').on('click', function (e) {
-                var form = this;
-                var rows_selected = tableUser.column(0).checkboxes.selected();
-                let rowdata = rows_selected.join(",")
-                // alert(getyear);
+            // $('#save').on('click', function (e) {
+            //     var form = this;
+            //     var rows_selected = tableUser.column(0).checkboxes.selected();
+            //     let rowdata = rows_selected.join(",")
+            //     // alert(getyear);
 
-                if (rows_selected.length != 0) {
-                    $.ajax({
-                        method: "PUT",
-                        url: "/takephoto/" + getyear,
-                        data: { year: getyear, records: rowdata }
-                    }).done(function (dataSet, state, xhr) {
-                        window.location.replace("/committee_AssetStatus")
-                    }).fail(function (xhr, state, error) {
-                        console.log(error)
-                    })
-                } else {
-                    alert("Please select item")
-                }
-            });
+            //     if (rows_selected.length != 0) {
+            //         $.ajax({
+            //             method: "PUT",
+            //             url: "/takephoto/" + getyear,
+            //             data: { year: getyear, records: rowdata }
+            //         }).done(function (dataSet, state, xhr) {
+            //             window.location.replace("/committee_AssetStatus")
+            //         }).fail(function (xhr, state, error) {
+            //             console.log(error)
+            //         })
+            //     } else {
+            //         alert("Please select item")
+            //     }
+            // });
 
             $("#Qrcode").click(function () {
 

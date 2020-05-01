@@ -94,7 +94,7 @@
         <div class="row ">
             <div class="mr-5"></div>
             <div class="col-2 ml-5">
-                <div class="card">
+                <div class="card text-white bg-success">
                     <div class="card-body">
                         <h4 class="card-title">ปกติ</h4>
                         <h2 id="normal" class="card-text"></h2>
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="col-2 ">
-                <div class="card">
+                <div class="card text-white bg-danger">
                     <div class="card-body">
                         <h4 class="card-title">สูญหาย</h4>
                         <h2 id="missing" class="card-text"></h2>
@@ -112,7 +112,7 @@
                 </div>
             </div>
             <div class="col-2">
-                <div class="card">
+                <div class="card text-white bg-primary">
                     <div class="card-body">
                         <h4 class="card-title">ส่งซ่อม</h4>
                         <h2 id="maintain" class="card-text"></h2>
@@ -121,16 +121,16 @@
                 </div>
             </div>
             <div class="col-2">
-                <div class="card">
+                <div class="card text-white" style="background-color: #343a40;">
                     <div class="card-body">
-                        <h4 class="card-title">ไม่ใช่ของสำนัก</h4>
+                        <h4 class="card-title">ไม่ระบุ</h4>
                         <h2 id="other" class="card-text"></h2>
                      
                     </div>
                 </div>
             </div>
             <div class="col-2">
-                <div class="card">
+                <div class="card text-white bg-info">
                     <div class="card-body">
                         <h4 class="card-title">ทั้งหมด</h4>
                         <h2 id="all" class="card-text"></h2>
@@ -297,24 +297,24 @@
                         }
                     },
                     series: [{
-                        name: 'Normal',
+                        name: 'ปกติ',
                         data: [countn],
-                        color: '#4f81bc'
+                        color: '#28a745'
 
                     }, {
-                        name: 'Missing',
+                        name: 'สูญหาย',
                         data: [countm],
-                        color: '#c0504e'
+                        color: '#dc3545'
 
                     }, {
-                        name: 'Repair',
+                        name: 'ส่งซ่อม',
                         data: [countr],
-                        color: '#9bbb58'
+                        color: '#007bff'
 
                     }, {
-                        name: 'Other',
+                        name: 'ไม่ระบุ',
                         data: [counto],
-                        color: '#23bfaa'
+                        color: '#343a40'
 
                     }]
                 });

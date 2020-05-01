@@ -123,7 +123,7 @@
     .nav-user-name {}
 
     .nav-user-info {
-        background-color: red;
+        background-color: #CC1D10;
         line-height: 1.2;
         padding: 12px;
         color: #fff;
@@ -674,7 +674,7 @@
                 $("#insert").hide();
                 console.log(dataSet[0].product_status)
                 for (let i = 0; i < dataSet.length; i++) {
-                    if (dataSet[i].product_status == 1) {
+                    if (dataSet[i].product_status == 1||dataSet[i].product_status == 2||dataSet[i].product_status == 3) {
                         $("#delete").prop('disabled', true);
                         console.log("aaaaaa")
                         // $("#dateStart").prop('disabled', true);

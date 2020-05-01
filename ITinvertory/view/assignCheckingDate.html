@@ -65,7 +65,7 @@
     .nav-user-name {}
 
     .nav-user-info {
-        background-color: red;
+        background-color: #CC1D10;
         line-height: 1.2;
         padding: 12px;
         color: #fff;
@@ -455,9 +455,9 @@
                     // alert(time2date)
 
                     if (time2date <= 0) {
-                        alert("Please check you select Date")
-                    } else if (dateStart == "" && dateEnd == "") {
-                        alert("Please select Date")
+                        alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+                    } else if (dateStart == "" || dateEnd == "") {
+                        alert("กรุณาเลือกวันที่")
                     }
                     else {
                         $.ajax({
@@ -512,9 +512,9 @@
                     // alert(time2date)
 
                     if (time2date <= 0) {
-                        alert("Please check you select Date")
-                    } else if (dateStart == "" && dateEnd == "") {
-                        alert("Please select Date")
+                        alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+                    } else if (dateStart == "" || dateEnd == "") {
+                        alert("กรุณาเลือกวันที่")
                     }
                     else {
                         $.ajax({
