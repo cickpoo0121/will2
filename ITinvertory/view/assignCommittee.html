@@ -54,68 +54,70 @@
             color: red;
             margin-top: 10px;
         }
+
         .nav-user {}
 
-.nav-user-dropdown {
-    padding: 0px;
-    min-width: 230px;
-    margin: 0px;
-}
+        .nav-user-dropdown {
+            padding: 0px;
+            min-width: 230px;
+            margin: 0px;
+        }
 
-.nav-user-name {}
+        .nav-user-name {}
 
-.nav-user-info {
-    background-color: #CC1D10;
-    line-height: 1.2;
-    padding: 12px;
-    color: #fff;
-    font-size: 13px;
-    border-radius: 2px 2px 0 0;
-}
+        .nav-user-info {
+            background-color: #CC1D10;
+            line-height: 1.2;
+            padding: 12px;
+            color: #fff;
+            font-size: 13px;
+            border-radius: 2px 2px 0 0;
+        }
 
-.nav-user-info .status {
-    float: left;
-    top: 7px;
-    left: 0px;
-}
+        .nav-user-info .status {
+            float: left;
+            top: 7px;
+            left: 0px;
+        }
 
-.nav-user-dropdown {}
+        .nav-user-dropdown {}
 
-.nav-user-dropdown .dropdown-item {
-    display: block;
-    width: 100%;
-    padding: 12px 22px 15px;
-    clear: both;
-    font-weight: 400;
-    color: #686972;
-    text-align: inherit;
-    white-space: nowrap;
-    background-color: transparent;
-    border: 0;
-    font-size: 13px;
-    line-height: 0.4;
-}
+        .nav-user-dropdown .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 12px 22px 15px;
+            clear: both;
+            font-weight: 400;
+            color: #686972;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+            font-size: 13px;
+            line-height: 0.4;
+        }
 
-.nav-user-dropdown .dropdown-item:hover {
-    /* background-color: #f7f7fb; */
-    color: red;
-}
+        .nav-user-dropdown .dropdown-item:hover {
+            /* background-color: #f7f7fb; */
+            color: red;
+        }
 
-.nav-user .dropdown-toggle::after {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    border: none;
-}
-.nav-user-dropdown {
-    padding: 0px;
-    margin: 0px;
-    margin-top: 74px;
-    
-}
+        .nav-user .dropdown-toggle::after {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: .255em;
+            vertical-align: .255em;
+            content: "";
+            border: none;
+        }
+
+        .nav-user-dropdown {
+            padding: 0px;
+            margin: 0px;
+            margin-top: 74px;
+
+        }
     </style>
 </head>
 
@@ -132,13 +134,14 @@
             <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
                     class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
-            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
-                aria-labelledby="navbarDropdownMenuLink2">
+            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
                 <div class="nav-user-info">
                     <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
 
                 </div>
-                <a class="dropdown-item" href="/auth/logout"><h6><i class="fas fa-power-off mr-2"></i>Logout</h6></a>
+                <a class="dropdown-item" href="/auth/logout">
+                    <h6><i class="fas fa-power-off mr-2"></i>Logout</h6>
+                </a>
             </div>
             <!-- </li> -->
 
@@ -334,7 +337,7 @@
                     console.log(data[0].role);
                     if (data[0].role == 1) {
                         $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");     
+                        $('#imguser').attr("src", "" + dataSet.photo + "");
                     } else if (data[0].role == 0) {
                         window.location.replace("/committeeBiodata");
                     } else if (email == undefined) {
@@ -356,9 +359,12 @@
                 email: {
                     required: true,
                     email: true
-                }
+                },
+
             },
             errorClass: "errorMessage"
+
+
         });
 
 
@@ -374,13 +380,20 @@
             $('#submitAdd').show();
             $('#submitUpdate').hide()
 
+            form=$("#setvalidation");
+            form.validate();
             $('#submitAdd').click(function () {
                 const yrearassign = year
                 const email = $('#email').val();
-                if (email == "") {
-
-                } else {
-
+                
+                if (form.valid()==false) {
+                    // alert("Valid: " + form.valid())
+                    
+                    // return false;
+                } 
+                else {
+                //     alert("test validation")
+                //     return false;
                     $.ajax({
                         method: "POST",
                         url: "/assign/committee",
@@ -393,6 +406,23 @@
                         console.log(err)
                     })
                 }
+
+                // if (email == "") {
+
+                // } else {
+
+                //     $.ajax({
+                //         method: "POST",
+                //         url: "/assign/committee",
+                //         data: { year: yrearassign, email: email }
+                //     }).done(function (dataSet, state, xhr) {
+                //         getcommittee();
+                //         // $("#exampleModalLong").modal(toggle)
+                //         console.log(dataSet)
+                //     }).fail(function (xhr, state, err) {
+                //         console.log(err)
+                //     })
+                // }
             });
 
         })
@@ -466,9 +496,25 @@
             //display modified JSON in DataTable
             tableUser.rows.add(dataSet).draw();
 
+            // console.log(getyear+"111111");
+            // console.log(new Date().getFullYear()+"11111111")
+            if (getyear != new Date().getFullYear()) {
+                // $("#assign").prop('disabled', true);
+                // $(".editMail").prop('disabled', true);
+                $("#assign").hide();
+                $(".editMail").hide();
+                // console.log(getyear+"11111")
+            }
+            else {
+                // $("#assign").prop('disabled', false);
+                // $(".editMail").prop('disabled', false);
+                $("#assign").show();
+                $(".editMail").show();
+            }
+
             selectedData = tableUser.row(1).data();
-                // var aa=tableUser.row(':eq(0)', { page: 'email' }).select();
-                console.log(selectedData.email)
+            // var aa=tableUser.row(':eq(0)', { page: 'email' }).select();
+            // console.log(selectedData.email)
             //editEmail
             $('#mytable tbody').on('click', '.editMail', function () {
                 const currentRow = $(this).parents('tr')

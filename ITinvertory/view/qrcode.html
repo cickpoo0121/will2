@@ -51,7 +51,7 @@
         for (var i = 0; i < Math.ceil(data.length / 12); i++) {
             $("#qrcode").append("<div class='row' id='aa" + [i] + "' ></div>")
             for (let j = 0; j < 12; j++) {
-                $("#aa" + [i] + "").append("<div class='col-md-2 col-sm-2 col-lg-1' id='bb" + [j] + "' ></div>")
+                $("#aa" + [i] + "").append("<div class='col-md-2 col-sm-2 col-lg-1 my-2' id='bb" + [j] + "' ></div>")
                 var dataqr = new QRCode(document.querySelector("#aa" + [i] + " #bb" + [j] + ""), {
                     width: 100,
                     height: 100,

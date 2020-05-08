@@ -11,7 +11,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"> -->
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -27,12 +27,6 @@
 
 
     <!-- button in table -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.62/pdfmake.min.js"></script>
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <!-- <script text="script" src="../vfs_fonts.js"></script>
-    <script text="script" src="../pdfmake.min.js"></script> -->
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
@@ -277,7 +271,7 @@
                 <div class="modal-body" style="padding:25px 50px;">
                     <form enctype="multipart/form-data">
                         <div>
-                            <input type="file" name="fileUpload" id="">
+                            <input type="file" name="fileUpload" id="uploadexcel">
                         </div>
                         <br>
                         <div class="float-right">
@@ -484,10 +478,10 @@
 
 
         tableUser = $("#mytable").DataTable({
-            "ordering": false,
-            "info": false,
-            "lengthChange": false,
-            "pageLength": 100,
+            // "ordering": false,
+            // "info": false,
+            // "lengthChange": false,
+            // "pageLength": 100,
             'columnDefs': [
                 {
                     'targets': 0,
@@ -668,17 +662,27 @@
 
             if (dataSet.length == 0) {
                 $("#delete").hide();
+                $("#insert").show();
             }
             else {
                 $("#delete").show();
                 $("#insert").hide();
-                console.log(dataSet[0].product_status)
+                console.log(dataSet[0].product_status+"aaaa")
                 for (let i = 0; i < dataSet.length; i++) {
-                    if (dataSet[i].product_status == 1||dataSet[i].product_status == 2||dataSet[i].product_status == 3) {
+                    if (dataSet[i].product_status != 0) {
                         $("#delete").prop('disabled', true);
                         console.log("aaaaaa")
-                        // $("#dateStart").prop('disabled', true);
                     }
+                    else {
+                        $("#delete").prop('disabled', false);
+                    }
+                }
+
+                if (getyear != new Date().getFullYear()) {
+                    $("#delete").hide();
+                }
+                else {
+                    $("#delete").show();
                 }
             }
 
@@ -711,93 +715,45 @@
             $("#insert").click(function () {
 
                 $('form').submit(function () {
-                    // var file = "";
-                    const formData = new FormData(this);
-                    $.ajax({
-                        method: "POST",
-                        url: "/uploadfile",
-                        data: formData,
-                        contentType: false,
-                        processData: false
-                    }).done(function (dataSet, state, xhr) {
-                        // console.log(dataSet)
-                        window.location.replace(dataSet)
-                        // alert("aaa")
 
-                    }).fail(function (xhr, state, err) {
-                        console.log(err)
-                    })
+                    fileName = $("#uploadexcel").val();
+                    fileExtension = fileName.replace(/^.*\./, '');
+                    // alert(fileExtension);
+
+                    if ($("#uploadexcel")[0].files.length == 0) {
+                        alert("No file selected")
+                        return;
+                    }
+                    else if (fileExtension != "xlsx") {
+                        alert("please select only excel file");
+                    }
+                    else {
+                        const formData = new FormData(this);
+                        $.ajax({
+                            method: "POST",
+                            url: "/uploadfile",
+                            data: formData,
+                            contentType: false,
+                            processData: false
+                        }).done(function (dataSet, state, xhr) {
+                            // console.log(dataSet)
+                            window.location.replace(dataSet)
+                            // alert("aaa")
+
+                        }).fail(function (xhr, state, err) {
+                            console.log(err)
+                        })
+                    }
 
                 });
 
-                // $.ajax({
-                //     method: "GET",
-                //     url: "product/checkscan/" + new Date().getFullYear()
-                // }).done(function (dataSet2, state, xhr) {
-                //     console.log(dataSet2)
-                //     if (dataSet2.length == 0) {
-                //         $('form').submit(function () {
-                //             // var file = "";
-                //             const formData = new FormData(this);
-                //             $.ajax({
-                //                 method: "POST",
-                //                 url: "/uploadfile",
-                //                 data: formData,
-                //                 contentType: false,
-                //                 processData: false
-                //             }).done(function (dataSet, state, xhr) {
-                //                 // console.log(dataSet)
-                //                 window.location.replace(dataSet)
-                //                 // alert("aaa")
-
-                //             }).fail(function (xhr, state, err) {
-                //                 console.log(err)
-                //             })
-
-                //         });
-                //     }
-
-                //     for (let i = 0; i < dataSet2.length; i++) {
-                //         if (dataSet2[i].product_year == dataSet.product_year && dataSet2[i].product_status == 1) {
-                //             alert("ไม่สามารถนำเข้าได้เนื่องจากได้เริ่มตรวจนับแล้ว")
-                //         }
-                //         else if (dataSet2[i].product_year == dataSet.product_year) {
-                //             alert("ไม่สามารถนำเข้าได้เนื่องกรุณาลบข้อมูล")
-                //         }
-                //         else {
-                //             $('form').submit(function () {
-                //                 // var file = "";
-                //                 const formData = new FormData(this);
-
-                //                 $.ajax({
-                //                     method: "POST",
-                //                     url: "/uploadfile",
-                //                     data: formData,
-                //                     contentType: false,
-                //                     processData: false
-                //                 }).done(function (dataSet, state, xhr) {
-                //                     // console.log(dataSet)
-                //                     window.location.replace(dataSet)
-                //                     // alert("aaa")
-
-                //                 }).fail(function (xhr, state, err) {
-                //                     console.log(err)
-                //                 })
-
-                //             });
-                //         }
-
-                //     }
-
-                // }).fail(function (xhr, state, err) {
-
-                // })
             })
             $("#savedelete").click(function () {
                 // alert("คำเตือน:ข่อมูลครุภันฑ์จะหายทั้งหมด")
+                // console.log(getyear)
                 $.ajax({
                     method: "delete",
-                    url: "/product/delete/" + dataSet[0].product_year
+                    url: "/product/delete/" + getyear
                 }).done(function (dataSet, state, xhr) {
                     window.location.replace("/productstatusadmin")
                 }).fail(function (xhr, state, err) {

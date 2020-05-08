@@ -12,7 +12,7 @@ get http://localhost:8080/years
 Content-Type: application/json
 
 ### show product of guset page
-get http://localhost:8080/product/guest/2020
+get http://localhost:8080/product/guest/2019
 Content-Type: application/json
 
 ### productstatus

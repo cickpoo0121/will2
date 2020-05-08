@@ -44,8 +44,9 @@ router.get("/guest", function (req, res) {
 
 //show product of guset page
 router.get("/guest/:year", function (req, res) {
-    date = new Date();
-    const year = date.getFullYear();
+    // date = new Date();
+    // const year = date.getFullYear();
+    const year = req.params.year;
     const sql = 'SELECT description,model,location,room,product_status,image FROM `product` WHERE product_status=1 and product_year =? ORDER BY asset ASC';
     con.query(sql, [year], function (err, result, fields) {
         if (err) {
