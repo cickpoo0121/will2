@@ -60,6 +60,7 @@ app.use("/vfs_fonts.js", express.static(path.join(__dirname, 'vfs_fonts.js')));
 app.use("/font", express.static(path.join(__dirname, 'font')));
 app.use("/qrcode.min.js", express.static(path.join(__dirname, 'qrcode.min.js')));
 app.use("/barcode.min.js", express.static(path.join(__dirname, 'barcode.min.js')));
+app.use("/sweetalert.min.js", express.static(path.join(__dirname, 'sweetalert.min.js')));
 app.use(express.static(path.join(__dirname, "public")));
 // app.use("/static", express.static('./static/'));
 

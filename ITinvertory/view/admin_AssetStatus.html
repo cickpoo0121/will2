@@ -44,6 +44,7 @@
     <script type="text/javascript"
         src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
+        <script text="script" src="sweetalert.min.js"></script>
 
 
 
@@ -439,6 +440,21 @@
 
     $(document).ready(function () {
 
+
+        
+        // bootbox.dialog({
+        //     message: "I am a custom dialog",
+        //     title: "Custom title",
+        //     buttons: {
+        //         main: {
+        //             label: "Close",
+        //             className: "btn-default",
+        //             callback: function () {
+        //                 Example.show("Primary button");
+        //             }
+        //         }
+        //     }
+        // })
         // pdfMake.fonts = {
         //     THSarabun: {
         //         normal: 'THSarabun.ttf',
@@ -667,7 +683,7 @@
             else {
                 $("#delete").show();
                 $("#insert").hide();
-                console.log(dataSet[0].product_status+"aaaa")
+                console.log(dataSet[0].product_status + "aaaa")
                 for (let i = 0; i < dataSet.length; i++) {
                     if (dataSet[i].product_status != 0) {
                         $("#delete").prop('disabled', true);
@@ -721,8 +737,10 @@
                     // alert(fileExtension);
 
                     if ($("#uploadexcel")[0].files.length == 0) {
+                        // swal("IT-Inventory", "...and here's the text!");
                         alert("No file selected")
-                        return;
+                        
+                        // return;
                     }
                     else if (fileExtension != "xlsx") {
                         alert("please select only excel file");
