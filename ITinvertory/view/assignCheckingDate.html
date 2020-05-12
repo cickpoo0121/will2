@@ -211,7 +211,7 @@
                             <div class="form-group">
                                 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
                                     <input type="text" id="dateStart" class="form-control datetimepicker-input"
-                                        data-target="#datetimepicker1" placeholder="วันเริ่มต้น"  />
+                                        data-target="#datetimepicker1" placeholder="วันเริ่มต้น" />
                                     <div class="input-group-append" data-target="#datetimepicker1"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
@@ -220,8 +220,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-                                    <input type="text" id="dateEnd" class="form-control" placeholder="วันสิ้นสุด"
-                                         />
+                                    <input type="text" id="dateEnd" class="form-control" placeholder="วันสิ้นสุด" />
                                     <div class="input-group-append" data-target="#datetimepicker2"
                                         data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
@@ -452,7 +451,8 @@
 
                     let caldate = date2.getTime() - date1.getTime();
                     let time2date = caldate / (1000 * 3600 * 24)
-                    // alert(time2date)
+
+                    // console.log(date1.getFullYear())
 
                     if (time2date <= 0) {
                         alert("กรุณาเลือกวันที่ให้ถูกต้อง")
@@ -488,51 +488,57 @@
                     method: "GET",
                     url: "product/checkscan/" + selectedData.year_alert
                 }).done(function (dataSet, state, xhr) {
-                    // console.log(dataSet[0])
+                    console.log(dataSet[0])
                     for (let i = 0; i < dataSet.length; i++) {
-                        if (dataSet[0].product_status == 1) {
+                        if (dataSet[i].product_status != 0) {
                             $("#dateStart").prop('disabled', true);
                         }
                     }
                 }).fail(function (xhr, sate, err) {
 
                 })
-
-                $("#editdate").click(function () {
-
-                    let dateStart = $("#dateStart").val();
-                    let dateEnd = $("#dateEnd").val();
-                    let year = selectedData.year_alert
-
-                    var date1 = new Date(dateStart);
-                    var date2 = new Date(dateEnd);
-
-                    let caldate = date2.getTime() - date1.getTime();
-                    let time2date = caldate / (1000 * 3600 * 24)
-                    // alert(time2date)
-
-                    if (time2date <= 0) {
-                        alert("กรุณาเลือกวันที่ให้ถูกต้อง")
-                    } else if (dateStart == "" || dateEnd == "") {
-                        alert("กรุณาเลือกวันที่")
-                    }
-                    else {
-                        $.ajax({
-                            method: "PUT",
-                            url: "/datealert/update/" + year,
-                            data: { datestart: dateStart, dateend: dateEnd }
-                        }).done(function (dataSet, state, xhr) {
-                            productadmin();
-                            $("#exampleModalLong").modal("toggle");
-                        }).fail(function (xhr, state, error) {
-
-                        })
-                    }
-                });
             })
         }).fail(function (xhr, state, error) {
             //get data failed
             alert(xhr.responseText);
+        });
+
+        $("#editdate").click(function () {
+
+            let dateStart = $("#dateStart").val();
+            let dateEnd = $("#dateEnd").val();
+            let year = selectedData.year_alert
+
+            var date1 = new Date(dateStart);
+            var date2 = new Date(dateEnd);
+
+            let caldate = date2.getTime() - date1.getTime();
+            let time2date = caldate / (1000 * 3600 * 24)
+            // alert(time2date)
+            // console.log(date2.getFullYear())
+
+            if (time2date <= 0) {
+                $("#dateEnd").val("");
+                alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+            }
+            else if (dateStart == "" || dateEnd == "") {
+                alert("กรุณาเลือกวันที่")
+            }
+            else if (date1.getFullYear() != new Date().getFullYear() || date2.getFullYear() != new Date().getFullYear()) {
+                alert("กรุณาเลือกวันที่ในปีนี้")
+            }
+            else {
+                $.ajax({
+                    method: "PUT",
+                    url: "/datealert/update/" + year,
+                    data: { datestart: dateStart, dateend: dateEnd }
+                }).done(function (dataSet, state, xhr) {
+                    productadmin();
+                    $("#exampleModalLong").modal("toggle");
+                }).fail(function (xhr, state, error) {
+
+                })
+            }
         });
     }
 

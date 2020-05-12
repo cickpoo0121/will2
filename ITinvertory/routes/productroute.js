@@ -112,7 +112,7 @@ router.delete("/delete/:years", function (req, res) {
 //check scan or not
 router.get("/checkscan/:years", function (req, res) {
     const years = req.params.years;
-    const sql = "SELECT product_status,product_year FROM `product` WHERE product_status=1 and product_year=?";
+    const sql = "SELECT product_status,product_year FROM `product` WHERE product_year=?";
     con.query(sql, [years], function (err, result, fields) {
         if (err) {
             // console.log(err)
