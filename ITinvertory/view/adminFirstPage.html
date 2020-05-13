@@ -91,7 +91,22 @@
 
     <!-- Status -->
     <div class="ml-5 mt-3">
-        <div class="row ">
+
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-md-11">
+
+            </div>
+            <div class="col-md-1 my-2">
+                <select id="years" class="form-control float-right mr-3">
+                </select>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div class="row mt-3">
             <div class="mr-5"></div>
             <div class="col-2 ml-5">
                 <div class="card text-white bg-success">
@@ -170,8 +185,10 @@
     window.onload = function () {
 
     }
+    var getyear;
     $(document).ready(function () {
         loadpage();
+        dropdownyear();
 
         //check login
         $.ajax({
@@ -207,11 +224,41 @@
             // console.log(err)
         })
 
+        
 
-        function loadpage() {
+        $('#years').change(function () {
+            getyear = $('#years').val();
+            console.log(getyear)
+            loadpage();
+        });
+
+    });
+
+    function dropdownyear(){
+        $.ajax({
+            method: "GET",
+            url: "/years"
+        }).done(function (dataSet, state, xhr) {
+
+            $("#years").empty();
+            $("#year").empty();
+            for (let i = dataSet.length - 1; i >= 0; i--) {
+                let id = dataSet[i].working_year;
+
+                $("#years").append("<option value='" + id + "'>" + id + "</option>");
+                console.log()
+            }
+            loadpage();
+        }).fail(function (xhr, state, error) {
+            alert(xhr.responseText);
+        });
+    }
+
+    function loadpage(){
+        getyear = $('#years').val();
             $.ajax({
                 method: "GET",
-                url: "/product/countstatus",
+                url: "/product/countstatus/" + getyear
             }).done(function (data, state, shr) {
 
                 let normal = "";
@@ -322,8 +369,7 @@
             }).fail(function (xhr, state) {
 
             });
-        }
-    });
+    }
 </script>
 
 </html>

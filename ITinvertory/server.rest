@@ -16,7 +16,7 @@ get http://localhost:8080/product/guest/2019
 Content-Type: application/json
 
 ### productstatus
-get http://localhost:8080/product/countstatus
+get http://localhost:8080/product/countstatus/2020
 Content-Type: application/json
 
 ### show product of user home page

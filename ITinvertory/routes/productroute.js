@@ -62,9 +62,10 @@ router.get("/guest/:year", function (req, res) {
 });
 
 //productstatus
-router.get("/countstatus", function (req, res) {
-    const sql = "SELECT (select COUNT(*) from product where product_status = 0) as missing,(select COUNT(*) from product where product_status = 1) as normal,(select COUNT(*) from product where product_status = 2) as repair,(select COUNT(*) from product where product_status = 3) as other";
-    con.query(sql, function (err, result, fields) {
+router.get("/countstatus/:year", function (req, res) {
+    const year = req.params.year;
+    const sql = "SELECT (select COUNT(*) from product where product_status = 0 and product_year = ?) as missing,(select COUNT(*) from product where product_status = 1 and product_year = ?) as normal,(select COUNT(*) from product where product_status = 2 and product_year = ?) as repair,(select COUNT(*) from product where product_status = 3 and product_year = ?) as other";
+    con.query(sql, [year,year,year,year], function (err, result, fields) {
         if (err) {
             res.status(500).send("Server error");
             console.log(err);
