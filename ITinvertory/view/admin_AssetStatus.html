@@ -44,7 +44,7 @@
     <script type="text/javascript"
         src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
-        <script text="script" src="sweetalert.min.js"></script>
+    <script text="script" src="sweetalert.min.js"></script>
 
 
 
@@ -52,6 +52,10 @@
 
 </head>
 <style>
+    .imgg:hover {
+        transform: scale(4);
+    }
+
     .dot1 {
         height: 10px;
         width: 10px;
@@ -367,7 +371,7 @@
                                 <button id="Qrcode" class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
                                 <button id="Barcode" class="btn btn-primary text-center">สร้างบาร์โค้ด</button>
                                 <button id="save" type="submit"
-                                    class="btn btn-primary text-center">บังคับถ่ายรูป</button>
+                                    class="btn btn-info text-center">ถ่ายรูป/ไม่ถ่ายรูป</button>
                                 <!-- <select id="years" class="form-control">
                                 </select> -->
 
@@ -441,7 +445,7 @@
     $(document).ready(function () {
 
 
-        
+
         // bootbox.dialog({
         //     message: "I am a custom dialog",
         //     title: "Custom title",
@@ -518,7 +522,7 @@
                     data: "image",
                     render: function (data, type, full) {
                         if (type === 'display') {             //if column 
-                            return '<img id="imgg" ' + ((full.image != null) ? 'src="../img/' + full.image + '"' : '') + 'style="width: 100%;"  alt=""> ';
+                            return '<img class="imgg" ' + ((full.image != null) ? 'src="../uploads/' + full.image + '"' : '') + 'style="width: 100px;hiegh:100px"  alt=""> ';
                             // return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.image + '" />';
                         }
                         return data;
@@ -779,14 +783,43 @@
                 })
             })
 
+            // $('#save').on('click', function (e) {
+            //     var form = this;
+
+            //     var rows_selected = tableUser.rows(0).checkboxes.selected();
+
+            //     // Iterate over all selected checkboxes
+            //     $.each(rows_selected, function (index, rowId) {
+            //         // Create a hidden element
+            //         $(form).append(
+            //             $('<input>')
+            //                 .attr('type', 'hidden')
+            //                 .attr('name', 'id[]')
+            //                 .val(rowId)
+            //         );
+            //         console.log(rowId)
+            //     });
+
+            // });
 
             $('#save').on('click', function (e) {
-                var form = this;
+                // var form = this;
                 var rows_selected = tableUser.column(0).checkboxes.selected();
                 let rowdata = rows_selected.join(",")
                 const arr = rowdata.split(",");
-                // console.log(arr)
+
+                // selectedData = tableUser.row(1).data();
+                console.log(rows_selected)
                 // alert(getyear);
+                // $('.dt-checkboxes').pro
+                // if ($('.dt-checkboxes').prop("checked") == true) {
+                //     // const currentRow = $(this).parents('tr')
+                //     selectedData = tableUser.row(1).column(0).checkboxes.selected();
+                //     console.log(selectedData)
+                //     // selectedData
+                //     // console.log(selectedData[0].image_status)
+
+                // }
 
                 if (rows_selected.length != 0) {
                     $.ajax({
