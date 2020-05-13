@@ -7,7 +7,7 @@ const config = require("./dbConfig.js");
 const multer = require("multer");
 const passportSetup = require("./config/passport-setup");
 const passport = require("passport");
-const cookieSession= require("cookie-session");
+const cookieSession = require("cookie-session");
 const key = require("./config/key")
 const readXlsxFile = require('read-excel-file/node');
 
@@ -22,7 +22,7 @@ const readXlsxFile = require('read-excel-file/node');
 
 //import auth
 const authRoutes = require("./routes/auth-routes");
-const profile= require("./routes/profile-routes");
+const profile = require("./routes/profile-routes");
 
 const product = require("./routes/productroute");
 const datealert = require("./routes/datealertroute");
@@ -66,7 +66,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 app.use(cookieSession({
-    maxAge: 60*60*1000,
+    maxAge: 60 * 60 * 1000,
     keys: [key.cookie.cookiekey]
 }))
 
@@ -96,7 +96,7 @@ app.post('/uploadfile', function (req, res) {
         }
         else {
 
-            importExcelData2MySQL(res,__dirname + '/uploads/' + req.file.filename)
+            importExcelData2MySQL(res, __dirname + '/uploads/' + req.file.filename)
             // res.send('/guest')
             console.log(req.file.filename);
 
@@ -107,7 +107,7 @@ app.post('/uploadfile', function (req, res) {
 
 
 // -> Import Excel Data to MySQL database
-function importExcelData2MySQL(res,filePath) {
+function importExcelData2MySQL(res, filePath) {
     // File path.
     readXlsxFile(filePath).then((rows) => {
         // `rows` is an array of rows
@@ -231,21 +231,55 @@ app.put("/takephoto/:year", function (req, res) {
     console.log(records)
 
     // const invenNum = req.body.invenNum;
-    const sql = "UPDATE `product` SET `image_status` = 1 WHERE product_year=? AND asset IN (?)"
+    // const sql = "UPDATE `product` SET `image_status` = 1 WHERE product_year=? AND asset IN (?)"
+
+    const sql = "SELECT image_status FROM `product`  WHERE product_year=? AND image_status=1 AND asset IN (?)"
 
     // for (i = 0; i <= records.length; i++) {
-        con.query(sql, [year,records], function (err, result, fields) {
-            if (err) {
-                res.status(500).send("Server error");
-                // console.log(err);
-                console.log("[mysql error]",err);
+    con.query(sql, [year, records], function (err, result, fields) {
+        if (err) {
+            res.status(500).send("Server error");
+            // console.log(err);
+            console.log("[mysql error]", err);
+        }
+        else {
+            if (result.length != records.length) {
+                
+                const sql = "UPDATE `product` SET `image_status` = 1 WHERE product_year=? AND asset IN (?)"
+
+                con.query(sql, [year, records],function(err, result, fields){
+                    if(err){
+                        res.status(500).send("Server error");
+                    }
+                    else{
+                        // res.json(result)
+                        res.send("/productstatusadmin");
+                        console.log("status 0")
+                    }
+                })
             }
             else {
-                res.json(result);
-                console.log(result);
-            }
+                // console.log("status 1")
+                const sql = "UPDATE `product` SET `image_status` = 0 WHERE product_year=? AND asset IN (?)"
 
-        });
+                con.query(sql, [year, records],function(err, result, fields){
+                    if(err){
+                        res.status(500).send("Server error");
+                    }
+                    else{
+                        // res.json(result)
+                        res.send("/productstatusadmin");
+                        console.log("status 1")
+                    }
+                })
+            }
+            // res.json(result);
+            // //  result.length
+            // console.log(result);
+            console.log(result.length + "  imageStatus");
+        }
+
+    });
     // }
 });
 
@@ -269,11 +303,11 @@ app.post("/assign/committee", function (req, res) {
 //Update committee 
 app.put("/update/committee", function (req, res) {
     // date = new Date();
-    const year     = req.body.year
+    const year = req.body.year
     const emailOld = req.body.emailOld;
     const emailNew = req.body.emailNew;
     const sql = "UPDATE `workingyear` SET `email` = ? WHERE `workingyear`.`working_year` = ? AND `workingyear`.`email` = ?;"
-    con.query(sql, [emailNew,year,emailOld], function (err, result, fields) {
+    con.query(sql, [emailNew, year, emailOld], function (err, result, fields) {
         if (err) {
             res.status(500).send("Server error");
             console.log(err)
@@ -286,14 +320,14 @@ app.put("/update/committee", function (req, res) {
 });
 
 //user or admin check
-app.get("/CheckRole/:email", function (req, res){
+app.get("/CheckRole/:email", function (req, res) {
     const email = req.params.email;
     const sql = "SELECT * FROM `workingyear` WHERE email = ?";
-    con.query(sql, [email], function(err, result, fields){
-        if(err){
+    con.query(sql, [email], function (err, result, fields) {
+        if (err) {
             res.status(500).send("Server error");
             console.log(err)
-        }else{
+        } else {
             res.json(result);
         }
     })
@@ -339,7 +373,7 @@ app.get("/committeefirstpage", function (req, res) {
     // console.log(req.user+"asdadasda")
     // res.end();
     res.sendFile(path.join(__dirname, "/view/committeeFirstPage.html"))
-    
+
 });
 
 //สถานะครุภัณฑ์
