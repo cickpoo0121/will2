@@ -439,14 +439,20 @@
                     url: "/CheckRole/" + email
                 }).done(function (data, state, xhr) {
                     console.log(data[0].role);
-                    if (data[0].role == 1) {
-                        window.location.replace("/productstatusadmin");
-                    } else if (data[0].role == 0) {
-                        $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");
-                    } else if (email == undefined) {
+                    if (data[0].working_year == year) {
+                        if (data[0].role == 1) {
+                            window.location.replace("/productstatusadmin");
+                        } else if (data[0].role == 0) {
+                            $('#NameUser').html(dataSet.name)
+                            $('#imguser').attr("src", "" + dataSet.photo + "");
+                        } else if (email == undefined) {
+                            window.location.replace('/');
+                        }
+                    } else {
+                        alert('ไม่สามารถเข้าใช้งานได้')
                         window.location.replace('/');
                     }
+
                 }).fail(function (xhr, state, err) {
                     console.log(err);
                 })

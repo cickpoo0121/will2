@@ -221,6 +221,8 @@
     window.onload = function () {
 
     }
+    date = new Date();
+    const year = date.getFullYear();
     var getyear;
     $(document).ready(function () {
         loadpage();
@@ -241,15 +243,22 @@
                     type: "GET",
                     url: "/CheckRole/" + email
                 }).done(function (data, state, xhr) {
-                    console.log(data[0].role);
-                    if (data[0].role == 1) {
-                        $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");
-                    } else if (data[0].role == 0) {
-                        window.location.replace("/committeefirstpage");
-                    } else if (email == undefined) {
-                        window.location.replace('/');
+                    console.log(data[0].working_year);
+                    if (data[0].working_year == year) {
+                        if (data[0].role == 1) {
+                            $('#NameUser').html(dataSet.name)
+                            $('#imguser').attr("src", "" + dataSet.photo + "");
+                        } else if (data[0].role == 0) {
+                            window.location.replace("/committeefirstpage");
+                        } else if (email == undefined) {
+                            window.location.replace('/');
+                        }
+                    } else {
+                        alert('ไม่สามารถเข้าใช้งานได้');
+                        window.location.replace('/auth/logout');
+                        //window.location.replace('/');
                     }
+
                 }).fail(function (xhr, state, err) {
                     console.log(err);
                 })

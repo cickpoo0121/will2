@@ -471,6 +471,46 @@
 
     $(document).ready(function () {
 
+        //check login
+        $.ajax({
+            method: "GET",
+            url: "/profile/userinfor"
+        }).done(function (dataSet, state, xhr) {
+            var email = dataSet.email;
+            console.log(dataSet.name);
+            console.log(dataSet.email);
+            if (dataSet.name == undefined) {
+                window.location.replace('/');
+            } else {
+                $.ajax({
+                    type: "GET",
+                    url: "/CheckRole/" + email
+                }).done(function (data, state, xhr) {
+                    console.log(data[0].role);
+                    if (data[0].working_year == year) {
+                        if (data[0].role == 1) {
+                            $('#NameUser').html(dataSet.name)
+                            $('#imguser').attr("src", "" + dataSet.photo + "");
+                        } else if (data[0].role == 0) {
+                            window.location.replace("/committee_AssetStatus");
+                        } else if (email == undefined) {
+                            window.location.replace('/');
+                        }
+                    } else {
+                        alert('ไม่สามารถเข้าใช้งานได้');
+                        window.location.replace('/auth/logout');
+                        //window.location.replace('/');
+                    }
+
+                }).fail(function (xhr, state, err) {
+                    console.log(err);
+                })
+            }
+            // window.location.replace('/committeefirstpage')
+
+        }).fail(function (xhr, state, err) {
+            // console.log(err)
+        })
 
 
         // bootbox.dialog({
@@ -640,39 +680,6 @@
 
     function dropdownyear() {
 
-        //check login
-        $.ajax({
-            method: "GET",
-            url: "/profile/userinfor"
-        }).done(function (dataSet, state, xhr) {
-            var email = dataSet.email;
-            console.log(dataSet.name);
-            console.log(dataSet.email);
-            if (dataSet.name == undefined) {
-                window.location.replace('/');
-            } else {
-                $.ajax({
-                    type: "GET",
-                    url: "/CheckRole/" + email
-                }).done(function (data, state, xhr) {
-                    console.log(data[0].role);
-                    if (data[0].role == 1) {
-                        $('#NameUser').html(dataSet.name)
-                        $('#imguser').attr("src", "" + dataSet.photo + "");
-                    } else if (data[0].role == 0) {
-                        window.location.replace("/committee_AssetStatus");
-                    } else if (email == undefined) {
-                        window.location.replace('/');
-                    }
-                }).fail(function (xhr, state, err) {
-                    console.log(err);
-                })
-            }
-            // window.location.replace('/committeefirstpage')
-
-        }).fail(function (xhr, state, err) {
-            // console.log(err)
-        })
 
         $.ajax({
             method: "GET",
