@@ -607,6 +607,8 @@
                                 url: "/assign/committee",
                                 data: { year: yrearassign, email: email }
                             }).done(function (dataSet, state, xhr) {
+                                $('#addcomModal').modal('toggle')
+                                swal("เสร็จสิ้น", "ลบข้อมูลครุภันฑ์เสร็จสิ้น", "success");
                                 getcommittee();
                                 // $("#exampleModalLong").modal(toggle)
                                 console.log(dataSet)
