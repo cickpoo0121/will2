@@ -161,65 +161,74 @@
 
     <div class="ml-5 mt-3">
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-            <div class="col-md-11">
+                <div class="col-md-10">
+
+                </div>
+                <div class="col-md-2 my-2">
+                    <select id="years" class="form-control float-right mr-3" style="width: 100px;">
+                    </select>
+                </div>
 
             </div>
-            <div class="col-md-1 my-2">
-                <select id="years" class="form-control float-right mr-3">
-                </select>
-            </div>
 
-        </div>
 
-        </div>
-        
 
-        <div class="row mt-3">
-            <div class="mr-5"></div>
-            <div class="col-2 ml-5">
-                <div class="card text-white bg-success" >
-                    <div class="card-body">
-                        <h4 class="card-title">ปกติ</h4>
-                        <h2 id="normal" class="card-text"></h2>
-                      
-                    </div>
-                </div>
-            </div>
-            <div class="col-2 ">
-                <div class="card text-white bg-danger" >
-                    <div class="card-body">
-                        <h4 class="card-title">สูญหาย</h4>
-                        <h2 id="missing" class="card-text"></h2>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card text-white bg-primary" >
-                    <div class="card-body">
-                        <h4 class="card-title">ส่งซ่อม</h4>
-                        <h2 id="maintain" class="card-text"></h2>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card text-white" style="background-color: #343a40;border-color:black;">
-                    <div class="card-body">
-                        <h4 class="card-title">ไม่ระบุ</h4>
-                        <h2 id="other" class="card-text"></h2>
-                      
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
+            <div class="row text-center mt-3">
+                <!-- <div class="mr-5"></div> -->
+                <!-- <div class="col-md-2">
                 <div class="card text-white bg-info">
                     <div class="card-body">
                         <h4 class="card-title">ทั้งหมด</h4>
                         <h2 id="all" class="card-text"></h2>
-                     
+                        
+                    </div>
+                </div>
+            </div> -->
+                <div class="col-md-3">
+                    <div class="card text-white bg-success float-center">
+                        <div class="card-body">
+                            <h4 class="card-title">ปกติ</h4>
+                            <h2 id="normal" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="card text-white bg-danger float-center">
+                        <div class="card-body">
+                            <h4 class="card-title">สูญหาย</h4>
+                            <h2 id="missing" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-primary float-center">
+                        <div class="card-body">
+                            <h4 class="card-title">ส่งซ่อม</h4>
+                            <h2 id="maintain" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3">
+                    <div class="card text-white float-center" style="background-color: #343a40;">
+                        <div class="card-body">
+                            <h4 class="card-title">ไม่ระบุ</h4>
+                            <h2 id="other" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-3">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            <h4 class="card-title">ทั้งหมด</h4>
+                            <h2 id="all" class="card-text"></h2>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -430,12 +439,14 @@
                         data: [countr],
                         color: '#007bff'
 
-                    }, {
-                        name: 'ไม่ระบุ',
-                        data: [counto],
-                        color: '#343a40'
+                    }, 
+                    // {
+                    //     name: 'ไม่ระบุ',
+                    //     data: [counto],
+                    //     color: '#343a40'
 
-                    }]
+                    // }
+                ]
                 });
 
             }).fail(function (xhr, state) {

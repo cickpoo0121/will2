@@ -535,16 +535,15 @@
             // alert(time2date)
             // console.log(date2.getFullYear())
 
-            if (time2date <= 0) {
-                $("#dateEnd").val("");
-                // alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+            if (date1.getFullYear() != new Date().getFullYear() || date2.getFullYear() != new Date().getFullYear()) {
                 swal({
-                    title: "กรุณาเลือกวันที่ให้ถูกต้อง",
+                    title: "กรุณาเลือกวันที่ภายในปีนี้",
                     type: "info",
                     confirmButtonClass: "btn-primary",
                     confirmButtonText: "ตกลง",
                     closeOnConfirm: true,
                 })
+
             }
             else if (dateStart == "" || dateEnd == "") {
                 // alert("กรุณาเลือกวันที่")
@@ -556,10 +555,12 @@
                     closeOnConfirm: true,
                 })
             }
-            else if (date1.getFullYear() != new Date().getFullYear() || date2.getFullYear() != new Date().getFullYear()) {
+            else if (time2date <= 0) {
                 // alert("กรุณาเลือกวันที่ในปีนี้")
+                // $("#dateEnd").val("");
+                // alert("กรุณาเลือกวันที่ให้ถูกต้อง")
                 swal({
-                    title: "กรุณาเลือกวันที่ในปีนี้",
+                    title: "กรุณาเลือกวันที่ให้ถูกต้อง",
                     type: "info",
                     confirmButtonClass: "btn-primary",
                     confirmButtonText: "ตกลง",
@@ -572,6 +573,7 @@
                     url: "/datealert/update/" + year,
                     data: { datestart: dateStart, dateend: dateEnd }
                 }).done(function (dataSet, state, xhr) {
+                    swal("เสร็จสิ้น", "ลบข้อมูลครุภันฑ์เสร็จสิ้น", "success");
                     productadmin();
                     $("#exampleModalLong").modal("toggle");
                 }).fail(function (xhr, state, error) {

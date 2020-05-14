@@ -30,10 +30,10 @@
 
     <!-- <link rel="stylesheet" href="style.css"> -->
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script text="script" src="sweetalert.min.js"></script>
+    <!-- <script text="script" src="sweetalert.min.js"></script> -->
 
-    <!-- <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
 
     <title>คณะกรรมการ</title>
     <style>
@@ -193,7 +193,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form role="form" id="setvalidation">
+                    <form role="form" action="" id="setvalidation">
                         <!-- <p>ประจำปี <span id="yearmodal"></span></p> -->
                         <p>อีเมล์กรรมการ</p>
                         <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"
@@ -201,8 +201,8 @@
                         <p align="right">
                             <span><button type="button" class="btn btn-secondary mt-4" data-dismiss="modal"
                                     style="width: 15%;">ปิด</button></span>
-                            <button class="btn btn-primary mt-4" id="submitAdd">บันทึก</button>
-                            <button class="btn btn-primary mt-4" id="submitUpdate">บันทึก</button>
+                            <button type="submit" class="btn btn-primary mt-4" id="submitAdd">บันทึก</button>
+                            <button type="submit" class="btn btn-primary mt-4" id="submitUpdate">บันทึก</button>
                         </p>
                     </form>
                 </div>
@@ -377,7 +377,7 @@
         });
 
 
-        $('#yearmodal').html(year);//set year assign is current year
+        $('#yearmodal').text(year);//set year assign is current year
 
         $('#years').change(function () {
             getyear = $('#years').val();
@@ -561,55 +561,67 @@
             });
 
             ///////////////// asign commitee //////////
-            $('#assign').click(function () {
+            $('#assign').click(function (e) {
+                // e.preventDefault();
+                $('#email').val('');
                 $('#submitAdd').show();
                 $('#submitUpdate').hide()
                 console.log(dataSet.length)
 
-                form = $("#setvalidation");
-                form.validate();
-                $('#submitAdd').click(function () {
-                    const yrearassign = year
-                    const email = $('#email').val();
+                $('form').submit(function (e) {
+                    e.preventDefault();
+                    form = $("#setvalidation");
+                    form.validate();
+                    // $('#submitAdd').click(function () {
+                        const yrearassign = year
+                        const email = $('#email').val();
 
-                    for (let i = 0; i < dataSet.length; i++) {
-                        var dupEmail = tableUser.row(i).data().email
-                        if (email == dupEmail) {
-                            // alert("มีอีเมลนี้แล้ว");
-                            // swal("IT-Inventory", "...and here's the text!");
-                            // break;
+                        for (let i = 0; i < dataSet.length; i++) {
+                            var dupEmail = tableUser.row(i).data().email
+                            if (email == dupEmail) {
+                                swal({
+                                    title: "มีอีเมลนี้แล้ว",
+                                    type: "error",
+                                    confirmButtonClass: "btn-primary",
+                                    confirmButtonText: "ตกลง",
+                                    closeOnConfirm: true,
+                                })
+                                break;
+                            }
+                            // console.log(dupEmail)
                         }
-                        // console.log(dupEmail)
-                    }
-                    // if (email == dupEmail) {
-                    //     alert("มีอีเมลนี้แล้ว");
-                    // }
+                        if(email == dupEmail){
 
-                     if (form.valid() == false) { //check email form
-                        // alert("Valid: " + form.valid())
+                        }
 
-                        // return false;
-                    }
-                    else {
-                        //     alert("test validation")
-                        //     return false;
-                        $.ajax({
-                            method: "POST",
-                            url: "/assign/committee",
-                            data: { year: yrearassign, email: email }
-                        }).done(function (dataSet, state, xhr) {
-                            getcommittee();
-                            // $("#exampleModalLong").modal(toggle)
-                            console.log(dataSet)
-                        }).fail(function (xhr, state, err) {
-                            console.log(err)
-                        })
-                    }
+                        else if (form.valid() == false) { //check email form
+                            // alert("Valid: " + form.valid())
 
-                    // if (email == "") {
+                            // return false;
+                        }
+                        else {
+                            //     alert("test validation")
+                            //     return false;
+                            $.ajax({
+                                method: "POST",
+                                url: "/assign/committee",
+                                data: { year: yrearassign, email: email }
+                            }).done(function (dataSet, state, xhr) {
+                                getcommittee();
+                                // $("#exampleModalLong").modal(toggle)
+                                console.log(dataSet)
+                            }).fail(function (xhr, state, err) {
+                                console.log(err)
+                            })
+                        }
 
-                    // } else {
-                });
+                        // if (email == "") {
+
+                        // } else {
+                    // });
+                })
+
+
 
             })
 

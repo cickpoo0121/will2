@@ -274,24 +274,26 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <form action="" enctype="multipart/form-data">
+                    <div class="modal-body" style="padding:25px 50px;">
 
-                <div class="modal-body" style="padding:25px 50px;">
-                    <form enctype="multipart/form-data">
                         <div>
                             <input type="file" name="fileUpload" id="uploadexcel">
                         </div>
                         <br>
                         <!-- <div class="float-right"> -->
 
-                        <button class="btn btn-danger float-right" data-dismiss="modal" id="cancel"><span
+                        <button type="button" class="btn btn-danger float-right" data-dismiss="modal" id="cancel"><span
                                 class="glyphicon glyphicon-off "></span>ยกเลิก</button>
                         <button class="btn btn-primary float-right mr-2" id="upexcel" type="submit">
                             บันทึก</button>
-                    </form>
-                    <!-- </div> -->
 
-                    <!-- <button class="btn btn-danger float-right mr-2" data-dismiss="modal" ><span class="glyphicon glyphicon-off "></span>ยกเลิก</button> -->
-                </div>
+                        <!-- </div> -->
+                        <br>
+
+                        <!-- <button class="btn btn-danger float-right mr-2" data-dismiss="modal" ><span class="glyphicon glyphicon-off "></span>ยกเลิก</button> -->
+                    </div>
+                </form>
 
             </div>
 
@@ -727,9 +729,9 @@
                 else if (dataSet[i].product_status == 2) {
                     dataSet[i].product_status = '<span class="badge badge-primary "style="font-size: 14px;">ส่งซ่อม</span>'
                 }
-                else if (dataSet[i].product_status == 3) {
-                    dataSet[i].product_status = '<span class="badge badge-dark "style="font-size: 14px;">ไม่ระบุ</span>'
-                }
+                // else if (dataSet[i].product_status == 3) {
+                //     dataSet[i].product_status = '<span class="badge badge-dark "style="font-size: 14px;">ไม่ระบุ</span>'
+                // }
 
             }
             console.log(dataSet)
@@ -741,9 +743,9 @@
             // $('.dt-button.buttons-excel.buttons-html5').addClass('btn')
             // $('.dt-button.buttons-print').addClass('btn')
             $("#insert").click(function () {
-                $("#cancel").click(function () {
-                    window.location.replace('/productstatusadmin')
-                })
+                // $("#cancel").click(function () {
+                //     window.location.replace('/productstatusadmin')
+                // })
 
                 // $('#upexcel').click(function () {
 
@@ -786,39 +788,100 @@
 
 
 
-                $('form').submit(function () {
+                $('form').submit(function (e) {
+                    e.preventDefault();
+                    // alert("adasd")
 
                     fileName = $("#uploadexcel").val();
                     fileExtension = fileName.replace(/^.*\./, '');
                     // alert(fileExtension);
+                    const formData = new FormData(this);
 
                     if ($("#uploadexcel")[0].files.length == 0) {
-                        swal("IT-Inventory", "...and here's the text!");
+                        // swal("IT-Inventory", "...and here's the text!");
                         // alert("No file selected")
+
+                        swal({
+                            title: "กรุณาเลือกไฟล์ที่จะนำเข้า",
+                            type: "info",
+                            confirmButtonClass: "btn-primary",
+                            confirmButtonText: "ตกลง",
+                            closeOnConfirm: true,
+                        })
 
                         // return;
                     }
                     else if (fileExtension != "xlsx") {
-                        alert("please select only excel file");
+                        // alert("please select only excel file");
+
+                        swal({
+                            title: "กรุณาเลือกเฉาพไฟล์ Excel",
+                            type: "info",
+                            confirmButtonClass: "btn-primary",
+                            confirmButtonText: "ตกลง",
+                            closeOnConfirm: true,
+                        })
                     }
                     else {
-                        const formData = new FormData(this);
-                        $.ajax({
-                            method: "POST",
-                            url: "/uploadfile",
-                            data: formData,
-                            contentType: false,
-                            processData: false
-                        }).done(function (dataSet, state, xhr) {
-                            // console.log(dataSet)
-                            window.location.replace(dataSet)
-                            // window.location.replace('/productstatusadmin')
-                            // productadmin()
-                            // alert("aaa")
 
-                        }).fail(function (xhr, state, err) {
-                            console.log(err)
-                        })
+                        swal({
+                            title: "ยืนยันนำเข้าข้อมูล",
+                            // text: "Submit to run ajax request",
+                            type: "info",
+                            showCancelButton: true,
+                            closeOnConfirm: false,
+                            showLoaderOnConfirm: true
+                        }, function (isConfirm) {
+                            setTimeout(function () {
+                                // swal("Ajax request finished!");
+                                // swal("Good job!", "You clicked the button!", "success")
+                                if (isConfirm) {
+                                    $('#myModal').modal('toggle'); 
+                                    $.ajax({
+                                        method: "POST",
+                                        url: "/uploadfile",
+                                        data: formData,
+                                        contentType: false,
+                                        processData: false
+                                    }).done(function (dataSet, state, xhr) {
+                                        // console.log(dataSet)
+                                        // window.location.replace(dataSet)
+                                        productadmin()
+                                        // $("#upexcel").modal(toggle);
+                                        
+                                        swal("เสร็จสิ้น", "ลบข้อมูลครุภันฑ์เสร็จสิ้น", "success")
+                                        // window.location.replace('/productstatusadmin')
+                                        
+
+                                    }).fail(function (xhr, state, err) {
+                                        console.log(err)
+                                    })
+
+                                }
+                            }, 2000);
+
+                            // $("#upexcel").modal(toggle);
+
+                        });
+
+                        // const formData = new FormData(this);
+                        //         $.ajax({
+                        //             method: "POST",
+                        //             url: "/uploadfile",
+                        //             data: formData,
+                        //             contentType: false,
+                        //             processData: false
+                        //         }).done(function (dataSet, state, xhr) {
+                        //             // console.log(dataSet)
+                        //             window.location.replace(dataSet)
+                        //             // window.location.replace('/productstatusadmin')
+                        //             // productadmin()
+                        //             // alert("aaa")
+
+                        //         }).fail(function (xhr, state, err) {
+                        //             console.log(err)
+                        //         })
+
                     }
 
                 });

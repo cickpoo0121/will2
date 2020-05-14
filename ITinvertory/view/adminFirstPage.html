@@ -35,28 +35,29 @@
 
 <body>
     <!-- Header -->
-        <div class="row">
-            <div class="col-md-9">
-                <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
-            </div>
-            <div class="col-md-3">
-
-                <!-- <li class="nav-item dropdown nav-user"> -->
-                <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
-                        class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
-                <div class="dropdown-menu dropdown-menu-right nav-user-dropdown"
-                    aria-labelledby="navbarDropdownMenuLink2">
-                    <div class="nav-user-info">
-                        <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
-
-                    </div>
-                    <a class="dropdown-item" href="/auth/logout"><h6><i class="fas fa-power-off mr-2"></i>Logout</h6></a>
-                </div>
-                <!-- </li> -->
-
-            </div>
+    <div class="row">
+        <div class="col-md-9">
+            <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
         </div>
+        <div class="col-md-3">
+
+            <!-- <li class="nav-item dropdown nav-user"> -->
+            <a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><img src="" id="imguser" alt=""
+                    class="user-avatar-md rounded-circle mt-3 float-right " style="width: 50px;height: 50px;"></a>
+            <div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
+                <div class="nav-user-info">
+                    <h6 class="mb-0 text-white nav-user-name" id="NameUser">John Abraham </h6>
+
+                </div>
+                <a class="dropdown-item" href="/auth/logout">
+                    <h6><i class="fas fa-power-off mr-2"></i>Logout</h6>
+                </a>
+            </div>
+            <!-- </li> -->
+
+        </div>
+    </div>
     <!-- Header -->
 
     <!-- Menu -->
@@ -92,64 +93,74 @@
     <!-- Status -->
     <div class="ml-5 mt-3">
 
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-            <div class="col-md-11">
+                <div class="col-md-10">
+
+                </div>
+                <div class="col-md-2 my-2">
+                    <select id="years" class="form-control float-right mr-3" style="width: 100px;">
+                    </select>
+                </div>
 
             </div>
-            <div class="col-md-1 my-2">
-                <select id="years" class="form-control float-right mr-3">
-                </select>
-            </div>
 
-        </div>
 
-        </div>
 
-        <div class="row mt-3">
-            <div class="mr-5"></div>
-            <div class="col-2 ml-5">
-                <div class="card text-white bg-success">
-                    <div class="card-body">
-                        <h4 class="card-title">ปกติ</h4>
-                        <h2 id="normal" class="card-text"></h2>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-2 ">
-                <div class="card text-white bg-danger">
-                    <div class="card-body">
-                        <h4 class="card-title">สูญหาย</h4>
-                        <h2 id="missing" class="card-text"></h2>
-                       
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card text-white bg-primary">
-                    <div class="card-body">
-                        <h4 class="card-title">ส่งซ่อม</h4>
-                        <h2 id="maintain" class="card-text"></h2>
-                      
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="card text-white" style="background-color: #343a40;">
-                    <div class="card-body">
-                        <h4 class="card-title">ไม่ระบุ</h4>
-                        <h2 id="other" class="card-text"></h2>
-                     
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
+            <div class="row text-center mt-3">
+                <!-- <div class="mr-5"></div> -->
+                <!-- <div class="col-md-2">
                 <div class="card text-white bg-info">
                     <div class="card-body">
                         <h4 class="card-title">ทั้งหมด</h4>
                         <h2 id="all" class="card-text"></h2>
                         
+                    </div>
+                </div>
+            </div> -->
+                <div class="col-md-3">
+                    <div class="card text-white bg-success float-center">
+                        <div class="card-body">
+                            <h4 class="card-title">ปกติ</h4>
+                            <h2 id="normal" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 ">
+                    <div class="card text-white bg-danger float-center">
+                        <div class="card-body">
+                            <h4 class="card-title">สูญหาย</h4>
+                            <h2 id="missing" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-white bg-primary float-center">
+                        <div class="card-body">
+                            <h4 class="card-title">ส่งซ่อม</h4>
+                            <h2 id="maintain" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3">
+                    <div class="card text-white float-center" style="background-color: #343a40;">
+                        <div class="card-body">
+                            <h4 class="card-title">ไม่ระบุ</h4>
+                            <h2 id="other" class="card-text"></h2>
+
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-3">
+                    <div class="card text-white bg-info">
+                        <div class="card-body">
+                            <h4 class="card-title">ทั้งหมด</h4>
+                            <h2 id="all" class="card-text"></h2>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -224,7 +235,7 @@
             // console.log(err)
         })
 
-        
+
 
         $('#years').change(function () {
             getyear = $('#years').val();
@@ -234,7 +245,7 @@
 
     });
 
-    function dropdownyear(){
+    function dropdownyear() {
         $.ajax({
             method: "GET",
             url: "/years"
@@ -254,121 +265,123 @@
         });
     }
 
-    function loadpage(){
+    function loadpage() {
         getyear = $('#years').val();
-            $.ajax({
-                method: "GET",
-                url: "/product/countstatus/" + getyear
-            }).done(function (data, state, shr) {
+        $.ajax({
+            method: "GET",
+            url: "/product/countstatus/" + getyear
+        }).done(function (data, state, shr) {
 
-                let normal = "";
-                let missing = "";
-                let maintain = "";
-                let other = "";
-                normal = "<h2 class='card-text'>" + data[0].normal + " รายการ</h2>"
-                missing = "<h2 class='card-text'>" + data[0].missing + " รายการ</h2>"
-                maintain = "<h2 class='card-text'>" + data[0].repair + " รายการ</h2>"
-                other = "<h2 class='card-text'>" + data[0].other + " รายการ</h2>"
+            let normal = "";
+            let missing = "";
+            let maintain = "";
+            let other = "";
+            normal = "<h2 class='card-text'>" + data[0].normal + " รายการ</h2>"
+            missing = "<h2 class='card-text'>" + data[0].missing + " รายการ</h2>"
+            maintain = "<h2 class='card-text'>" + data[0].repair + " รายการ</h2>"
+            other = "<h2 class='card-text'>" + data[0].other + " รายการ</h2>"
 
-                let all = "";
-                let allNum = Number(data[0].normal + data[0].missing + data[0].repair + data[0].other);
-                all = "<h2 class='card-text'>" + allNum + " รายการ</h2>";
+            let all = "";
+            let allNum = Number(data[0].normal + data[0].missing + data[0].repair + data[0].other);
+            all = "<h2 class='card-text'>" + allNum + " รายการ</h2>";
 
-                $("#normal").html(normal);
-                $("#missing").html(missing);
-                $("#maintain").html(maintain);
-                $("#other").html(other);
-                $("#all").html(all);
+            $("#normal").html(normal);
+            $("#missing").html(missing);
+            $("#maintain").html(maintain);
+            $("#other").html(other);
+            $("#all").html(all);
 
 
-                // ----Chart canvas----
-                // var countn = Number(data[0].normal);
-                // var countm = Number(data[0].missing);
-                // var countr = Number(data[0].repair);
-                // var counto = Number(data[0].other);
-                // var options = {
-                //     title: {
-                //         text: "แผนภูมิสถานะครุภัณฑ์ ประจำปี 2563"
-                //     },
-                //     data: [
-                //         {
-                //             // Change type to "doughnut", "line", "splineArea", etc.
-                //             type: "column",
-                //             dataPoints: [
-                //                 { label: "ปกติ", y: countn },
-                //                 { label: "สูญหาย", y: countm },
-                //                 { label: "ส่งซ่อม", y: countr },
-                //                 { label: "ไม่ใช่ของสำนัก", y: counto }
+            // ----Chart canvas----
+            // var countn = Number(data[0].normal);
+            // var countm = Number(data[0].missing);
+            // var countr = Number(data[0].repair);
+            // var counto = Number(data[0].other);
+            // var options = {
+            //     title: {
+            //         text: "แผนภูมิสถานะครุภัณฑ์ ประจำปี 2563"
+            //     },
+            //     data: [
+            //         {
+            //             // Change type to "doughnut", "line", "splineArea", etc.
+            //             type: "column",
+            //             dataPoints: [
+            //                 { label: "ปกติ", y: countn },
+            //                 { label: "สูญหาย", y: countm },
+            //                 { label: "ส่งซ่อม", y: countr },
+            //                 { label: "ไม่ใช่ของสำนัก", y: counto }
 
-                //             ]
-                //         }
-                //     ]
-                // };
+            //             ]
+            //         }
+            //     ]
+            // };
 
-                // $("#chartContainer").CanvasJSChart(options);
+            // $("#chartContainer").CanvasJSChart(options);
 
-                //highchart
-                var countn = Number(data[0].normal);
-                var countm = Number(data[0].missing);
-                var countr = Number(data[0].repair);
-                var counto = Number(data[0].other);
-                Highcharts.chart('highchart', {
-                    chart: {
-                        type: 'column'
-                    },
+            //highchart
+            var countn = Number(data[0].normal);
+            var countm = Number(data[0].missing);
+            var countr = Number(data[0].repair);
+            var counto = Number(data[0].other);
+            Highcharts.chart('highchart', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Amount of stuff in inventory'
+                },
+                subtitle: {
+                    text: 'ข้อมูลคุรุภัณฑ์ของสำนักวิชาเทคโนโลยีสารสนเทศ'
+                },
+                xAxis: {
+                    categories: [
+                        'item'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
                     title: {
-                        text: 'Amount of stuff in inventory'
-                    },
-                    subtitle: {
-                        text: 'ข้อมูลคุรุภัณฑ์ของสำนักวิชาเทคโนโลยีสารสนเทศ'
-                    },
-                    xAxis: {
-                        categories: [
-                            'item'
-                        ],
-                        crosshair: true
-                    },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: 'amount of item (จำนวนคุรุภัณฑ์)'
-                        }
-                    },
-                    tooltip: {
+                        text: 'amount of item (จำนวนคุรุภัณฑ์)'
+                    }
+                },
+                tooltip: {
 
-                    },
-                    plotOptions: {
-                        column: {
-                            pointPadding: 0.2,
-                            borderWidth: 0
-                        }
-                    },
-                    series: [{
-                        name: 'ปกติ',
-                        data: [countn],
-                        color: '#28a745'
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'ปกติ',
+                    data: [countn],
+                    color: '#28a745'
 
-                    }, {
-                        name: 'สูญหาย',
-                        data: [countm],
-                        color: '#dc3545'
+                }, {
+                    name: 'สูญหาย',
+                    data: [countm],
+                    color: '#dc3545'
 
-                    }, {
-                        name: 'ส่งซ่อม',
-                        data: [countr],
-                        color: '#007bff'
+                }, {
+                    name: 'ส่งซ่อม',
+                    data: [countr],
+                    color: '#007bff'
 
-                    }, {
-                        name: 'ไม่ระบุ',
-                        data: [counto],
-                        color: '#343a40'
+                }, 
+                // {
+                //     name: 'ไม่ระบุ',
+                //     data: [counto],
+                //     color: '#343a40'
 
-                    }]
-                });
-
-            }).fail(function (xhr, state) {
-
+                // }
+            ]
             });
+
+        }).fail(function (xhr, state) {
+
+        });
     }
 </script>
 
