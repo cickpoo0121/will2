@@ -21,7 +21,7 @@
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
     <!-- <link rel="stylesheet" href="landingpage.css"> -->
     <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-    <title>การตรวจสอบและนับครุภัณฑ์</title>
+    <title>การตรวจสอบและนับครุภัณฑ์ สำนักวิชาเทคโนโลยีสารสนเทศ</title>
 </head>
 <style>
     /* footer {
@@ -219,7 +219,7 @@
                     dataSet[i].product_status = "สูญหาย"
                 }
                 else if (dataSet[i].product_status == 1) {
-                    dataSet[i].product_status = "ปกติ"
+                    dataSet[i].product_status = '<span class="badge badge-success "style="font-size: 14px;">ปกติ</span>'
                 }
                 else if (dataSet[i].product_status == 2) {
                     dataSet[i].product_status = "ส่งซ่อม"
