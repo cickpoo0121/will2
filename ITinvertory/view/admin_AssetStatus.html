@@ -44,7 +44,10 @@
     <script type="text/javascript"
         src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 
-    <script text="script" src="sweetalert.min.js"></script>
+    <!-- <script text="script" src="sweetalert.min.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
 
 
 
@@ -81,8 +84,7 @@
     }
 
     #Qrcode,
-    #Barcode,
-    #save {
+    #Barcode {
         width: 107px;
         font-size: 14px;
     }
@@ -279,13 +281,16 @@
                             <input type="file" name="fileUpload" id="uploadexcel">
                         </div>
                         <br>
-                        <div class="float-right">
-                            <button class="btn btn-primary" id="upexcel" type="submit">
-                                บันทึก</button>
-                            <button class="btn btn-danger "><span
-                                    class="glyphicon glyphicon-off "></span>ยกเลิก</button>
-                        </div>
+                        <!-- <div class="float-right"> -->
+
+                        <button class="btn btn-danger float-right" data-dismiss="modal" id="cancel"><span
+                                class="glyphicon glyphicon-off "></span>ยกเลิก</button>
+                        <button class="btn btn-primary float-right mr-2" id="upexcel" type="submit">
+                            บันทึก</button>
                     </form>
+                    <!-- </div> -->
+
+                    <!-- <button class="btn btn-danger float-right mr-2" data-dismiss="modal" ><span class="glyphicon glyphicon-off "></span>ยกเลิก</button> -->
                 </div>
 
             </div>
@@ -301,7 +306,7 @@
     <!-- </div> -->
 
     <!-- Modal -->
-    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <!-- <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -319,7 +324,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div>
         <div class="row">
@@ -371,7 +376,7 @@
                                 <button id="Qrcode" class="btn btn-primary text-center">สร้างคิวอาร์โค้ด</button>
                                 <button id="Barcode" class="btn btn-primary text-center">สร้างบาร์โค้ด</button>
                                 <button id="save" type="submit"
-                                    class="btn btn-info text-center">ถ่ายรูป/ไม่ถ่ายรูป</button>
+                                    class="btn btn-info text-center data-toggle='button'">ถ่ายรูป/ไม่ถ่ายรูป</button>
                                 <!-- <select id="years" class="form-control">
                                 </select> -->
 
@@ -700,6 +705,9 @@
 
                 if (getyear != new Date().getFullYear()) {
                     $("#delete").hide();
+                    // $("#Qrcode").hide();
+                    // $("#Barcode").hide();
+                    $("#save").hide();
                 }
                 else {
                     $("#delete").show();
@@ -733,6 +741,50 @@
             // $('.dt-button.buttons-excel.buttons-html5').addClass('btn')
             // $('.dt-button.buttons-print').addClass('btn')
             $("#insert").click(function () {
+                $("#cancel").click(function () {
+                    window.location.replace('/productstatusadmin')
+                })
+
+                // $('#upexcel').click(function () {
+
+                //     fileName = $("#uploadexcel").val();
+                //     fileExtension = fileName.replace(/^.*\./, '');
+                //     // alert(fileExtension);
+
+                //     if ($("#uploadexcel")[0].files.length == 0) {
+                //         swal("IT-Inventory", "...and here's the text!");
+                //         // alert("No file selected")
+
+                //         // return;
+                //     }
+                //     else if (fileExtension != "xlsx") {
+                //         alert("please select only excel file");
+                //     }
+                //     else {
+                //         $('form').ready(function () {
+                //             const formData = new FormData(this);
+                //             $.ajax({
+                //                 method: "POST",
+                //                 url: "/uploadfile",
+                //                 data: formData,
+                //                 contentType: false,
+                //                 processData: false
+                //             }).done(function (dataSet, state, xhr) {
+                //                 // console.log(dataSet)
+                //                 window.location.replace(dataSet)
+                //                 // window.location.replace('/productstatusadmin')
+                //                 // productadmin()
+                //                 // alert("aaa")
+
+                //             }).fail(function (xhr, state, err) {
+                //                 console.log(err)
+                //             })
+                //         });
+                //     }
+
+                // });
+
+
 
                 $('form').submit(function () {
 
@@ -741,9 +793,9 @@
                     // alert(fileExtension);
 
                     if ($("#uploadexcel")[0].files.length == 0) {
-                        // swal("IT-Inventory", "...and here's the text!");
-                        alert("No file selected")
-                        
+                        swal("IT-Inventory", "...and here's the text!");
+                        // alert("No file selected")
+
                         // return;
                     }
                     else if (fileExtension != "xlsx") {
@@ -760,6 +812,8 @@
                         }).done(function (dataSet, state, xhr) {
                             // console.log(dataSet)
                             window.location.replace(dataSet)
+                            // window.location.replace('/productstatusadmin')
+                            // productadmin()
                             // alert("aaa")
 
                         }).fail(function (xhr, state, err) {
@@ -770,18 +824,46 @@
                 });
 
             })
-            $("#savedelete").click(function () {
-                // alert("คำเตือน:ข่อมูลครุภันฑ์จะหายทั้งหมด")
-                // console.log(getyear)
-                $.ajax({
-                    method: "delete",
-                    url: "/product/delete/" + getyear
-                }).done(function (dataSet, state, xhr) {
-                    window.location.replace("/productstatusadmin")
-                }).fail(function (xhr, state, err) {
+            $("#delete").click(function () {
+                // swal("Good job!", "You clicked the button!", "success")
+                swal({
+                    title: "ข้อมูลครุภันฑ์จะหายทั้งหมด",
+                    // text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    cancelButtonClass: "btn-primary",
+                    confirmButtonText: "ยืนยัน",
+                    cancelButtonText: "ยกเลิก",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            swal("เสร็จสิ้น", "ลบข้อมูลครุภันฑ์เสร็จสิ้น", "success");
+                            // $("#savedelete").click(function () {
+                            // alert("คำเตือน:ข่อมูลครุภันฑ์จะหายทั้งหมด")
+                            // console.log(getyear)
+                            $.ajax({
+                                method: "delete",
+                                url: "/product/delete/" + getyear
+                            }).done(function (dataSet, state, xhr) {
+                                // window.location.replace("/productstatusadmin")
+                                productadmin()
+                            }).fail(function (xhr, state, err) {
 
-                })
+                            })
+                            // })
+
+                        }
+                        // else {
+                        //     swal("ยกเลิก", "", "error");
+                        // }
+                    });
+
+
             })
+
 
             // $('#save').on('click', function (e) {
             //     var form = this;
@@ -822,17 +904,64 @@
                 // }
 
                 if (rows_selected.length != 0) {
+
                     $.ajax({
                         method: "PUT",
                         url: "/takephoto/" + getyear,
                         data: { year: getyear, records: arr }
                     }).done(function (dataSet, state, xhr) {
-                        window.location.replace("/productstatusadmin")
+                        // swal("Good job!", "You clicked the button!", "success")
+                        swal({
+                            title: "Successed",
+                            type: "success",
+                            // showCancelButton: false,
+                            confirmButtonClass: "btn-success",
+                            // cancelButtonClass: "btn-primary",
+                            confirmButtonText: "ยืนยัน",
+                            // cancelButtonText: "ยกเลิก",
+                            closeOnConfirm: false,
+                            closeOnCancel: true
+                        },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    window.location.replace("/productstatusadmin")
+                                }
+                            });
+
+
                     }).fail(function (xhr, state, error) {
                         console.log(error)
                     })
+
+
+
+                    // $.ajax({
+                    //     method: "PUT",
+                    //     url: "/takephoto/" + getyear,
+                    //     data: { year: getyear, records: arr }
+                    // }).done(function (dataSet, state, xhr) {
+                    //     // swal("Good job!", "You clicked the button!", "success")
+
+                    //     window.location.replace("/productstatusadmin")
+                    // }).fail(function (xhr, state, error) {
+                    //     console.log(error)
+                    // })
                 } else {
-                    alert("Please select item")
+                    // alert("Please select item")
+                    // swal("กรุณาเลือกข้อมูล", "   ")
+                    swal({
+                        title: "กรุณาเลือกข้อมูล",
+                        // text: "You will not be able to recover this imaginary file!",
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonClass: "btn-primary",
+                        // cancelButtonClass: "btn-primary",
+                        confirmButtonText: "ตกลง",
+                        // cancelButtonText: "ยกเลิก",
+                        closeOnConfirm: true,
+                        // closeOnCancel: true
+                    })
+
                 }
             });
 
@@ -853,7 +982,19 @@
 
                     window.open('/qrcode', '_blank');
                 } else {
-                    alert("Please select item")
+                    // alert("Please select item")
+                    swal({
+                        title: "กรุณาเลือกข้อมูล",
+                        // text: "You will not be able to recover this imaginary file!",
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonClass: "btn-primary",
+                        // cancelButtonClass: "btn-primary",
+                        confirmButtonText: "ตกลง",
+                        // cancelButtonText: "ยกเลิก",
+                        closeOnConfirm: true,
+                        // closeOnCancel: true
+                    })
                 }
             })
 
@@ -871,7 +1012,19 @@
 
                     window.open('/barcode', '_blank');
                 } else {
-                    alert("Please select item")
+                    // alert("Please select item")
+                    swal({
+                        title: "กรุณาเลือกข้อมูล",
+                        // text: "You will not be able to recover this imaginary file!",
+                        type: "info",
+                        showCancelButton: false,
+                        confirmButtonClass: "btn-primary",
+                        // cancelButtonClass: "btn-primary",
+                        confirmButtonText: "ตกลง",
+                        // cancelButtonText: "ยกเลิก",
+                        closeOnConfirm: true,
+                        // closeOnCancel: true
+                    })
                 }
             })
 
