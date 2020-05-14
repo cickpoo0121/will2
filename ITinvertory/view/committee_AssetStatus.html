@@ -500,7 +500,7 @@
                     data: "image",
                     render: function (data, type, full) {
                         if (type === 'display') {             //if column 
-                            return '<img class="imgg" ' + ((full.image != null) ? 'src="../img/' + full.image + '"' : '') + 'style="width: 100%;"  alt=""> ';
+                            return '<img class="imgg" ' + ((full.image != null) ? 'src="../uploads/' + full.image + '"' : 'src="../img/default-thumbnail.jpg"') + 'style="width: 100%;"  alt=""> ';
                             // return '<input type="checkbox" ' + ((full.image_status == '1') ? 'checked' : '') + ' id="input' + full.image + '" />';
                         }
                         return data;
