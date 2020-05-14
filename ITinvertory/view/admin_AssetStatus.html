@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>สถานะครุภัณฑ์</title>
+    <title>การตรวจสอบและนับครุภัณฑ์ สำนักวิชาเทคโนโลยีสารสนเทศ</title>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <!-- Bootstrap CSS -->
@@ -176,7 +176,23 @@
         margin-top: 74px;
 
     }
+    #page-container {
+        position: relative;
+        min-height: 100vh;
+    }
 
+    #content-wrap {
+        padding-bottom: 2.5rem;
+        /* Footer height */
+    }
+
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+        /* Footer height */
+    }
 
 
 
@@ -204,11 +220,11 @@
 </style>
 
 
-
-
-
-
 <body>
+    <div id="page-container">
+        <div id="content-wrap">
+
+
     <div class="row">
         <div class="col-md-9">
             <img src="../img/banner.png" alt="LOGO" style="width: 450px;">
@@ -429,9 +445,11 @@
         </div>
     </div>
 
-
+</div>
+</div>
 
     <!-- Footer -->
+    <div class="footer">
     <footer class="page-footer font-small blue " style="background-color: #fe0000;">
 
         <!-- Copyright -->
@@ -439,8 +457,10 @@
         <!-- Copyright -->
 
     </footer>
+</div>
     <!-- Footer -->
     <!-- ============================================================== -->
+
 </body>
 
 <script>
@@ -975,7 +995,7 @@
                     }).done(function (dataSet, state, xhr) {
                         // swal("Good job!", "You clicked the button!", "success")
                         swal({
-                            title: "Successed",
+                            title: "สำเร็จ",
                             type: "success",
                             // showCancelButton: false,
                             confirmButtonClass: "btn-success",
