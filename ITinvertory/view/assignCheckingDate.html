@@ -26,6 +26,10 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+
+
     <!-- datepicker -->
     <!-- <script
         src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
@@ -455,9 +459,23 @@
                     // console.log(date1.getFullYear())
 
                     if (time2date <= 0) {
-                        alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+                        // alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+                        swal({
+                            title: "กรุณาเลือกวันที่ให้ถูกต้อง",
+                            type: "error",
+                            confirmButtonClass: "btn-primary",
+                            confirmButtonText: "ตกลง",
+                            closeOnConfirm: true,
+                        })
                     } else if (dateStart == "" || dateEnd == "") {
-                        alert("กรุณาเลือกวันที่")
+                        // alert("กรุณาเลือกวันที่")
+                        swal({
+                            title: "กรุณาเลือกวันที่",
+                            type: "error",
+                            confirmButtonClass: "btn-primary",
+                            confirmButtonText: "ตกลง",
+                            closeOnConfirm: true,
+                        })
                     }
                     else {
                         $.ajax({
@@ -519,13 +537,34 @@
 
             if (time2date <= 0) {
                 $("#dateEnd").val("");
-                alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+                // alert("กรุณาเลือกวันที่ให้ถูกต้อง")
+                swal({
+                    title: "กรุณาเลือกวันที่ให้ถูกต้อง",
+                    type: "error",
+                    confirmButtonClass: "btn-primary",
+                    confirmButtonText: "ตกลง",
+                    closeOnConfirm: true,
+                })
             }
             else if (dateStart == "" || dateEnd == "") {
-                alert("กรุณาเลือกวันที่")
+                // alert("กรุณาเลือกวันที่")
+                swal({
+                    title: "กรุณาเลือกวันที่",
+                    type: "error",
+                    confirmButtonClass: "btn-primary",
+                    confirmButtonText: "ตกลง",
+                    closeOnConfirm: true,
+                })
             }
             else if (date1.getFullYear() != new Date().getFullYear() || date2.getFullYear() != new Date().getFullYear()) {
-                alert("กรุณาเลือกวันที่ในปีนี้")
+                // alert("กรุณาเลือกวันที่ในปีนี้")
+                swal({
+                    title: "กรุณาเลือกวันที่ในปีนี้",
+                    type: "error",
+                    confirmButtonClass: "btn-primary",
+                    confirmButtonText: "ตกลง",
+                    closeOnConfirm: true,
+                })
             }
             else {
                 $.ajax({

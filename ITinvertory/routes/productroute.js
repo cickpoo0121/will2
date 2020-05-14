@@ -44,19 +44,45 @@ router.get("/guest", function (req, res) {
 
 //show product of guset page
 router.get("/guest/:year", function (req, res) {
-    // date = new Date();
-    // const year = date.getFullYear();
-    const year1 = 2020;
-    const sql = 'SELECT description,model,location,room,product_status,image FROM `product` WHERE product_status=1 and product_year =? ORDER BY asset ASC';
-    con.query(sql, [year1], function (err, result, fields) {
+    date = new Date();
+    const currentyear = date.getFullYear();
+    // const year1 = 2020;
+    const sql = 'SELECT description,model,location,room,product_status,image,product_year FROM `product` WHERE product_status=1 and product_year =? ORDER BY asset ASC';
+    con.query(sql, [currentyear], function (err, result, fields) {
         if (err) {
             // console.log(err)
             res.status(500).send("Server error");
             console.log(err)
         }
         else {
-            res.json(result);
-            // console.log(err)
+            // res.json(result);
+            if (result.length == 0) {
+                const previousyear = currentyear - 1
+                const sql = 'SELECT description,model,location,room,product_status,image,product_year FROM `product` WHERE product_status=1 and product_year =? ORDER BY asset ASC';
+                con.query(sql, [previousyear], function (err, result, fields) {
+                    if (err) {
+                        res.status(500).send("Server error");
+                    }
+                    else {
+                        res.json(result);
+                    }
+
+                })
+            }
+            else {
+                console.log("current")
+                const sql = 'SELECT description,model,location,room,product_status,image,product_year FROM `product` WHERE product_status=1 and product_year =? ORDER BY asset ASC';
+                con.query(sql, [currentyear], function (err, result, fields) {
+                    if (err) {
+                        res.status(500).send("Server error");
+                    }
+                    else {
+                        res.json(result);
+                    }
+
+                })
+            }
+            console.log(result.length)
         }
     });
 });
@@ -65,7 +91,7 @@ router.get("/guest/:year", function (req, res) {
 router.get("/countstatus/:year", function (req, res) {
     const year = req.params.year;
     const sql = "SELECT (select COUNT(*) from product where product_status = 0 and product_year = ?) as missing,(select COUNT(*) from product where product_status = 1 and product_year = ?) as normal,(select COUNT(*) from product where product_status = 2 and product_year = ?) as repair,(select COUNT(*) from product where product_status = 3 and product_year = ?) as other";
-    con.query(sql, [year,year,year,year], function (err, result, fields) {
+    con.query(sql, [year, year, year, year], function (err, result, fields) {
         if (err) {
             res.status(500).send("Server error");
             console.log(err);

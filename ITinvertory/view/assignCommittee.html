@@ -30,6 +30,7 @@
 
     <!-- <link rel="stylesheet" href="style.css"> -->
     <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script text="script" src="sweetalert.min.js"></script>
 
     <!-- <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script> -->
@@ -384,56 +385,47 @@
             getcommittee();
         });
 
-        $('#assign').click(function () {
-            $('#submitAdd').show();
-            $('#submitUpdate').hide()
+        // $('#assign').click(function () {
+        //     $('#submitAdd').show();
+        //     $('#submitUpdate').hide()
 
-            form = $("#setvalidation");
-            form.validate();
-            $('#submitAdd').click(function () {
-                const yrearassign = year
-                const email = $('#email').val();
+        //     form = $("#setvalidation");
+        //     form.validate();
+        //     $('#submitAdd').click(function () {
+        //         const yrearassign = year
+        //         const email = $('#email').val();
 
-                if (form.valid() == false) {
-                    // alert("Valid: " + form.valid())
+        //         if(email){
 
-                    // return false;
-                }
-                else {
-                    //     alert("test validation")
-                    //     return false;
-                    $.ajax({
-                        method: "POST",
-                        url: "/assign/committee",
-                        data: { year: yrearassign, email: email }
-                    }).done(function (dataSet, state, xhr) {
-                        getcommittee();
-                        // $("#exampleModalLong").modal(toggle)
-                        console.log(dataSet)
-                    }).fail(function (xhr, state, err) {
-                        console.log(err)
-                    })
-                }
+        //         }
 
-                // if (email == "") {
+        //         else if (form.valid() == false) { //check email form
+        //             alert("Valid: " + form.valid())
 
-                // } else {
+        //             // return false;
+        //         }
+        //         else {
+        //             //     alert("test validation")
+        //             //     return false;
+        //             $.ajax({
+        //                 method: "POST",
+        //                 url: "/assign/committee",
+        //                 data: { year: yrearassign, email: email }
+        //             }).done(function (dataSet, state, xhr) {
+        //                 getcommittee();
+        //                 // $("#exampleModalLong").modal(toggle)
+        //                 console.log(dataSet)
+        //             }).fail(function (xhr, state, err) {
+        //                 console.log(err)
+        //             })
+        //         }
 
-                //     $.ajax({
-                //         method: "POST",
-                //         url: "/assign/committee",
-                //         data: { year: yrearassign, email: email }
-                //     }).done(function (dataSet, state, xhr) {
-                //         getcommittee();
-                //         // $("#exampleModalLong").modal(toggle)
-                //         console.log(dataSet)
-                //     }).fail(function (xhr, state, err) {
-                //         console.log(err)
-                //     })
-                // }
-            });
+        //         // if (email == "") {
 
-        })
+        //         // } else {
+        //     });
+
+        // })
 
 
 
@@ -466,7 +458,7 @@
 
         $.ajax({
             method: "GET",
-            url: "/years"
+            url: "/yearsAssign"
         }).done(function (dataSet, state, xhr) {
 
             $("#years").empty();
@@ -505,23 +497,23 @@
             tableUser.rows.add(dataSet).draw();
 
             $.ajax({
-            method: "GET",
-            url: "/product/status/" + getyear
-        }).done(function (dataSet, state, xhr) {
-            console.log(dataSet)
-            for (let i = 0; i < dataSet.length; i++) {
-                if (dataSet[i].product_status != 0) {
-                    // $("#assign").hide();
-                    console.log("edithide")
-                    $(".editMail").hide();
+                method: "GET",
+                url: "/product/status/" + getyear
+            }).done(function (dataSet, state, xhr) {
+                console.log(dataSet)
+                for (let i = 0; i < dataSet.length; i++) {
+                    if (dataSet[i].product_status != 0) {
+                        // $("#assign").hide();
+                        console.log("edithide")
+                        $(".editMail").hide();
+                    }
+                    else {
+                        // $(".editMail").show();
+                    }
                 }
-                else {
-                    // $(".editMail").show();
-                }
-            }
-        }).fail(function (xhr, state, err) {
+            }).fail(function (xhr, state, err) {
 
-        })
+            })
 
             if (getyear != new Date().getFullYear()) {
                 // $("#assign").prop('disabled', true);
@@ -567,6 +559,59 @@
                     })
                 });
             });
+
+            ///////////////// asign commitee //////////
+            $('#assign').click(function () {
+                $('#submitAdd').show();
+                $('#submitUpdate').hide()
+                console.log(dataSet.length)
+
+                form = $("#setvalidation");
+                form.validate();
+                $('#submitAdd').click(function () {
+                    const yrearassign = year
+                    const email = $('#email').val();
+
+                    for (let i = 0; i < dataSet.length; i++) {
+                        var dupEmail = tableUser.row(i).data().email
+                        if (email == dupEmail) {
+                            // alert("มีอีเมลนี้แล้ว");
+                            // swal("IT-Inventory", "...and here's the text!");
+                            // break;
+                        }
+                        // console.log(dupEmail)
+                    }
+                    // if (email == dupEmail) {
+                    //     alert("มีอีเมลนี้แล้ว");
+                    // }
+
+                     if (form.valid() == false) { //check email form
+                        // alert("Valid: " + form.valid())
+
+                        // return false;
+                    }
+                    else {
+                        //     alert("test validation")
+                        //     return false;
+                        $.ajax({
+                            method: "POST",
+                            url: "/assign/committee",
+                            data: { year: yrearassign, email: email }
+                        }).done(function (dataSet, state, xhr) {
+                            getcommittee();
+                            // $("#exampleModalLong").modal(toggle)
+                            console.log(dataSet)
+                        }).fail(function (xhr, state, err) {
+                            console.log(err)
+                        })
+                    }
+
+                    // if (email == "") {
+
+                    // } else {
+                });
+
+            })
 
 
         }).fail(function (xhr, state, error) {

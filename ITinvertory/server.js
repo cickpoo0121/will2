@@ -187,6 +187,21 @@ function importExcelData2MySQL(res, filePath) {
 
 //get years
 app.get("/years", function (req, res) {
+    const sql = "SELECT DISTINCT product_year as working_year FROM `product`";
+    con.query(sql, function (err, result, fields) {
+        if (err) {
+            // console.log(err)
+            res.status(500).send("Server error");
+            console.log(err)
+        }
+        else {
+            res.json(result);
+            console.log(result)
+        }
+    });
+});
+
+app.get("/yearsAssign", function (req, res) {
     const sql = "SELECT DISTINCT working_year FROM `workingyear`";
     con.query(sql, function (err, result, fields) {
         if (err) {
@@ -337,7 +352,7 @@ app.get("/CheckRole/:email", function (req, res) {
 
 //root
 app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "/view/login.html"))
+    res.sendFile(path.join(__dirname, "/view/generalUser.html"))
     // res.render("login.ejs",{user:req.user});
 });
 
@@ -362,11 +377,11 @@ app.get("/barcode", function (req, res) {
 
 //========= User ========//
 //ผู้ใช้ทั้วไป
-app.get("/guest", function (req, res) {
-    // console.log(req.user+"asdadasda")
-    res.sendFile(path.join(__dirname, "/view/generalUser.html"))
-    // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
-});
+// app.get("/guest", function (req, res) {
+//     // console.log(req.user+"asdadasda")
+//     res.sendFile(path.join(__dirname, "/view/generalUser.html"))
+//     // res.render("หน้าแรกผู้ใช้ทั่วไป.ejs",{user:req.user});
+// });
 
 //หน้าแรกcommittee
 app.get("/committeefirstpage", function (req, res) {
