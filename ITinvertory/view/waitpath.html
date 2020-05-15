@@ -21,7 +21,10 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <title>Document</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+    <title>authen</title>
 </head>
 <script>
     $(document).ready(function () {
@@ -65,7 +68,7 @@
                 }).done(function (data, state, xhr) {
                     console.log(data[0].role);
                     if (data[0].working_year == year) {
-                         if (data[0].role == 1) {
+                        if (data[0].role == 1) {
                             window.location.replace("/adminfirstpage");
                         } else if (data[0].role == 0) {
                             window.location.replace("/committeefirstpage");
@@ -73,9 +76,34 @@
                             window.location.replace('/');
                         }
                     } else {
-                        alert('ไม่สามารถเข้าใช้งานได้');
-                        window.location.replace('/auth/logout');
+                        // alert('ไม่สามารถเข้าใช้งานได้');
+                        // window.location.replace('/auth/logout');
                         //window.location.replace('/');
+
+                        swal({
+                            title: "ไม่สามารถเข้าใช้งานได้",
+                            text: "กรุณาติดต่อเจ้าหน้าไอที",
+                            type: "error",
+                            // showCancelButton: true,
+                            confirmButtonClass: "btn-primary",
+                            // cancelButtonClass: "btn-primary",
+                            confirmButtonText: "ยืนยัน",
+                            // cancelButtonText: "ยกเลิก",
+                            closeOnConfirm: false,
+                            closeOnCancel: true
+                        },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    // swal("เสร็จสิ้น", "ลบข้อมูลครุภันฑ์เสร็จสิ้น", "success");
+                                    window.location.replace('/auth/logout');
+                                    
+
+                                }
+                                // else {
+                                //     swal("ยกเลิก", "", "error");
+                                // }
+                            });
+
                     }
 
                 }).fail(function (xhr, state, err) {

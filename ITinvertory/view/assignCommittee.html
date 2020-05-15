@@ -167,7 +167,7 @@
                             <h6><i class="fas fa-power-off mr-2"></i>Logout</h6>
                         </a>
                     </div>
-                  
+
                 </div>
             </div>
             <!-- Header -->
@@ -282,20 +282,20 @@
         </div>
     </div>
 
-            <!-- Footer -->
-            <div class="footer">
-                <footer class="page-footer font-small blue mt-5" style="background-color: #fe0000;">
+    <!-- Footer -->
+    <div class="footer">
+        <footer class="page-footer font-small blue mt-5" style="background-color: #fe0000;">
 
-                    <!-- Copyright -->
-                    <div class="footer-copyright text-center py-3 text-light">© 2020 POWERSOL</div>
-                    <!-- Copyright -->
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3 text-light">© 2020 POWERSOL</div>
+            <!-- Copyright -->
 
-                </footer>
+        </footer>
 
-            </div>
-            <!-- Footer -->
+    </div>
+    <!-- Footer -->
 
-  
+
 
 </body>
 
@@ -533,17 +533,74 @@
                 let yearTable = selectedData.working_year;
                 // alert(emailold + " " + yearTable + " " + emailnew)
 
-                $('#submitUpdate').click(function () {
+                $('#submitUpdate').click(function (e) {
+                    e.preventDefault();
                     let emailnew = $('#email').val();
                     // alert(emailold + " " + yearTable + " " + emailnew)
-                    $.ajax({
-                        method: "PUT",
-                        url: "/update/committee",
-                        data: { emailNew: emailnew, year: yearTable, emailOld: emailold }
-                    }).done(function (dataSet, state, xhr) {
-                    }).fail(function (xhr, sate, err) {
-                        console.log(err)
-                    })
+                    // $.ajax({
+                    //     method: "PUT",
+                    //     url: "/update/committee",
+                    //     data: { emailNew: emailnew, year: yearTable, emailOld: emailold }
+                    // }).done(function (dataSet, state, xhr) {
+                    // }).fail(function (xhr, sate, err) {
+                    //     console.log(err)
+                    // })
+
+
+                    const yrearassign = year
+                    // const email = $('#email').val();
+
+                    for (let i = 0; i < dataSet.length; i++) {
+                        var dupEmail = tableUser.row(i).data().email
+                        if (emailnew == dupEmail) {
+                            swal({
+                                title: "อีเมลนี้อยู่ในระบบแล้ว",
+                                type: "error",
+                                confirmButtonClass: "btn-primary",
+                                confirmButtonText: "ตกลง",
+                                closeOnConfirm: true,
+                            })
+                            break;
+                        }
+                        // console.log(dupEmail)
+                    }
+                    if (emailnew == dupEmail) {
+
+                    }
+
+                    // else if (form.valid() == false) { //check email form
+                    //     // alert("Valid: " + form.valid())
+
+                    //     // return false;
+                    // }
+                    else {
+                        //     alert("test validation")
+                        //     return false;
+                        $.ajax({
+                            method: "PUT",
+                            url: "/update/committee",
+                            data: { emailNew: emailnew, year: yearTable, emailOld: emailold }
+                        }).done(function (dataSet, state, xhr) {
+                            getcommittee();
+                            swal("เสร็จสิ้น", "เพิ่มกรรมการ", "success");
+                            $("#addcomModal").modal('toggle')
+                        }).fail(function (xhr, sate, err) {
+                            console.log(err)
+                        })
+
+                        // $.ajax({
+                        //     method: "POST",
+                        //     url: "/assign/committee",
+                        //     data: { year: yrearassign, email: email }
+                        // }).done(function (dataSet, state, xhr) {
+                        //     getcommittee();
+                        //     swal("เสร็จสิ้น", "เพิ่มกรรมการ", "success");
+                        //     $("#addcomModal").modal('toggle')
+                        //     console.log(dataSet)
+                        // }).fail(function (xhr, state, err) {
+                        //     console.log(err)
+                        // })
+                    }
                 });
             });
 
@@ -567,7 +624,7 @@
                         var dupEmail = tableUser.row(i).data().email
                         if (email == dupEmail) {
                             swal({
-                                title: "มีอีเมลนี้แล้ว",
+                                title: "อีเมลนี้อยู่ในระบบแล้ว",
                                 type: "error",
                                 confirmButtonClass: "btn-primary",
                                 confirmButtonText: "ตกลง",
@@ -595,7 +652,8 @@
                             data: { year: yrearassign, email: email }
                         }).done(function (dataSet, state, xhr) {
                             getcommittee();
-                            // $("#exampleModalLong").modal(toggle)
+                            swal("เสร็จสิ้น", "เพิ่มกรรมการ", "success");
+                            $("#addcomModal").modal('toggle')
                             console.log(dataSet)
                         }).fail(function (xhr, state, err) {
                             console.log(err)

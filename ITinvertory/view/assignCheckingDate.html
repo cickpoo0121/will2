@@ -607,7 +607,7 @@
                     url: "/datealert/update/" + year,
                     data: { datestart: dateStart, dateend: dateEnd }
                 }).done(function (dataSet, state, xhr) {
-                    swal("เสร็จสิ้น", "ลบข้อมูลครุภันฑ์เสร็จสิ้น", "success");
+                    swal("เสร็จสิ้น", "แก้ไขวันที่เสร็จสิ้น", "success");
                     productadmin();
                     $("#exampleModalLong").modal("toggle");
                 }).fail(function (xhr, state, error) {
