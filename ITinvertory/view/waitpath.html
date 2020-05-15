@@ -52,6 +52,8 @@
         }).done(function (dataSet, state, xhr) {
             // console.log(dataSet.name)
             var email = dataSet.email;
+            date = new Date();
+            const year = date.getFullYear();
 
             if (dataSet.name == undefined) {
                 alert('บัญชีไม่ถูกต้อง')
@@ -62,13 +64,20 @@
                     url: "/CheckRole/" + email
                 }).done(function (data, state, xhr) {
                     console.log(data[0].role);
-                    if (data[0].role == 1) {
-                        window.location.replace("/adminfirstpage");
-                    } else if (data[0].role == 0) {
-                        window.location.replace("/committeefirstpage");
-                    } else if (email == undefined) {
-                        window.location.replace('/');
+                    if (data[0].working_year == year) {
+                         if (data[0].role == 1) {
+                            window.location.replace("/adminfirstpage");
+                        } else if (data[0].role == 0) {
+                            window.location.replace("/committeefirstpage");
+                        } else if (email == undefined) {
+                            window.location.replace('/');
+                        }
+                    } else {
+                        alert('ไม่สามารถเข้าใช้งานได้');
+                        window.location.replace('/auth/logout');
+                        //window.location.replace('/');
                     }
+
                 }).fail(function (xhr, state, err) {
                     console.log(err);
                 })
