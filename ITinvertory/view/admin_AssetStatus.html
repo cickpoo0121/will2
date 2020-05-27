@@ -725,10 +725,12 @@
                 for (let i = 0; i < dataSet.length; i++) {
                     if (dataSet[i].product_status != 0) {
                         $("#delete").prop('disabled', true);
-                        console.log("aaaaaa")
+                        console.log("disabled")
+                        break;
                     }
                     else {
                         $("#delete").prop('disabled', false);
+                        console.log("undisabled")
                     }
                 }
 
